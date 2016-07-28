@@ -8,8 +8,8 @@ IFB299 'Community Management' project.
 ### Precursor
 **Before you commit anything** ensure that you follow the following style
 guides, including:
-  - Design Style Guide
-  - Development Style Guide
+  - [Design Style Guide](https://github.com/trjstewart/qut-ifb299/wiki/Design-Style-Guide)
+  - [Development Style Guide](https://github.com/trjstewart/qut-ifb299/wiki/Development-Style-Guide)
   - [Git Style Guide](https://github.com/trjstewart/qut-ifb299/wiki/Git-Style-Guide)
 
 After ensuring that you are comfortable with each, you may begin work
