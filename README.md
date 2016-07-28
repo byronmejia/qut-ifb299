@@ -1,4 +1,8 @@
-*Note: This README is still a work in progress*
+Build Status:
+
+Develop: [![Build Status](https://travis-ci.com/byronmejia/qut-ifb299.svg?token=acN8U3sQnG2yr6qQ4ozY&branch=develop)](https://travis-ci.com/byronmejia/qut-ifb299)
+
+Master: [![Build Status](https://travis-ci.com/byronmejia/qut-ifb299.svg?token=acN8U3sQnG2yr6qQ4ozY&branch=master)](https://travis-ci.com/byronmejia/qut-ifb299)
 
 # IFB299 - Group 90
 This repository holds everything related to the lifecycle of the
