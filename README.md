@@ -21,14 +21,17 @@ guides, including:
   - [Git Style Guide](https://github.com/trjstewart/qut-ifb299/wiki/Git-Style-Guide)
 
 After ensuring that you are comfortable with each, you may begin work
-on the project
+on the project. Developers should make themselves most comfortable with
+the development style guide, design with design, and both should be
+comfortable with git style guide.
 
 ### Development Tools
-*Developers must come into an agreement before choosing a development tool*
+For development, NodeJS will be used for server-side endpoints. This will
+interact with a 
 
 Issue tracking will be completed via GitHub Issue tracker. For more
 information on how the project's GitHub Issue tracker works, please see
-|To Change|.
+[Issue Tracker](https://github.com/trjstewart/qut-ifb299/wiki/Git-Style-Guide).
 
 ### Setting up Node.JS
 Information on setting up NodeJS is here, for development
