@@ -1,0 +1,33 @@
+{
+  "name": "community-portal",
+  "version": "0.1.0",
+  "description": "A community portal.",
+  "main": "app/app.js",
+  "scripts": {
+    "test": "./node_modules/.bin/mocha --reporter spec"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/byronmejia/qut-ifb299.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/byronmejia/qut-ifb299/issues"
+  },
+  "homepage": "https://github.com/byronmejia/qut-ifb299#readme",
+  "dependencies": {
+    "express": "^4.14.0",
+    "request": "^2.74.0"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "eslint": "^3.2.0",
+    "eslint-config-airbnb": "^9.0.1",
+    "eslint-plugin-import": "^1.12.0",
+    "eslint-plugin-jsx-a11y": "^2.0.1",
+    "eslint-plugin-react": "^5.2.2",
+    "mocha": "^2.5.3",
+    "mocha-eslint": "^2.1.1"
+  }
+}
