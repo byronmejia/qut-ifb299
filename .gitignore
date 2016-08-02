@@ -1,2 +1,13 @@
 /.idea/
 /node_modules/
+*.aux
+*.dvi
+*.lof
+*.log
+*.toc
+*.fdb_latexmk
+*.fls
+*.lot
+*.synctex.gz
+*.vscodeLog
+*.out
