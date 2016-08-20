@@ -1,0 +1,23 @@
+
+html
+    head
+        title Login
+    body
+        if(attempt > 0)
+            div
+                h3 Oops
+                p That username and password didn't match... :(
+
+        form(action="login" method="POST")
+            div
+                label Username
+                input(type='text' placeholder="Enter Username" name='username' required)
+            div
+                label Password
+                input(type='password' placeholder="Enter Password" name='password' required)
+            div
+                button(type='sumbit') Login
+                label Remember Me
+                input(type='checkbox')
+            div
+                button(type='button') Forgotten Password
