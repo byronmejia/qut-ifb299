@@ -1,14 +1,14 @@
-var lint = require('mocha-eslint');
+const lint = require('mocha-eslint');
 
 // Array of paths to lint
 // Note: a seperate Mocha test will be run for each path and each file which
 // matches a glob pattern
-var paths = [
+const paths = [
   'app/**/*.js',
-  'tests/**/*Test.js'
+  'tests/**/*Test.js',
 ];
 
-var options = {
+const options = {
   // Specify style of output
   formatter: 'stylish',  // Defaults to `stylish`
 
@@ -22,7 +22,7 @@ var options = {
   slow: 1000,  // Defaults to the global mocha `slow` option
 
   // Consider linting warnings as errors and return failure
-  strict: true  // Defaults to `false`, only notify the warnings
+  strict: true,  // Defaults to `false`, only notify the warnings
 };
 
 // Run the tests
