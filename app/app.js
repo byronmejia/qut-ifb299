@@ -9,18 +9,18 @@ app.set('port', process.env.PORT || 3000);
 
 // Set the views
 app.set('view engine', 'pug');
-app.set('views', `${__dirname}/views`);
+app.set('views', path.join(__dirname, 'views'));
 
 // Set public folder
-app.use(express.static(path.join(__dirname, '/public')));
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Log the requests
 if (!module.parent) app.use(logger('dev'));
 
 // Dynamically load routes
-const routePath = `${__dirname}/routes/`;
+const routePath = path.join(__dirname, 'routes');
 fs.readdirSync(routePath).forEach((file) => {
-  const route = routePath + file;
+  const route = path.join(routePath, file);
   require(route)(app); // eslint-disable-line global-require
 });
 
