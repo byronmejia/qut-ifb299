@@ -1,8 +1,13 @@
+// Requirements
 const express = require('express');
 const logger = require('morgan');
 const path = require('path');
 const app = express();
 const fs = require('fs');
+const knex = require('knex')(
+  path.join('..', 'knexfile.js')
+);
+const bookshelf = require('bookshelf')(knex);
 
 // Setup the app
 app.set('port', process.env.PORT || 3000);
@@ -16,6 +21,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Log the requests
 if (!module.parent) app.use(logger('dev'));
+
+// Dynamically load models
+const modelPath = path.join(__dirname, 'models');
+fs.readdirSync(modelPath).forEach((file) => {
+  const model = path.join(modelPath, file);
+  require(model)(bookshelf); // eslint-disable-line global-require
+});
 
 // Dynamically load routes
 const routePath = path.join(__dirname, 'routes');
