@@ -4,7 +4,7 @@ const logger = require('morgan');
 const path = require('path');
 const app = express();
 const fs = require('fs');
-const passport = require(path.join('config', 'passport')).passport;
+const passport = require(path.join(__dirname, 'config', 'passport')).passport;
 
 // Setup the app
 app.set('port', process.env.PORT || 3000);
