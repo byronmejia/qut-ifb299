@@ -16,13 +16,11 @@ module.exports = (app, passport) => {
       (err, user) => {
         if (err) return res.redirect('/error?id=1');
         if (!user) return res.redirect('/login?attempt=1');
-        let good = true;
-        req.login(user, () => {
-          if (err){
+        return req.logIn(user, (data) => {
+          if (!data) {
             return res.redirect('/error?id=3');
-          } else {
-            return res.redirect('/success');
           }
+          return res.redirect('/success');
         });
       }
     )(req, res);

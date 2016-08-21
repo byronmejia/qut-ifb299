@@ -18,7 +18,7 @@ const Login = bookshelf.Model.extend({
         resolve(hash);
       }
     )
-  )
+  ),
 });
 
 module.exports = Login;
