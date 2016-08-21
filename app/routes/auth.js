@@ -15,7 +15,9 @@ module.exports = (app, passport) => {
     passport.authenticate('local', (user, err) => {
       if (err) res.redirect('/login?attempt=2', 400);
       if (!user) res.redirect('/login?attempt=1', 400);
-      const token = jwt.encode({ username: 'somedata' }, tokenSecret);
+      const token = {
+        example: 'token',
+      };
       res.cookie('auth', token);
       res.redirect('/');
     });

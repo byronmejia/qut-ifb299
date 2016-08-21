@@ -5,9 +5,11 @@ const bookshelf = require(path.join('..', 'config', 'db.js')).bookshelf;
 
 const Login = bookshelf.Model.extend({
   tableName: 'logins',
+  /* eslint-disable */
   initialize: function() {
     this.on('creating', this.hashPassword, this);
   },
+  /* eslint-enable */
   hashPassword: (model) => new Promise(
     (resolve, reject) => bcrypt.hash(
       model.attributes.password, 10, (err, hash) => {
