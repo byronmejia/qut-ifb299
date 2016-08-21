@@ -1,10 +1,10 @@
 exports.up = (knex, Promise) => (
   Promise.all(
-    knex.schema.createTable('logins', () => {
-      /* eslint-disable */
-      table.increment('id').primary();
-      table.string('username');
-      /* eslint-enable */
+    knex.schema.createTable('logins', (t) => {
+      t.increments('id').primary();
+      t.string('username');
+      t.string('password');
+      t.timestamp('lastLogin');
     })
   )
 );

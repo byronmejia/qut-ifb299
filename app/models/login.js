@@ -1,35 +1,22 @@
 const bcrypt = require('bcrypt');
+const path = require('path');
 const Promise = require('bluebird');
+const bookshelf = require(path.join('..', 'config', 'db.js')).bookshelf;
 
-module.exports = (bookshelf, passport, LocalStrategy) => {
-  /* eslint-disable */
-  const Login = bookshelf.Model.extend({
-    tableName: 'logins',
-    initialize: () => {
-      this.on('creating', this.hashPassword, this);
-    },
-    hashPassword: (model) => new Promise(
-      (resolve, reject) => bcrypt.hash(
-        model.attributes.password, 10, (err, hash) => {
-          if (err) reject(err);
-          model.set('password', hash);
-          resolve(hash);
-        }
-      )
-    ),
-  });
-  /* eslint-enable */
+const Login = bookshelf.Model.extend({
+  tableName: 'logins',
+  initialize: function() {
+    this.on('creating', this.hashPassword, this);
+  },
+  hashPassword: (model) => new Promise(
+    (resolve, reject) => bcrypt.hash(
+      model.attributes.password, 10, (err, hash) => {
+        if (err) reject(err);
+        model.set('password', hash);
+        resolve(hash);
+      }
+    )
+  ),
+});
 
-  // Set strategies from models
-  passport.use(new LocalStrategy(
-    (username, password, done) => Login.findOne(
-      { username }, (err, user) => {
-        if (err) return done(err);
-        if (!user) return done(null, false);
-        if (!user.validPassword(password)) {
-          return done(null, false);
-        }
-        return done(null, user);
-      })
-  ));
-};
+module.exports = Login;

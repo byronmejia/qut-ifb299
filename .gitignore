@@ -1,6 +1,7 @@
 /.idea/
 /node_modules/
 *.sqlite3
+*.db
 *.aux
 *.dvi
 *.lof

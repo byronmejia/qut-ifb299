@@ -4,12 +4,7 @@ const logger = require('morgan');
 const path = require('path');
 const app = express();
 const fs = require('fs');
-const knex = require('knex')(
-  path.join('..', 'knexfile.js')
-);
-const bookshelf = require('bookshelf')(knex);
-const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;
+const passport = require(path.join('config', 'passport')).passport;
 
 // Setup the app
 app.set('port', process.env.PORT || 3000);
@@ -28,7 +23,7 @@ if (!module.parent) app.use(logger('dev'));
 const modelPath = path.join(__dirname, 'models');
 fs.readdirSync(modelPath).forEach((file) => {
   const model = path.join(modelPath, file);
-  require(model)(bookshelf, passport, LocalStrategy); // eslint-disable-line global-require
+  require(model); // eslint-disable-line global-require
 });
 
 // Dynamically load routes
