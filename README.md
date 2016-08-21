@@ -44,34 +44,13 @@ nvm use
 Now that your node environment is setup, it's time to start work on the project.
 
   1. Clone this project
-  2. Install the NPM packages
-  ```sh
-  npm install
-  ```
-  3. Install KNEX globally, for databases
-  ```sh
-  npm install knex -g
-  ```  
-  4. Branch off from develop, EG:
-  ```sh
-  git checkout -b feature-sick-homepage develop
-  ```
-  5. Migrate local sqlite file to latest
-  ```sh
-  knex migrate:latest
-  ```
-  6. Seed development database with sample data
-  ```sh
-  knex seed:run development
-  ```
-  7. Start Development, and run with
-  ```sh
-  npm start
-  ```
-  8. And remember to test!
-  ```sh
-  npm test
-  ```
+  2. Install the NPM packages `npm install`
+  3. Install KNEX globally, for databases `npm install knex -g`
+  4. Branch off from develop `git checkout -b feature-sick-homepage develop`
+  5. Migrate local sqlite file to latest `knex migrate:latest`
+  6. Seed development database with sample data `knex seed:run development`
+  7. Start Development, and run with `npm start`
+  8. And remember to test! `npm test`
 
 ### Production setup
 Heroku does everything. We should be okay. I hope....
