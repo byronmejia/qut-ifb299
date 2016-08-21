@@ -1,20 +1,21 @@
 const path = require('path');
-const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;
-const Login = require(path.join('..', 'models', 'login.js'));
+const Strategy = require('passport-local').Strategy;
+const Login = require(path.join(__dirname, '..', 'models', 'login.js'));
 
-// Set Local Strategy
-passport.use(new LocalStrategy(
-  (username, password, done) => Login.findOne(
-    { username }, (err, user) => {
-      if (err) return done(err);
-      if (!user) return done(null, false);
-      if (!user.validPassword(password)) {
-        return done(null, false);
-      }
-      return done(null, user);
-    })
-));
-
-exports.passport = passport;
-exports.LocalStrategy = LocalStrategy;
+module.exports = function(passport) {
+  passport.use('local', new Strategy({
+    usernameField: 'username',
+    passwordField: 'password',
+  },
+  function (username, password, cb) {
+    console.log('Doing Strategy');
+    Login
+      .where({ username: username })
+      .fetch()
+      .then((data) => {
+        console.log(data);
+        return cb(null, data);
+      });
+    }
+  ));
+};

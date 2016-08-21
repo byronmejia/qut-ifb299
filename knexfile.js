@@ -1,8 +1,11 @@
+const path = require('path');
+const databaseFile = path.join(__dirname, 'dev.db');
+
 module.exports = {
   development: {
     client: 'sqlite3',
     connection: {
-      filename: './dev.db',
+      filename: databaseFile,
     },
   },
 

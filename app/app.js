@@ -1,22 +1,14 @@
-// Requirements
+// Start with Config Directories
+const path = require('path');
+const dir = require(path.join(__dirname, 'config', '_init.js'));
 const express = require('express');
 const logger = require('morgan');
-const path = require('path');
 const app = express();
 const fs = require('fs');
-const passport = require(path.join(__dirname, 'config', 'passport')).passport;
+const passport = require('passport');
+require(dir.passport)(passport);
+require(dir.app)(app, path, express, passport);
 
-// Setup the app
-app.set('port', process.env.PORT || 3000);
-
-// Set the views
-app.set('view engine', 'pug');
-app.set('views', path.join(__dirname, 'views'));
-
-// Set public folder
-app.use(express.static(path.join(__dirname, 'public')));
-
-// Log the requests
 if (!module.parent) app.use(logger('dev'));
 
 // Dynamically load models
@@ -33,7 +25,8 @@ fs.readdirSync(routePath).forEach((file) => {
   require(route)(app, passport); // eslint-disable-line global-require
 });
 
-// assume 404 since no middleware responded
+// If none of the above routes hit
+// Send 404
 app.use((req, res) => {
   res.status(404).render('404', { url: req.originalUrl });
 });

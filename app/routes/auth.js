@@ -11,20 +11,14 @@ module.exports = (app, passport) => {
     }
   });
 
-  app.post('/login', (req, res) => {
-    passport.authenticate('local', (user, err) => {
-      if (err) res.redirect('/login?attempt=2', 400);
-      if (!user) res.redirect('/login?attempt=1', 400);
-      const token = {
-        example: 'token',
-      };
-      res.cookie('auth', token);
-      res.redirect('/');
-    });
-  });
+  app.post('/login', passport.authenticate('local', {
+    failureRedirect: '/login',
+    successRedirect: '/',
+    session: false,
+  }));
 
   app.get('/logout', (req, res) => {
-    res.cookie('auth', {});
+    res.cookie('authToken', {});
     res.render('logout');
   });
 };
