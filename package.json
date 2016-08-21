@@ -4,6 +4,7 @@
   "description": "A community portal.",
   "main": "app/app.js",
   "scripts": {
+    "start": "node ./app/app.js",
     "test": "./node_modules/.bin/mocha --reporter nyan"
   },
   "repository": {
@@ -17,10 +18,21 @@
   },
   "homepage": "https://github.com/byronmejia/qut-ifb299#readme",
   "dependencies": {
+    "bcrypt": "^0.8.7",
+    "bluebird": "^3.4.1",
+    "body-parser": "^1.15.2",
+    "bookshelf": "^0.10.0",
     "express": "^4.14.0",
+    "gulp": "^3.9.1",
+    "jwt-simple": "^0.5.0",
+    "knex": "^0.11.10",
     "morgan": "^1.7.0",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0",
+    "pg": "^6.1.0",
     "pug": "^2.0.0-beta4",
-    "request": "^2.74.0"
+    "request": "^2.74.0",
+    "sqlite3": "^3.1.4"
   },
   "devDependencies": {
     "chai": "^3.5.0",
@@ -30,6 +42,8 @@
     "eslint-plugin-jsx-a11y": "^2.0.1",
     "eslint-plugin-react": "^5.2.2",
     "mocha": "^2.5.3",
-    "mocha-eslint": "^2.1.1"
+    "mocha-eslint": "^2.1.1",
+    "passport-debug": "^0.1.15",
+    "sqlite3": "^3.1.4"
   }
 }

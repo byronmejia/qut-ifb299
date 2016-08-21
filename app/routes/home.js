@@ -4,6 +4,6 @@
 
 module.exports = (app) => {
   app.get('/', (req, res) => {
-    res.send('Hello heroku');
+    res.render('index', { url: req.originalUrl });
   });
 };
