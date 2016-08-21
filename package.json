@@ -4,6 +4,7 @@
   "description": "A community portal.",
   "main": "app/app.js",
   "scripts": {
+    "start": "node ./app/app.js",
     "test": "./node_modules/.bin/mocha --reporter nyan"
   },
   "repository": {
