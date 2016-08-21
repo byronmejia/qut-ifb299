@@ -4,21 +4,15 @@ IFB299 'Community Management' project.
 
 __Build Status:__
 
-Develop Branch
-
 [![Build Status](https://travis-ci.com/byronmejia/qut-ifb299.svg?token=acN8U3sQnG2yr6qQ4ozY&branch=develop)](https://travis-ci.com/byronmejia/qut-ifb299)
 
-Master Branch
-
-[![Build Status](https://travis-ci.com/byronmejia/qut-ifb299.svg?token=acN8U3sQnG2yr6qQ4ozY&branch=master)](https://travis-ci.com/byronmejia/qut-ifb299)
-
 ## Getting Started
-### Precursor
+### Preface
 **Before you commit anything** ensure that you follow the following style
 guides, including:
-  - [Design Style Guide](https://github.com/trjstewart/qut-ifb299/wiki/Design-Style-Guide)
-  - [Development Style Guide](https://github.com/trjstewart/qut-ifb299/wiki/Development-Style-Guide)
-  - [Git Style Guide](https://github.com/trjstewart/qut-ifb299/wiki/Git-Style-Guide)
+  - [Design Style Guide](https://tree.taiga.io/project/byronmejia-ifb299-community-platform/wiki/design-style-guide)
+  - [Development Style Guide](https://tree.taiga.io/project/byronmejia-ifb299-community-platform/wiki/development-style-guide)
+  - [Git Style Guide](https://tree.taiga.io/project/byronmejia-ifb299-community-platform/wiki/git-style-guide)
 
 After ensuring that you are comfortable with each, you may begin work
 on the project. Developers should make themselves most comfortable with
@@ -31,10 +25,24 @@ interact with a
 
 Issue tracking will be completed via GitHub Issue tracker. For more
 information on how the project's GitHub Issue tracker works, please see
-[Issue Tracker](https://github.com/trjstewart/qut-ifb299/wiki/Git-Style-Guide).
+[Issue Tracker](https://tree.taiga.io/project/byronmejia-ifb299-community-platform/wiki/issue-tracking-guide).
 
 ### Setting up Node.JS
-Information on setting up NodeJS is here, for development
+It is recommended that you use a node.js manager, for dependencies.
+
+If you are a *nix user, use [NVM](https://github.com/creationix/nvm).
+
+If you are a windows user, use [NVM-Windows](https://github.com/coreybutler/nvm-windows).
+
+Then, install the project's node.js version
+```sh
+nvm install 6.3.1
+```
+
+And when you are working in the project directory, switch to the appropiate node version with
+```sh
+nvm use
+```
 
 ### Production setup
-Information on setting up production is here
+Heroku does everything. We should be okay. I hope....
