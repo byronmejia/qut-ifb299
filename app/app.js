@@ -8,6 +8,8 @@ const fs = require('fs');
 const passport = require('passport');
 require(dir.passport)(passport);
 require(dir.app)(app, path, express, passport);
+const jwt = require(dir.jwt);
+const jwtAuth = require(dir.jwt).auth(passport);
 
 if (!module.parent) app.use(logger('dev'));
 
@@ -22,7 +24,7 @@ fs.readdirSync(modelPath).forEach((file) => {
 const routePath = path.join(__dirname, 'routes');
 fs.readdirSync(routePath).forEach((file) => {
   const route = path.join(routePath, file);
-  require(route)(app, passport); // eslint-disable-line global-require
+  require(route)(app, passport, jwt, jwtAuth); // eslint-disable-line global-require
 });
 
 // If none of the above routes hit
