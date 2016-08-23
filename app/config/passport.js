@@ -30,7 +30,7 @@ module.exports = function loadPassport(passport) {
       let decoded = '';
       try {
         decoded = JWT.decode(req.cookies.authToken);
-      } finally {
+      } catch (e) {
         decoded = false;
       }
       if (!decoded) return cb(null, false);
