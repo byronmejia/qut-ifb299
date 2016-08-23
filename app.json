@@ -9,8 +9,8 @@
     }
   },
   "scripts": {
-    "postdeploy": "heroku/bootstrap",
-    "pr-predestroy": "heroku/teardown"
+    "postdeploy": "heroku/bootstrap.sh",
+    "pr-predestroy": "heroku/teardown.sh"
   },
   "addons": [
     "heroku-postgresql"
