@@ -1,7 +1,6 @@
 {
   "name": "qut-ifb299",
   "description": "",
-  "scripts": {},
   "formation": {
     "web": {
       "quantity": 1
