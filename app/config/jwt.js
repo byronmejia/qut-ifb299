@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const jwt = require('jwt-simple');
-const secret = fs.readFileSync(
+const secret = process.env.secret_key || fs.readFileSync(
   path.join(__dirname, 'secret.key'),
   'utf8'
 );
