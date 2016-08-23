@@ -11,7 +11,8 @@
     "SECRET_KEY": {
       "description": "A secret key for verifying the integrity of signed cookies.",
       "generator": "secret"
-    },
+    }
+  },
   "scripts": {
     "postdeploy": "bash heroku/bootstrap.sh",
     "pr-predestroy": "bash heroku/teardown.sh"
