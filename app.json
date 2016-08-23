@@ -8,6 +8,10 @@
       "quantity": 1
     }
   },
+  "scripts": {
+    "postdeploy": "heroku/bootstrap",
+    "pr-predestroy": "heroku/teardown"
+  },
   "addons": [
     "heroku-postgresql"
   ],
