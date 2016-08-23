@@ -26,8 +26,9 @@ module.exports = function loadPassport(passport) {
 
   passport.use('jwt', new CustomStrategy(
     (req, cb) => {
+      if (req.cookies.authToken === '') return cb(null, false);
       const decoded = JWT.decode(req.cookies.authToken);
-      console.log(decoded);
+      if (((new Date).getTime()) > decoded.ttl) return cb(null, false);
       return cb(null, decoded);
     }
   ));

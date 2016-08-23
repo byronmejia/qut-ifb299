@@ -1,13 +1,27 @@
 /**
  * Created by byron on 20/08/2016.
  */
-module.exports = (app, passport, JWT) => {
+
+function payloadGenerator(userObject) {
+  return {
+    user: userObject,
+    ttl: ((new Date).getTime() + 300000), // Expire in 5 minutes,
+    ee: 'http://bitly.com/17mR8bN',
+  };
+}
+
+module.exports = (app, passport, JWT, jwtAuth) => {
   app.get('/login', (req, res) => {
-    if (req.query.attempt > 0) {
-      res.render('login', { attempt: 1 });
-    } else {
-      res.render('login');
-    }
+    passport.authenticate('jwt', (err, data) => {
+      if (err) return res.redirect('/error?id=1');
+      if (data) return res.redirect('/profile');
+
+      if (req.query.attempt > 0) {
+        return res.render('login', { attempt: 1 });
+      }
+
+      return res.render('login');
+    })(req, res);
   });
 
   app.post('/login', (req, res) => {
@@ -19,14 +33,7 @@ module.exports = (app, passport, JWT) => {
           if (!data) {
             return res.redirect('/error?id=3');
           }
-
-          console.log(user);
-          const payload = {
-            user: user.username,
-            ttl: ((new Date).getTime() + 300), // Expire in 5 minutes
-            ee: 'http://bitly.com/17mR8bN',
-          };
-
+          const payload = payloadGenerator(user.attributes.id);
           res.cookie('authToken', JWT.encode(payload));
           return res.redirect('/profile');
         });
@@ -34,8 +41,8 @@ module.exports = (app, passport, JWT) => {
     )(req, res);
   });
 
-  app.get('/logout', (req, res) => {
-    res.cookie('authToken', {});
+  app.get('/logout', jwtAuth, (req, res) => {
+    res.cookie('authToken', '');
     res.render('logout');
   });
 };

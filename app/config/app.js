@@ -2,7 +2,7 @@
  * Created by byron on 21/08/2016.
  */
 const bodyParser = require('body-parser');
-const cookieParser = require('cookie-parser')
+const cookieParser = require('cookie-parser');
 
 module.exports = (app, path, express, passport) => {
   app.set('showStackError', true);
