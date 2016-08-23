@@ -1,7 +1,9 @@
 const path = require('path');
 const bcrypt = require('bcrypt');
 const Strategy = require('passport-local').Strategy;
+const CustomStrategy = require('passport-custom').Strategy;
 const Login = require(path.join(__dirname, '..', 'models', 'login.js'));
+const JWT = require(path.join(__dirname, 'jwt.js'));
 
 const isValidPassword = function isValidPassword(user, password) {
   return bcrypt.compareSync(password, user.attributes.password);
@@ -21,4 +23,13 @@ module.exports = function loadPassport(passport) {
       return cb(null, data);
     })
   ));
+
+  passport.use('jwt', new CustomStrategy(
+    (req, cb) => {
+      const decoded = JWT.decode(req.cookies.authToken);
+      console.log(decoded);
+      return cb(null, decoded);
+    }
+  ));
 };
+

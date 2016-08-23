@@ -1,8 +1,7 @@
 /**
  * Created by byron on 20/08/2016.
  */
-
-module.exports = (app, passport) => {
+module.exports = (app, passport, JWT) => {
   app.get('/login', (req, res) => {
     if (req.query.attempt > 0) {
       res.render('login', { attempt: 1 });
@@ -20,7 +19,16 @@ module.exports = (app, passport) => {
           if (!data) {
             return res.redirect('/error?id=3');
           }
-          return res.redirect('/success');
+
+          console.log(user);
+          const payload = {
+            user: user.username,
+            ttl: ((new Date).getTime() + 300), // Expire in 5 minutes
+            ee: 'http://bitly.com/17mR8bN',
+          };
+
+          res.cookie('authToken', JWT.encode(payload));
+          return res.redirect('/profile');
         });
       }
     )(req, res);
