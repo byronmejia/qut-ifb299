@@ -12,6 +12,8 @@ exports.up = (knex, Promise) => (
 
 exports.down = (knex, Promise) => (
   Promise.all(
-    knex.schema.dropTable('logins')
+    [
+      knex.schema.dropTable('logins')
+    ]
   )
 );
