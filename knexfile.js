@@ -1,5 +1,9 @@
 const path = require('path');
 const databaseFile = path.join(__dirname, 'dev.db');
+const migrations = {
+  migrations: path.join(__dirname, '/migrations'),
+  seeds: path.join(__dirname, '/seeds'),
+};
 
 module.exports = {
   development: {
@@ -10,34 +14,34 @@ module.exports = {
   },
 
   staging: {
-    client: 'pg',
+    client: 'postgresql',
     connection: process.env.DATABASE_URL,
     pool: {
-      min: 0,
-      max: 7,
+      min: 2,
+      max: 10,
     },
     migrations: {
-      directory: __dirname + '/migrations',
+      directory: migrations.migrations,
     },
     seeds: {
-      directory: __dirname + '/seeds',
+      directory: migrations.seeds,
     },
     ssl: true,
   },
 
   production: {
-    client: 'pg',
+    client: 'postgresql',
     connection: process.env.DATABASE_URL,
     pool: {
-      min: 0,
-      max: 7,
+      min: 2,
+      max: 10,
     },
     migrations: {
-      directory: __dirname+"/migrations"
+      directory: migrations.migrations,
     },
     seeds: {
-      directory: __dirname+"/seeds"
+      directory: migrations.seeds,
     },
-    ssl: true,
+    ssl: false,
   },
 };
