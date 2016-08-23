@@ -12,24 +12,32 @@ module.exports = {
   staging: {
     client: 'pg',
     connection: process.env.DATABASE_URL,
-    migrations: {
-      tableName: 'knex_migrations',
-    },
     pool: {
       min: 0,
       max: 7,
     },
+    migrations: {
+      directory: __dirname + '/migrations',
+    },
+    seeds: {
+      directory: __dirname + '/seeds',
+    },
+    ssl: true,
   },
 
   production: {
     client: 'pg',
     connection: process.env.DATABASE_URL,
-    migrations: {
-      tableName: 'knex_migrations',
-    },
     pool: {
       min: 0,
       max: 7,
     },
+    migrations: {
+      directory: __dirname+"/migrations"
+    },
+    seeds: {
+      directory: __dirname+"/seeds"
+    },
+    ssl: true,
   },
 };
