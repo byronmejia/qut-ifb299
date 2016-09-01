@@ -13,13 +13,6 @@ const jwtAuth = require(dir.jwt).auth(passport);
 
 if (!module.parent) app.use(logger('dev'));
 
-// Dynamically load models
-const modelPath = path.join(__dirname, 'models');
-fs.readdirSync(modelPath).forEach((file) => {
-  const model = path.join(modelPath, file);
-  require(model); // eslint-disable-line global-require
-});
-
 // Dynamically load routes
 const routePath = path.join(__dirname, 'routes');
 fs.readdirSync(routePath).forEach((file) => {
