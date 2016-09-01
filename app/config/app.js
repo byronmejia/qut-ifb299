@@ -3,6 +3,7 @@
  */
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+const sassMiddleware = require('node-sass-middleware');
 
 module.exports = (app, path, express, passport) => {
   app.set('showStackError', true);
@@ -14,4 +15,19 @@ module.exports = (app, path, express, passport) => {
   app.use(bodyParser.urlencoded({ extended: false }));
   app.use(express.static(path.join(__dirname, '..', 'public')));
   app.use(passport.initialize());
+  app.use(sassMiddleware({
+    /* Options */
+    src: path.join(__dirname, '..', 'assets', 'scss'),
+    dest: path.join(__dirname, '..', 'public'),
+    debug: true,
+    outputStyle: 'compressed',
+    prefix: '/assets',
+    options: {
+      compress: false,
+      include: [
+        './bower_components/../',
+        './node_modules/../',
+      ],
+    },
+  }));
 };
