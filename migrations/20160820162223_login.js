@@ -6,14 +6,11 @@ exports.up = (knex, Promise) => (
       t.string('password');
       t.timestamp('lastLogin');
     }),
-  ]
-  )
+  ])
 );
 
 exports.down = (knex, Promise) => (
-  Promise.all(
-    [
-      knex.schema.dropTable('logins'),
-    ]
-  )
+  Promise.all([
+    knex.schema.dropTable('logins'),
+  ])
 );
