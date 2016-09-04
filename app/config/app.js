@@ -18,7 +18,7 @@ module.exports = (app, path, express, passport) => {
   app.use(sassMiddleware({
     /* Options */
     src: path.join(__dirname, '..', 'assets', 'scss'),
-    dest: path.join(__dirname, '..', 'public', 'css'),
+    dest: path.join(__dirname, '..', 'public'),
     debug: true,
     outputStyle: 'compressed',
     prefix: '/',

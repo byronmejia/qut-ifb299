@@ -1,21 +1,21 @@
 extends _home_layout
 
 block content
-    if(attempt > 0)
-        div
-            h3 Oops
-            p That username and password didn't match... :(
+    section.fullpager
+        div.centered
+            h1.cen Please Sign In
+            if(attempt > 0)
+                div
+                    h3 Oops
+                    p That username and password didn't match... :(
 
-    form(action="/login" method="POST")
-        div
-            label Username
-            input(type='text' placeholder="Enter Username" name='username' required)
-        div
-            label Password
-            input(type='password' placeholder="Enter Password" name='password' required)
-        div
-            button(type='sumbit') Login
-            label Remember Me
-            input(type='checkbox')
-        div
-            button(type='button') Forgotten Password
+            form(action="/login" method="POST")
+                div
+                    label
+                        input(type='text' placeholder="Enter Username" name='username' required)
+                div
+                    label
+                        input(type='password' placeholder="Enter Password" name='password' required)
+                div
+                    button(type='sumbit') Login
+                    button.warning(type='button') Forgotten Password
