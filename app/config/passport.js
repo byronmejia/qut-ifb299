@@ -2,7 +2,7 @@ const path = require('path');
 const bcrypt = require('bcrypt');
 const Strategy = require('passport-local').Strategy;
 const CustomStrategy = require('passport-custom').Strategy;
-const Login = require(path.join(__dirname, '..', 'models', 'login.js'));
+const Login = require(path.join(__dirname, '..', 'models', 'Login.js'));
 const JWT = require(path.join(__dirname, 'jwt.js'));
 
 const isValidPassword = function isValidPassword(user, password) {

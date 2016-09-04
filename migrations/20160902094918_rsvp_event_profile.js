@@ -21,6 +21,6 @@ exports.up = (knex, Promise) => (
 
 exports.down = (knex, Promise) => (
   Promise.all([
-    knex.schema.dropTable('profile_community_relationship'),
+    knex.schema.dropTable('rsvp_event_profile_relationship'),
   ])
 );
