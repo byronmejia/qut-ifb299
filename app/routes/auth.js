@@ -5,7 +5,7 @@
 function payloadGenerator(userObject) {
   return {
     user: userObject,
-    ttl: ((new Date).getTime() + 300000), // Expire in 5 minutes,
+    ttl: ((new Date()).getTime() + 300000), // Expire in 5 minutes,
     ee: 'http://bitly.com/17mR8bN',
   };
 }

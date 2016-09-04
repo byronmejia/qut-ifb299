@@ -6,7 +6,7 @@ const path = require('path');
 const bookshelf = require(path.join('..', 'config', 'db.js')).bookshelf;
 
 const Rsvp = bookshelf.Model.extend({
-    tableName: 'rsvp',
+  tableName: 'rsvp',
 });
 
 module.exports = Rsvp;

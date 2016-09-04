@@ -2,6 +2,7 @@ const path = require('path');
 const bcrypt = require('bcrypt');
 const Strategy = require('passport-local').Strategy;
 const CustomStrategy = require('passport-custom').Strategy;
+
 const Login = require(path.join(__dirname, '..', 'models', 'Login.js'));
 const JWT = require(path.join(__dirname, 'jwt.js'));
 
@@ -34,7 +35,7 @@ module.exports = function loadPassport(passport) {
         decoded = false;
       }
       if (!decoded) return cb(null, false);
-      if (((new Date).getTime()) > decoded.ttl) return cb(null, false);
+      if (((new Date()).getTime()) > decoded.ttl) return cb(null, false);
       return cb(null, decoded);
     }
   ));
