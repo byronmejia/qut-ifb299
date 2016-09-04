@@ -1,0 +1,17 @@
+{
+  "name": "community-portal",
+  "description": "A community portal.",
+  "main": "app/app.js",
+  "authors": [
+    "Byron Mejia <byron.mejia@connect.qut.edu.au>"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "lean"
+  ],
+  "homepage": "https://github.com/byronmejia/qut-ifb299",
+  "private": true,
+  "dependencies": {
+    "picnic": "^6.1.4"
+  }
+}

@@ -1,5 +1,6 @@
 /.idea/
 /node_modules/
+/bower_components/
 /target/
 *.sqlite3
 *.db
@@ -15,3 +16,4 @@
 *.vscodeLog
 *.out
 *.key
+/app/public/*
