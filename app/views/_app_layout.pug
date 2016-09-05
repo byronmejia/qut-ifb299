@@ -5,11 +5,12 @@ html
         link(rel="stylesheet" type="text/css" href="/css/style.css")
     body
         nav
+            a.brand(href="/home")
+                img.logo
+                span Coterie Online
             input.show(id='bmenub' type='checkbox')
             label.burger.psuedo.button(for='bmenub') Menu
             div.menu
-                a.psuedo.button(href='#') A Link
                 a.psuedo.button(href='/profile') Profile
                 a.psuedo.button(href='/logout') Logout
         block content
-
