@@ -14,7 +14,7 @@ module.exports = (app, passport, JWT, jwtAuth) => {
   app.get('/login', (req, res) => {
     passport.authenticate('jwt', (err, data) => {
       if (err) return res.redirect('/error?id=1');
-      if (data) return res.redirect('/profile');
+      if (data) return res.redirect('/home');
 
       if (req.query.attempt > 0) {
         return res.render('login', { attempt: 1 });

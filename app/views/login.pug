@@ -11,11 +11,11 @@ block content
 
             form(action="/login" method="POST")
                 div
-                    label
-                        input(type='text' placeholder="Enter Username" name='username' required)
+                    label(for='username') Username
+                    input(id='username' type='text' placeholder="Enter Username" name='username' required)
                 div
-                    label
-                        input(type='password' placeholder="Enter Password" name='password' required)
+                    label(for='password') Password
+                    input(id='password' type='password' placeholder="Enter Password" name='password' required)
                 div
                     button(type='sumbit') Login
                     button.warning(type='button') Forgotten Password
