@@ -189,54 +189,45 @@ function seedCommunities(knex, Promise) {
   ]));
 }
 
-function seedOneProfileCommunityRelationship(loginAttr, communityAttr, Promise) {
-  Profile.where({ login_id: login.attributes.id }).fetch(),
-    Community.where({ name: communityAttr }).fetch(),
+function seedOneProfileCommunityRelationship(loginAttr, communityAttr) {
   return Login.where({ username: loginAttr }).fetch()
     .then(
-      (login) => {
-        
-      }
+      (login) => Profile
+        .where(
+          { login_id: login.attributes.id }
+          ).fetch().then((profile) => profile)
+    )
+    .then(
+      (profile) => Community
+        .where(
+          { name: communityAttr }
+        ).fetch().then((community) => {
+          const data = {}
+          data.community = community;
+          data.profile = profile;
+          return data;
+        })
+    )
+    .then(
+      (data) => new RelationshipProfileCommunity({
+        profile_id: data.profile.attributes.id,
+        community_id: data.community.attributes.id,
+      }).save()
     );
 }
 
 function seedProfileCommunityRelationship(knex, Promise) {
-  return Promise.all([
-    seedOneProfileCommunityRelationship('admin', 'Erlang Anonymous', Promise),
-    // new RelationshipProfileCommunity({
-    //   profile_id: Profile
-    //     .where({ login_id: Login.where({ username: 'admin' })
-    //       .fetch().attributes.id })
-    //     .fetch().attributes.id,
-    //   community_id: Community.where({ name: 'Erlang Anonymous' }).fetch().attributes.id,
-    // }).save(),
-    // new RelationshipProfileCommunity({
-    //   profile_id: Profile
-    //     .where({ login_id: Login.where({ username: 'admin' })
-    //       .fetch().attributes.id })
-    //     .fetch().attributes.id,
-    //   community_id: Community.where({ name: 'Ruby Anonymous' }).fetch().attributes.id,
-    // }).save(),
-    // new RelationshipProfileCommunity({
-    //   profile_id: Profile.where({ login_id: Login.where({ username: 'admin' })
-    //     .fetch().attributes.id })
-    //     .fetch().attributes.id,
-    //   community_id: Community.where({ name: 'Javascript Anonymous' }).fetch().attributes.id,
-    // }).save(),
-    // new RelationshipProfileCommunity({
-    //   profile_id: Profile
-    //     .where({ login_id: Login.where({ username: 'admin' })
-    //       .fetch().attributes.id })
-    //     .fetch().attributes.id,
-    //   community_id: Community.where({ name: 'Facebook Anonymous' }).fetch().attributes.id,
-    // }).save(),
-    // new RelationshipProfileCommunity({
-    //   profile_id: Profile.where({ login_id: Login.where({ username: 'admin' })
-    //     .fetch().attributes.id })
-    //     .fetch().attributes.id,
-    //   community_id: Community.where({ name: 'Buffalo Anonymous' }).fetch().attributes.id,
-    // }).save(),
-  ]);
+  const users = ['admin', '12345', 'dragon', 'football', 'baseball'];
+  const communities = ['Erlang Anonymous', 'Ruby Anonymous',
+    'Javascript Anonymous', 'Facebook Anonymous', 'Buffalo Anonymous'];
+  const promises = [];
+
+  users.forEach((user) =>
+    communities.forEach((community) =>
+      promises.push(seedOneProfileCommunityRelationship(user, community))));
+
+  return knex('profile_community_relationship').truncate()
+    .then(() => Promise.all(promises));
 }
 
 exports.seed = function generateSeeds(knex, Promise) {
@@ -253,8 +244,4 @@ exports.seed = function generateSeeds(knex, Promise) {
       ])
     )
   );
-
-    // .then(seedProfiles(knex, Promise));
-    //
-    // .then(seedProfileCommunityRelationship(knex, Promise));
 };
