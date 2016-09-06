@@ -35,7 +35,7 @@ module.exports = (app, passport, JWT, jwtAuth) => {
           }
           const payload = payloadGenerator(user.attributes.id);
           res.cookie('authToken', JWT.encode(payload));
-          return res.redirect('/profile');
+          return res.redirect('/dashboard');
         });
       }
     )(req, res);
