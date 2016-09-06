@@ -1,0 +1,36 @@
+extends _app_layout
+
+block content
+    h1 Create an event
+    form(action="" method="POST")
+        div
+            label(for='event-name') Name
+            input(id='event-name' type='text' placeholder="Name of Event" name='event-name' required)
+        div
+            label(for='event-desc') Event Description
+            textarea(id='event-desc' name='event-desc' required)
+        div
+            label(for='event-location') Location
+            input(id='event-location' type='text' placeholder="Location of Event" name='event-location' required)
+        
+        fieldset
+            div
+                legend Event Start
+                div
+                    label(for='event-startdate') Date
+                    input(id='event-startdate' type='date' placeholder="Date of Event" name='event-startdate' required)
+                div
+                    label(for='event-starttime') Time
+                    input(id='event-starttime' type='time' placeholder="Time of Event" name='event-starttime' required)
+
+        fieldset
+            div 
+                legend Event Finish
+                div
+                    label(for='event-enddate') Date
+                    input(id='event-enddate' type='date' placeholder="Date of Event" name='event-enddate' required)
+                div
+                    label(for='event-endtime') Time
+                    input(id='event-endtime' type='time' placeholder="Time of Event" name='event-endtime' required)
+        div
+            button(type='submit') Create Event
