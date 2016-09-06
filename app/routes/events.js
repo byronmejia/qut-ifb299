@@ -3,5 +3,5 @@
  */
 
 module.exports = (app, passport, jwt, jwtAuth) => {
-  app.get('/events', jwtAuth, (req, res) => res.render('profile'));
+  app.get('/events', jwtAuth, (req, res) => res.render('events'));
 };
