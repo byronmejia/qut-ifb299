@@ -1,0 +1,21 @@
+extends _home_layout
+
+block content
+    section.fullpager
+        div.centered
+            h1.cen Please Sign In
+            if(attempt > 0)
+                div
+                    h3 Oops
+                    p That username and password didn't match... :(
+
+            form(action="/login" method="POST")
+                div
+                    label(for='username') Username
+                    input(id='username' type='text' placeholder="Enter Username" name='username' required)
+                div
+                    label(for='password') Password
+                    input(id='password' type='password' placeholder="Enter Password" name='password' required)
+                div
+                    button(type='sumbit') Login
+                    button.warning(type='button') Forgotten Password

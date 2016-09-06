@@ -1,24 +1,18 @@
 // Start with Config Directories
-const path = require('path');
+import path from 'path';
+import express from 'express';
+import morgan from 'morgan';
+import * as fs from 'fs';
+import passport from 'passport';
+
 const dir = require(path.join(__dirname, 'config', '_init.js'));
-const express = require('express');
-const logger = require('morgan');
 const app = express();
-const fs = require('fs');
-const passport = require('passport');
 require(dir.passport)(passport);
 require(dir.app)(app, path, express, passport);
 const jwt = require(dir.jwt);
 const jwtAuth = require(dir.jwt).auth(passport);
 
-if (!module.parent) app.use(logger('dev'));
-
-// Dynamically load models
-const modelPath = path.join(__dirname, 'models');
-fs.readdirSync(modelPath).forEach((file) => {
-  const model = path.join(modelPath, file);
-  require(model); // eslint-disable-line global-require
-});
+if (!module.parent) app.use(morgan('dev'));
 
 // Dynamically load routes
 const routePath = path.join(__dirname, 'routes');

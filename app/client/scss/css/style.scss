@@ -1,0 +1,106 @@
+//! Picnic CSS http://www.picnicss.com/
+
+// Imports the base variable styles
+@import 'bower_components/picnic/src/themes/squared/theme';
+
+@import 'bower_components/picnic/src/vendor/compass-breakpoint/stylesheets/breakpoint';
+
+// Normalize.css (external library)
+@import 'bower_components/picnic/src/plugins/normalize/plugin';
+
+// Generic styles for things like <body>, <a> and others
+// It also overwrites normalize.css a bit
+@import 'bower_components/picnic/src/plugins/generic/plugin';
+@import 'bower_components/picnic/src/plugins/fontello/plugin';
+
+// Simple elements
+@import 'bower_components/picnic/src/plugins/label/plugin';
+@import 'bower_components/picnic/src/plugins/button/plugin';
+
+// Forms
+@import 'bower_components/picnic/src/plugins/input/plugin';
+@import 'bower_components/picnic/src/plugins/select/plugin';
+@import 'bower_components/picnic/src/plugins/radio/plugin';
+@import 'bower_components/picnic/src/plugins/checkbox/plugin';
+
+// Components
+@import 'bower_components/picnic/src/plugins/table/plugin';
+@import 'bower_components/picnic/src/plugins/grid/plugin';
+
+// Extra
+// @import 'bower_components/picnic/src/plugins/nav/plugin';
+
+@import 'bower_components/picnic/src/plugins/stack/plugin';
+@import 'bower_components/picnic/src/plugins/card/plugin';
+@import 'bower_components/picnic/src/plugins/modal/plugin';
+
+@import 'bower_components/picnic/src/plugins/dropimage/plugin';
+@import 'bower_components/picnic/src/plugins/tabs/plugin';
+@import 'bower_components/picnic/src/plugins/tooltip/plugin';
+
+nav {
+  height: 100%; /* 100% Full-height */
+  width: 250px; /* 0 width - change this with JavaScript */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Stay on top */
+  top: 0;
+  left: 0;
+  background-color: #111; /* Black*/
+  overflow-x: hidden; /* Disable horizontal scroll */
+  padding-top: 60px; /* Place content 60px from the top */
+  transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+
+  a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+    transition: 0.3s
+  }
+  a:hover, .offcanvas a:focus{
+    color: #f1f1f1;
+  }
+
+  &.closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+  }
+
+}
+
+@media screen and (max-height: 450px) {
+  nav {padding-top: 15px;}
+  nav a {font-size: 18px;}
+}
+
+section.main{
+  margin-left: 250px;
+}
+
+
+.fullpager {
+  height: 100vh;
+}
+
+.centered {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  /* bring your own prefixes */
+  transform: translate(-50%, -50%);
+}
+
+form {
+  div {
+    padding-top: 20px;
+    padding-bottom-alt: 20px;
+  }
+}
+
+.cen {
+  text-align: center;
+}

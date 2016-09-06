@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const path = require('path');
 const Promise = require('bluebird');
+
 const bookshelf = require(path.join('..', 'config', 'db.js')).bookshelf;
 
 const Login = bookshelf.Model.extend({
