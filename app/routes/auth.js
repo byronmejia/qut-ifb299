@@ -1,6 +1,9 @@
 /**
  * Created by byron on 20/08/2016.
  */
+const path = require('path');
+
+const FacebookAuth = require(path.join(__dirname, '..', 'models', 'FacebookAuth.js'));
 
 function payloadGenerator(userObject) {
   return {
@@ -45,4 +48,38 @@ module.exports = (app, passport, JWT, jwtAuth) => {
     res.cookie('authToken', '');
     res.render('logout');
   });
+
+  app.get('/auth/facebook', passport.authenticate('facebook'));
+  app.get('/auth/callback/facebook', (req, res) =>
+    passport.authenticate('facebook',
+      (err, type) => {
+        if (err) return res.redirect('/error?id=1');
+        if (!type) return res.redirect('/login?attempt=34');
+        const payload = payloadGenerator(type.attributes.login_id);
+        res.cookie('authToken', JWT.encode(payload));
+        return res.redirect('/dashboard');
+      }
+    )(req, res)
+  );
+
+  app.get('/auth/link/facebook', jwtAuth, passport.authenticate('facebook_link'));
+  app.get('/auth/callback/facebook/new', (req, res) =>
+    passport.authenticate('facebook_link',
+      (err, type) => {
+        if (err) return res.redirect('/error?id=1');
+        if (req.cookies.authToken === '') return res.redirect('/login?attempt=42');
+        if (!type) res.redirect('/profile?authError=1');
+
+        let decoded = '';
+        try {
+          decoded = JWT.decode(req.cookies.authToken);
+        } catch (e) {
+          decoded = false;
+        }
+        type.save({ login_id: decoded.user }, { method: 'insert' });
+        return res.redirect('/dashboard');
+      }
+    )(req, res)
+  );
+
 };

@@ -202,7 +202,7 @@ function seedOneProfileCommunityRelationship(loginAttr, communityAttr) {
         .where(
           { name: communityAttr }
         ).fetch().then((community) => {
-          const data = {}
+          const data = {};
           data.community = community;
           data.profile = profile;
           return data;
