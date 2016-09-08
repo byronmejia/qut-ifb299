@@ -1,7 +1,6 @@
 /**
  * Created by byron on 20/08/2016.
  */
-const path = require('path');
 
 function payloadGenerator(userObject) {
   return {
