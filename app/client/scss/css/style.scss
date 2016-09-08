@@ -103,3 +103,15 @@ form {
 .cen {
   text-align: center;
 }
+
+fieldset {
+  label {
+    font-size: 0.8em;
+  }
+}
+
+section#main {
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 40px;
+}
