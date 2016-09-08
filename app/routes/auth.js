@@ -11,6 +11,32 @@ function payloadGenerator(userObject) {
 }
 
 module.exports = (app, passport, JWT, jwtAuth) => {
+  /**
+   * GET Logout page
+   *
+   * @function
+   *
+   * @param {Object} req - Express request object
+   * @param {Object} res - Express response object
+   * @description Destroys the JWT token on the client
+   * @todo Explicitly state last logout time in persistence
+   * @returns undefined
+   */
+  app.get('/logout', jwtAuth, (req, res) => {
+    res.cookie('authToken', '');
+    res.render('logout');
+  });
+
+  /**
+   * GET Login page
+   *
+   * @function
+   *
+   * @param {Object} req - Express request object
+   * @param {Object} res - Express response object
+   * @description Loads a form for signing in
+   * @returns undefined
+   */
   app.get('/login', (req, res) => {
     passport.authenticate('jwt', (err, data) => {
       if (err) return res.redirect('/error?id=1');
@@ -24,7 +50,7 @@ module.exports = (app, passport, JWT, jwtAuth) => {
     })(req, res);
   });
 
-  app.post('/login', (req, res) => {
+  app.post('/auth/local', (req, res) => {
     passport.authenticate('local',
       (err, user) => {
         if (err) return res.redirect('/error?id=1');
@@ -39,11 +65,6 @@ module.exports = (app, passport, JWT, jwtAuth) => {
         });
       }
     )(req, res);
-  });
-
-  app.get('/logout', jwtAuth, (req, res) => {
-    res.cookie('authToken', '');
-    res.render('logout');
   });
 
   app.get('/auth/facebook', passport.authenticate('facebook'));

@@ -5,7 +5,19 @@ const Strategy = require('passport-local').Strategy;
 const CustomStrategy = require('passport-custom').Strategy;
 const FacebookStrategy = require('passport-facebook').Strategy;
 
-const keys = require('./keys.json');
+let keys;
+
+try {
+  keys = require('./keys.json'); // eslint-disable-line global-require
+} catch (err) {
+  console.log(err); // eslint-disable-line no-console
+  keys = {
+    facebook: {
+      id: process.env.FB_ID,
+      secret: process.env.FB_SEC,
+    },
+  };
+}
 
 const Login = require(path.join(__dirname, '..', 'models', 'Login.js'));
 const FacebookAuth = require(path.join(__dirname, '..', 'models', 'FacebookAuth.js'));
