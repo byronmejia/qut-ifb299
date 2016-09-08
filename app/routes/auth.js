@@ -95,7 +95,7 @@ module.exports = (app, passport, JWT, jwtAuth) => {
           decoded = false;
         }
         type.save({ login_id: decoded.user }, { method: 'insert' });
-        return res.redirect('/dashboard');
+        return res.redirect('/profile');
       }
     )(req, res)
   );
@@ -128,7 +128,47 @@ module.exports = (app, passport, JWT, jwtAuth) => {
           decoded = false;
         }
         type.save({ login_id: decoded.user }, { method: 'insert' });
+        return res.redirect('/profile');
+      }
+    )(req, res)
+  );
+
+  app.get('/auth/google', passport.authenticate('google', { scope: [
+    'https://www.googleapis.com/auth/plus.login',
+    'https://www.googleapis.com/auth/plus.profile.emails.read',
+  ] }));
+  app.get('/auth/callback/google', (req, res) =>
+    passport.authenticate('google',
+      (err, type) => {
+        if (err) return res.redirect('/error?id=1');
+        if (!type) return res.redirect('/login?attempt=34');
+        const payload = payloadGenerator(type.attributes.login_id);
+        res.cookie('authToken', JWT.encode(payload));
         return res.redirect('/dashboard');
+      }
+    )(req, res)
+  );
+
+  app.get('/auth/link/google', jwtAuth, passport.authenticate('google_link', { scope: [
+    'https://www.googleapis.com/auth/plus.login',
+    'https://www.googleapis.com/auth/plus.profile.emails.read',
+  ] }));
+  app.get('/auth/callback/google/new', (req, res) =>
+    passport.authenticate('google_link',
+      (err, type) => {
+        if (err) return res.redirect('/error?id=1');
+        if (req.cookies.authToken === '') return res.redirect('/login?attempt=42');
+        if (!type) res.redirect('/profile?authError=1');
+
+        let decoded = '';
+        try {
+          decoded = JWT.decode(req.cookies.authToken);
+        } catch (e) {
+          decoded = false;
+        }
+        type.save({ login_id: decoded.user }, { method: 'insert' });
+
+        return res.redirect('/profile');
       }
     )(req, res)
   );
