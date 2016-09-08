@@ -8,7 +8,7 @@ const FacebookStrategy = require('passport-facebook').Strategy;
 let keys;
 
 try {
-  keys = require('./keys.json'); // eslint-disable-line global-require
+  keys = require('./keys.json'); // eslint-disable-line
 } catch (err) {
   console.log(err); // eslint-disable-line no-console
   keys = {
