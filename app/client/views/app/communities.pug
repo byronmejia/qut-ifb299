@@ -1,0 +1,10 @@
+extends ../_app_layout
+
+block content
+    article.card
+        h2 All Communities
+        section#community_list(v-for='community in communities')
+
+    script(src='/js/community/index.js')
+    script#community-template(type='x/template')
+        h4 {{ community.name }}
