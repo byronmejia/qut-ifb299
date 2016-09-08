@@ -3,8 +3,6 @@
  */
 const path = require('path');
 
-const FacebookAuth = require(path.join(__dirname, '..', 'models', 'FacebookAuth.js'));
-
 function payloadGenerator(userObject) {
   return {
     user: userObject,
@@ -81,5 +79,4 @@ module.exports = (app, passport, JWT, jwtAuth) => {
       }
     )(req, res)
   );
-
 };
