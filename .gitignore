@@ -16,4 +16,6 @@
 *.vscodeLog
 *.out
 *.key
+keys.json
+npm-debug*
 /app/public/*

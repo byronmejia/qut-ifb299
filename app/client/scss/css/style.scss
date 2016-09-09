@@ -69,7 +69,6 @@ nav {
     font-size: 36px;
     margin-left: 50px;
   }
-
 }
 
 @media screen and (max-height: 450px) {
@@ -77,7 +76,7 @@ nav {
   nav a {font-size: 18px;}
 }
 
-section.main{
+#main{
   margin-left: 250px;
 }
 
@@ -103,4 +102,16 @@ form {
 
 .cen {
   text-align: center;
+}
+
+fieldset {
+  label {
+    font-size: 0.8em;
+  }
+}
+
+section#main {
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 40px;
 }

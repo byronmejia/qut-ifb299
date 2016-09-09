@@ -2,5 +2,10 @@
 extends _app_layout
 
 block content
-    h1 Hello Profile
-    h2 I love this page
+    h1 My Profile
+    article.card
+        h3 My Linked Accounts
+        br
+        a.stack.pseudo.button(href='/auth/link/facebook') Link Facebook
+        a.stack.pseudo.button(href='/auth/link/google') Link Google
+        a.stack.pseudo.button(href='/auth/link/github') Link GitHub

@@ -9,7 +9,7 @@ block content
                     h3 Oops
                     p That username and password didn't match... :(
 
-            form(action="/login" method="POST")
+            form(action="/auth/local" method="POST")
                 div
                     label(for='username') Username
                     input(id='username' type='text' placeholder="Enter Username" name='username' required)
@@ -17,5 +17,11 @@ block content
                     label(for='password') Password
                     input(id='password' type='password' placeholder="Enter Password" name='password' required)
                 div
-                    button(type='sumbit') Login
+                    button.stack(type='sumbit') Login
+                    a.stack.psuedo.button(href='/auth/facebook') Sign in with Facebook
+                    a.stack.psuedo.button(href='/auth/google') Sign in with Google
+                    a.stack.psuedo.button(href='/auth/github') Sign in with GitHub
+
+
+                div
                     button.warning(type='button') Forgotten Password

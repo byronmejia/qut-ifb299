@@ -5,4 +5,5 @@
 module.exports = (app, passport, jwt, jwtAuth) => {
   app.get('/profile', jwtAuth, (req, res) => res.render('profile'));
   app.get('/home', jwtAuth, (req, res) => res.render('home'));
+  app.get('/dashboard', jwtAuth, (req, res) => res.render('dashboard'));
 };
