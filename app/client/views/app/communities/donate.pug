@@ -1,0 +1,30 @@
+extends ../../_app_layout
+
+block content
+    script src="https://js.stripe.com/v2/"
+
+    article.card
+        h1 Donate to #{ community.attributes.name }
+        h3 Thank you for donating! Many appreciate!
+
+    form#payment-form(role='form', autocomplete='on', action='/', method='POST')
+        amount.flex.one
+            div
+                label Amount
+                input(type='number', min='0.05', step='0.05', placeholder="500.00", required)
+        creditCardInfo.flex.two
+            div
+                label Card Number
+                input.card-number.cc-number(type='tel', data-stripe='number', autocomplete='cc-number', placeholder='•••• •••• •••• ••••', required)
+            div
+                label CVC
+                input.cc-cvc.card-cvc(type='tel', data-stripe='cvc', autocomplete='off', placeholder='CVC', required)
+        creditCardExpireDate.flex.two
+            div
+                label Month
+                input.card-expiry-month(type='text', data-stripe='exp-month', placeholder='MM', required)
+            div
+                label Year
+                input.card-expiry-year(type='text', data-stripe='exp-year', placeholder='YYYY', required)
+        submit
+            button(type='submit') Submit

@@ -15,4 +15,15 @@ module.exports = (app, passport, jwt, jwtAuth) => {
       res.json(data)
     );
   });
+
+  app.get('/communities/:id/donate', jwtAuth, (req, res) => {
+    Communities.where({ id: req.params.id }).fetch()
+      .then((data) => {
+        res.render('app/communities/donate', { community: data });
+      });
+  });
+
+  app.post('/communities/:id/donate', jwtAuth, (req, res) => {
+    // Do something
+  });
 };
