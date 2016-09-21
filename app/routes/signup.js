@@ -11,22 +11,18 @@ module.exports = (app) => {
 
   app.post('/signup/success', (req, res) => {
     new Login({
-      firstName: req.body.first_name,
       username: req.body.username,
       password: req.body.password,
-      lastlogin: null,
-    }).save().then(() => {
-      res.send('Data sent?');
-      // get login id
+    }).save().then((login) => {
       new Profile({
         firstName: req.body.first_name,
         lastName: req.body.last_name,
         email: req.body.email,
         mobile: req.body.mobile,
         bio: req.body.bio,
-        login_id: 1,
+        login_id: login.attributes.id,
       }).save().then(() => {
-        res.send('Data sent?');
+        res.redirect('/login');
       });
     });
   });
