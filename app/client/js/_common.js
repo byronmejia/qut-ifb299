@@ -1,3 +1,4 @@
+/* eslint-disable */
 global.openNav = module.exports.openNav = function openNav() {
   document.getElementsByTagName("nav")[0].style.width = "250px";
   document.getElementById("main").style.marginLeft = "250px";
