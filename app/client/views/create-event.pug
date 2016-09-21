@@ -2,7 +2,7 @@ extends _app_layout
 
 block content
     h1 Create an event
-    form(action="" method="POST")
+    form(action="/events/create/success" method="POST")
         div
             label(for='event_name') Name
             input(id='event_name' type='text' placeholder="Name of Event" name='event_name' required)

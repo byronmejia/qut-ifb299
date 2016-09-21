@@ -4,10 +4,10 @@ block content
     article.card
         h2 All Communities
         section#CommunitiesSection
-            community(v-for="item in items" ,:name="item.name" ,:profile_picture="item.profile_picture" ,:description="item.description")
+            //community(v-for="item in items" ,:name="item.name" ,:profile_picture="item.profile_picture" ,:description="item.description")
 
     script#CommunityTemplate(type='x/template')
-        img(:src="profile_picture")
+        //img(:src="profile_picture")
         h4 {{ name }}
         p {{ description }}
 

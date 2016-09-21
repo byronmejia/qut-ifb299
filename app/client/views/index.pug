@@ -1,9 +1,13 @@
 extends _home_layout
 
 block content
-    section(id="main")
+    header(id="landing")
+        // replace with logo
         h1 Coterie Online
         h2 Join communities and attend events near you
-        a(href="/signup" class="button") Sign up for Coterie Online
-        p or
+        a(href="/signup" class="button") Sign up
+        | &nbsp;
         a(href="/login" class="button") Login with an existing account
+
+    section(id="main")
+        p Coterie online is a community platform. Attend events and donate to your favourite causes.
