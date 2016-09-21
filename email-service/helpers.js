@@ -49,6 +49,27 @@ module.exports = {
     });
   },
 
+  eventUpdated: (email, name, event) => {
+    client.sendEmailWithTemplate({
+      From: from,
+      TemplateId: "942461",
+      To: email,
+      TemplateModel: {
+        product_name: "Coterie Online",
+        name: name,
+        event_name: event,
+        product_address_line1: "1 George St",
+        product_address_line2: "Brisbane, QLD 4000"
+      }
+    }, function(error, success) {
+      if(error) {
+        console.error("Unable to send via postmark: " + error.message);
+        return;
+      }
+      console.info("Sent to postmark for delivery: ", success);
+    });
+  },
+
   eventReminder: (email, name, event, period, location, date, start, end) => {
     client.sendEmailWithTemplate({
       From: from,
