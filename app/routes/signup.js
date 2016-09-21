@@ -22,7 +22,7 @@ module.exports = (app) => {
         bio: req.body.bio,
         login_id: login.attributes.id,
       }).save().then(() => {
-        res.send('Thanks for signing up');
+        res.redirect('/login');
       });
     });
   });
