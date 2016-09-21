@@ -1,93 +1,110 @@
 const postmark = require("postmark");
 const client = new postmark.Client("d094b93e-5921-436e-b2a2-d26a69045681");
-const from = 'tylor@binaryorange.co';
+
+const path = require('path');
+const Profile = require(path.join(__dirname, '..', 'models', 'Profile'));
+
+const emailConfig = {
+  from: 'tylor@binaryorange.co',
+  company: {
+    name: 'Coterie Online',
+    address: '1 George St, Brisbane, QLD 4000'
+  }
+};
+
+const getUserProfile = (user) => {
+  return Profile.where({ id: user }).fetch().then((profile) => {
+    return (!profile) ? null : profile.attributes;
+  });
+};
+
+const email = {
+  send: (emailAddress, template, data) => {
+    client.sendEmailWithTemplate({
+      From: emailConfig.from,
+      TemplateId: template,
+      To: emailAddress,
+      TemplateModel: data
+    }, (error, response) => (error) ? email.failure(error) : email.success(response))
+  },
+  success: (response) => console.info("Sent to postmark for delivery:", response),
+  failure: (error) => console.error("Unable to send via postmark:", error.message)
+};
 
 module.exports = {
-  welcome: (name, email, username) => {
-    client.sendEmailWithTemplate({
-      From: from,
-      TemplateId: "942341",
-      To: email,
-      TemplateModel: {
-        product_name: "Coterie Online",
-        name: name,
-        username: username,
-        product_address_line1: "1 George St",
-        product_address_line2: "Brisbane, QLD 4000"
+  welcome: (user) => {
+    getUserProfile(user).then((profile) => {
+      if (profile.notifications === 'email') {
+        email.send(profile.email, 942341, {
+          companyName: emailConfig.company.name,
+          name: profile.firstName,
+          username: 'username',
+          companyAddress: emailConfig.company.address
+        });
       }
-    }, function(error, success) {
-      if(error) {
-        console.error("Unable to send via postmark: " + error.message);
-        return;
+
+      else if (profile.notifications === 'sms') {
+        console.log('Oops! Notifications is set to SMS and we ain\'t done it yet!');
       }
-      console.info("Sent to postmark for delivery: ", success);
     });
   },
 
-  eventRegistration: (email, name, event, location, date, start, end) => {
-    client.sendEmailWithTemplate({
-      From: from,
-      TemplateId: "942442",
-      To: email,
-      TemplateModel: {
-        product_name: "Coterie Online",
-        name: name,
-        event_name: event,
-        event_location: location,
-        event_date: date,
-        start_event_time: start,
-        end_event_time: end,
-        product_address_line1: "1 George St",
-        product_address_line2: "Brisbane, QLD 4000"
+  eventRegistration: (user, event) => {
+    getUserProfile(user).then((profile) => {
+      if (profile.notifications === 'email') {
+        email.send(profile.email, 942442, {
+          eventTitle: 'eventTitle',
+          companyName: emailConfig.company.name,
+          name: profile.firstName,
+          eventLocation: 'eventLocation',
+          eventDate: 'eventDate',
+          eventStart: 'eventStart',
+          eventFinish: 'eventFinish',
+          companyAddress: emailConfig.company.address
+        });
       }
-    }, function(error, success) {
-      if(error) {
-        console.error("Unable to send via postmark: " + error.message);
-        return;
+
+      else if (profile.notifications === 'sms') {
+        console.log('Oops! Notifications is set to SMS and we ain\'t done it yet!');
       }
-      console.info("Sent to postmark for delivery: ", success);
     });
   },
 
-  eventUpdated: (email, name, event) => {
-    client.sendEmailWithTemplate({
-      From: from,
-      TemplateId: "942461",
-      To: email,
-      TemplateModel: {
-        product_name: "Coterie Online",
-        name: name,
-        event_name: event,
-        product_address_line1: "1 George St",
-        product_address_line2: "Brisbane, QLD 4000"
+  eventUpdated: (user, event) => {
+    getUserProfile(user).then((profile) => {
+      if (profile.notifications === 'email') {
+        email.send(profile.email, 942443, {
+          eventName: 'eventName',
+          companyName: emailConfig.company.name,
+          name: profile.firstName,
+          eventLocation: 'eventLocation',
+          eventDate: 'eventDate',
+          eventStart: 'eventStart',
+          eventFinish: 'eventFinish',
+          companyAddress: emailConfig.company.address
+        });
       }
-    }, function(error, success) {
-      if(error) {
-        console.error("Unable to send via postmark: " + error.message);
-        return;
+
+      else if (profile.notifications === 'sms') {
+        console.log('Oops! Notifications is set to SMS and we ain\'t done it yet!');
       }
-      console.info("Sent to postmark for delivery: ", success);
     });
   },
 
-  eventCancelled: (email, name, event) => {
-    client.sendEmailWithTemplate({
-      From: from,
-      TemplateId: "942461",
-      To: email,
-      TemplateModel: {
-        product_name: "Coterie Online",
-        name: name,
-        event_name: event,
-        product_address_line1: "1 George St",
-        product_address_line2: "Brisbane, QLD 4000"
+  eventCancelled: (user, event) => {
+    getUserProfile(user).then((profile) => {
+      if (profile.notifications === 'email') {
+        email.send(profile.email, 942461, {
+          eventTitle: 'eventTitle',
+          companyName: emailConfig.company.name,
+          name: profile.firstName,
+          companyAddress: emailConfig.company.address
+        });
       }
-  }, function(error, success) {
-      if(error) {
-        console.error("Unable to send via postmark: " + error.message);
-        return;
+
+      else if (profile.notifications === 'sms') {
+        console.log('Oops! Notifications is set to SMS and we ain\'t done it yet!');
       }
-      console.info("Sent to postmark for delivery: ", success);
     });
   },
 };
