@@ -12,7 +12,6 @@ module.exports = (app, passport, jwt, jwtAuth) => {
       description: req.body.community_desc,
       location: req.body.community_location,
     }).save().then(() => {
-      console.log('woof');
       res.send('Data sent?');
     });
   });

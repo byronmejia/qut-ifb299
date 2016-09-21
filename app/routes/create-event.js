@@ -15,7 +15,6 @@ module.exports = (app, passport, jwt, jwtAuth) => {
       endTime: finish,
       location_id: 1,
     }).save().then(() => {
-      console.log('woof');
       res.send('Data sent?');
     });
   });
