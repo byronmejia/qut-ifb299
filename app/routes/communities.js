@@ -93,7 +93,7 @@ module.exports = (app, passport, jwt, jwtAuth) => {
     });
   });
 
-  app.get('/communities/:id/donate', jwtAuth, (req, res) => {
+  app.get('/community/:id/donate', jwtAuth, (req, res) => {
     Communities.where({ id: req.params.id }).fetch()
       .then((data) => {
         res.render(
@@ -102,7 +102,7 @@ module.exports = (app, passport, jwt, jwtAuth) => {
       });
   });
 
-  app.post('/communities/:id/donate', jwtAuth, (req, res) => {
+  app.post('/community/:id/donate', jwtAuth, (req, res) => {
     let amount = parseFloat(req.body.finalAmount).toFixed(2);
     const token = req.body.stripeToken;
     amount = Math.round(amount * 100);
