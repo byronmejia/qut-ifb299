@@ -1,14 +1,16 @@
 extends ../_app_layout
 
 block content
+    h1 All Communities
+    a(href="/communities/create" class="button") Create a community
     article.card
-        h2 All Communities
         section#CommunitiesSection
-            community(v-for="item in items" ,:name="item.name" ,:profile_picture="item.profile_picture" ,:description="item.description")
-
+            community(v-for="item in items" ,:name="item.name" ,:profile_picture="item.profile_picture" ,:description="item.description", :id="item.id")
+    
     script#CommunityTemplate(type='x/template')
         img(:src="profile_picture")
-        h4 {{ name }}
+        a(href="/community/"+id)
+          h4 {{ name }}
         p {{ description }}
 
     script(src='/js/community/index.js')

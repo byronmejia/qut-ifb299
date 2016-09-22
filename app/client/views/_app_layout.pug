@@ -1,8 +1,14 @@
 html
     head
-        title Pugfile
+        title Coterie
         meta(name="viewport" content="width=device-width, initial-scale=1.0")
         link(rel="stylesheet" type="text/css" href="/css/style.css")
+        link(rel='icon', type='image/png', href='http://s9.postimg.org/a4rwg5o5r/coterie_online.png')
+        script(src="//cdn.tinymce.com/4/tinymce.min.js")
+        script.
+          tinymce.init({ selector:'textarea' });
+        script(src='https://use.fontawesome.com/99d22de933.js')
+
     body
         nav
             a(href="javascript:void(0)" class="closebtn" onclick="closeNav()") &times;

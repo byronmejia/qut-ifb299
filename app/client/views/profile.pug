@@ -3,9 +3,20 @@ extends _app_layout
 
 block content
     h1 My Profile
+    textarea Simple WYSIWYG Text Editing
+    br
     article.card
         h3 My Linked Accounts
-        br
-        a.stack.pseudo.button(href='/auth/link/facebook') Link Facebook
-        a.stack.pseudo.button(href='/auth/link/google') Link Google
-        a.stack.pseudo.button(href='/auth/link/github') Link GitHub
+        a(href='/auth/link/facebook')
+          i.fa.fa-facebook-official.fa-2x(aria-hidden='true')
+          |  Link Facebook
+        a(href='/auth/link/google')
+          i.fa.fa-google.fa-2x(aria-hidden='true')
+          |  Link Google
+        a(href='/auth/link/github')
+          i.fa.fa-github.fa-2x(aria-hidden='true')
+          |  Link Github
+
+        h3 Communities I've joined
+        a(href="#")
+          p Code Network
