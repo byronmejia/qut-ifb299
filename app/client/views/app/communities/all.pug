@@ -4,13 +4,7 @@ block content
     h1 All Communities
     a(href="/communities/create" class="button") Create a community
     article.card
-        section#CommunitiesSection
-            community(v-for="item in items" ,:name="item.name" ,:profile_picture="item.profile_picture" ,:description="item.description", :id="item.id")
-
-    script#CommunityTemplate(type='x/template')
-        img(:src="profile_picture")
-        a(href="/community/"+id)
-            h4 {{ name }}
-        p {{ description }}
-
-    script(src='/js/community/index.js')
+        each community in communities
+            a(href='/community/' + community.attributes.id)
+                h1= community.attributes.name
+            p= community.attributes.description

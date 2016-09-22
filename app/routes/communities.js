@@ -40,7 +40,9 @@ module.exports = (app, passport, jwt, jwtAuth) => {
   );
 
   app.get('/communities', jwtAuth, (req, res) => {
-    res.render('app/communities/all');
+    Communities.fetchAll().then((communities) =>
+      res.render('app/communities/all', { communities: communities.models })
+    );
   });
 
   app.get('/community/:id', jwtAuth, (req, res) => {
