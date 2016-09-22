@@ -6,6 +6,7 @@ const path = require('path');
 const Communities = require(path.join('..', 'models', 'Community.js'));
 const Charges = require(path.join('..', 'models', 'Charges.js'));
 const stripe = require(path.join('..', 'config', 'stripe.js')).stripe;
+const getCurrentProfile = require(path.join('..', 'helper', 'getCurrentProfile.js'));
 
 const keyPath = path.join('..', 'config', 'keys.json');
 
@@ -34,10 +35,14 @@ const Relationship = require(
 );
 
 module.exports = (app, passport, jwt, jwtAuth) => {
-  app.get('/communities/create', jwtAuth, (req, res) => res.render('create-community'));
+  app.get('/communities/create', jwtAuth, (req, res) =>
+    res.render('app/communities/new')
+  );
 
   app.get('/communities', jwtAuth, (req, res) => {
-    res.render('app/communities');
+    Communities.fetchAll().then((communities) =>
+      res.render('app/communities/all', { communities: communities.models })
+    );
   });
 
   app.get('/community/:id', jwtAuth, (req, res) => {
@@ -46,18 +51,20 @@ module.exports = (app, passport, jwt, jwtAuth) => {
     }).fetch({
       require: true,
     }).then((data) => {
-      res.render('app/community-page', {
+      res.render('app/communities/index', {
         community: data.attributes,
       });
     });
   });
 
-  app.post('/community/:id/join', jwtAuth, (req, res) => {
-    new Relationship({
-      community_id: req.params.id,
-      profile_id: 1111,
-    }).save().then(() => {
-      res.redirect('/communities');
+  app.get('/community/:id/join', jwtAuth, (req, res) => {
+    getCurrentProfile(req).then((id) => {
+      new Relationship({
+        community_id: req.params.id,
+        profile_id: id,
+      }).save().then(() => {
+        res.redirect('/communities');
+      });
     });
   });
 
@@ -67,7 +74,7 @@ module.exports = (app, passport, jwt, jwtAuth) => {
     }).fetch({
       require: true,
     }).then((data) => {
-      res.render('edit-community', {
+      res.render('app/communities/edit', {
         community: data.attributes,
       });
     });
@@ -88,22 +95,16 @@ module.exports = (app, passport, jwt, jwtAuth) => {
     });
   });
 
-  app.get('/api/communities', jwtAuth, (req, res) => {
-    Communities.fetchAll().then((data) =>
-      res.json(data)
-    );
-  });
-
-  app.get('/communities/:id/donate', jwtAuth, (req, res) => {
+  app.get('/community/:id/donate', jwtAuth, (req, res) => {
     Communities.where({ id: req.params.id }).fetch()
       .then((data) => {
         res.render(
-          'app/communities/donate', { community: data, stripe_pub: keys.stripe.test.publish }
+          'app/communities/donate/index', { community: data, stripe_pub: keys.stripe.test.publish }
           );
       });
   });
 
-  app.post('/communities/:id/donate', jwtAuth, (req, res) => {
+  app.post('/community/:id/donate', jwtAuth, (req, res) => {
     let amount = parseFloat(req.body.finalAmount).toFixed(2);
     const token = req.body.stripeToken;
     amount = Math.round(amount * 100);
