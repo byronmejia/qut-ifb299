@@ -4,6 +4,7 @@
 const path = require('path');
 
 const Communities = require(path.join('..', 'models', 'Community.js'));
+const Charges = require(path.join('..', 'models', 'Charges.js'));
 const stripe = require(path.join('..', 'config', 'stripe.js')).stripe;
 
 const keyPath = path.join('..', 'config', 'keys.json');
@@ -49,21 +50,35 @@ module.exports = (app, passport, jwt, jwtAuth) => {
   });
 
   app.post('/communities/:id/donate', jwtAuth, (req, res) => {
-    const amount = parseFloat(req.body.finalAmount).toFixed(2);
+    let amount = parseFloat(req.body.finalAmount).toFixed(2);
     const token = req.body.stripeToken;
+    amount = Math.round(amount * 100);
 
-    if (isNaN(amount)) res.render('app/communities/donate/error');
+    if (isNaN(amount)) res.render('app/communities/donate/amount_error');
 
     stripe.charges.create({
       amount,
       currency: 'aud',
       source: token,
-      description: 'Charge for sofia.smith@example.com',
+      description: 'Charge for Coterie Online',
     }, (err, charge) => {
       if (!err) {
-        console.log(charge);
-        res.render('app/communities/donate/thank-you');
-      } else res.render('app/communities/donate/error');
+        Communities.where({ id: req.params.id })
+          .fetch()
+          .then((community) => {
+            new Charges({
+              id: charge.id,
+              community_id: community.attributes.id,
+            }).save(null, { method: 'insert' });
+            new Communities({
+              id: community.attributes.id,
+              currentAmount: community.attributes.currentAmount + amount,
+            }).save();
+          })
+          .then(() => {
+            res.render('app/communities/donate/thank-you');
+          });
+      } else res.render('app/communities/donate/stripe_error');
     });
   });
 };
