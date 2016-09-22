@@ -4,6 +4,7 @@
 const path = require('path');
 
 const Communities = require(path.join('..', 'models', 'Community.js'));
+const stripe = require(path.join('..', 'config', 'stripe.js')).stripe;
 
 const keyPath = path.join('..', 'config', 'keys.json');
 
@@ -27,7 +28,7 @@ try {
   };
 }
 
-module.exports = (app, passport, jwt, jwtAuth, opts) => {
+module.exports = (app, passport, jwt, jwtAuth) => {
   app.get('/communities', jwtAuth, (req, res) => {
     res.render('app/communities');
   });
@@ -48,7 +49,21 @@ module.exports = (app, passport, jwt, jwtAuth, opts) => {
   });
 
   app.post('/communities/:id/donate', jwtAuth, (req, res) => {
-    console.log(req.body.stripeToken);
-    console.log(req.body.finalAmount);
+    const amount = parseFloat(req.body.finalAmount).toFixed(2);
+    const token = req.body.stripeToken;
+
+    if (isNaN(amount)) res.render('app/communities/donate/error');
+
+    stripe.charges.create({
+      amount,
+      currency: 'aud',
+      source: token,
+      description: 'Charge for sofia.smith@example.com',
+    }, (err, charge) => {
+      if (!err) {
+        console.log(charge);
+        res.render('app/communities/donate/thank-you');
+      } else res.render('app/communities/donate/error');
+    });
   });
 };
