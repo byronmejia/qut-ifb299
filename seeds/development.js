@@ -71,12 +71,13 @@ function seedProfiles(knex, Promise) {
       .then(
         (login) =>
         new Profile({
-          firstName: 'Matilda',
-          lastName: 'Benson',
-          email: 'MatildaBenson@teleworm.us',
-          mobile: '0453413742',
+          firstName: 'Tylor',
+          lastName: 'Stewart',
+          email: 'trjstewart@gmail.com',
+          mobile: '0413192125',
           bio: 'My favourite colour is Orange',
           login_id: login.attributes.id,
+          notifications: 'email'
         }).save()
       ),
 
@@ -90,6 +91,7 @@ function seedProfiles(knex, Promise) {
           mobile: '0440790214',
           bio: 'My favourite colour is Black',
           login_id: login.attributes.id,
+          notifications: 'email'
         }).save()
       ),
 
@@ -103,6 +105,7 @@ function seedProfiles(knex, Promise) {
             mobile: '0453859974',
             bio: 'My favourite colour is Blue',
             login_id: login.attributes.id,
+            notifications: 'email'
           }).save()
       ),
 
@@ -116,6 +119,7 @@ function seedProfiles(knex, Promise) {
             mobile: '0489419791',
             bio: 'My favourite colour is Purple',
             login_id: login.attributes.id,
+            notifications: 'email'
           }).save()
       ),
 
@@ -129,6 +133,7 @@ function seedProfiles(knex, Promise) {
             mobile: '0487367226',
             bio: 'My favourite colour is Purple',
             login_id: login.attributes.id,
+            notifications: 'email'
           }).save()
       ),
   ])));

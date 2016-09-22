@@ -1,6 +1,7 @@
 {
     "extends": "airbnb",
     "rules": {
-      "linebreak-style": 0
+        "no-confusing-arrow": "off",
+        "linebreak-style": 0
     }
 }
