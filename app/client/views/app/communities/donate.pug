@@ -1,17 +1,19 @@
 extends ../../_app_layout
 
 block content
-    script src="https://js.stripe.com/v2/"
+    script(type='text/javascript', src="https://js.stripe.com/v2/")
 
     article.card
         h1 Donate to #{ community.attributes.name }
         h3 Thank you for donating! Many appreciate!
 
-    form#payment-form(role='form', autocomplete='on', action='/', method='POST')
+    form#payment-form(role='form', autocomplete='on', method='POST')
+        error#errorRegion
+
         amount.flex.one
             div
                 label Amount
-                input(type='number', min='0.05', step='0.05', placeholder="500.00", required)
+                input#amountValue(name='amount', type='number', min='0.05', step='0.05', placeholder="500.00", required)
         creditCardInfo.flex.two
             div
                 label Card Number
@@ -27,4 +29,42 @@ block content
                 label Year
                 input.card-expiry-year(type='text', data-stripe='exp-year', placeholder='YYYY', required)
         submit
-            button(type='submit') Submit
+            button#submitButton(type='submit') Submit
+
+    script(type='text/javascript').
+        var globalAmount = 0;
+        const PublicKey = "!{ stripe_pub }";
+        Stripe.setPublishableKey(PublicKey);
+
+        function stripeResponseHandler(status, response) {
+            if (response.error) {
+                alert("Aye! Bad! Stripe Error!");
+                document.getElementById('errorRegion').innerText(response.error.message);
+                document.getElementById('submitButton').disabled = false;
+            } else {
+                var form = document.getElementById('payment-form');
+                var token = response['id'];
+                form.innerHTML += "<input type='hidden' name='stripeToken' value='" + token + "'/>";
+                form.innerHTML += "<input type='hidden' name='finalAmount' value='" + globalAmount + "'/>";
+                form.submit();
+            }
+        }
+
+        function submitHandler(event){
+            document.getElementById('submitButton').disabled = true;
+            event.preventDefault();
+
+            globalAmount = document.getElementById('amountValue').value;
+
+            Stripe.createToken({
+                number: document.getElementsByClassName('card-number')[0].value,
+                cvc: document.getElementsByClassName('card-cvc')[0].value,
+                exp_month: document.getElementsByClassName('card-expiry-month')[0].value,
+                exp_year: document.getElementsByClassName('card-expiry-year')[0].value,
+            }, stripeResponseHandler);
+            return false;
+        }
+
+        document.addEventListener("DOMContentLoaded", function(event) {
+            document.getElementById('payment-form').addEventListener('submit', submitHandler)
+        });
