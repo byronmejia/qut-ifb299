@@ -40,6 +40,20 @@ module.exports = (app, passport, jwt, jwtAuth, client, s3) => {
       return;
     }
 
+    //keep files under 2MB
+    if(req.file.size/1000000 > 2){
+
+      //render
+      res.render('profile', {
+        error: "please keep images under 2MB :)"
+      });
+
+      //delete file
+      del([req.file.path]).then(paths => {});
+
+      return;
+    }
+
     //handle png's
     if (path.extname(req.file.originalname).toLowerCase() === '.png') {
       console.log("Stage 1: PNG");
@@ -100,9 +114,12 @@ module.exports = (app, passport, jwt, jwtAuth, client, s3) => {
         console.log("Stage 3: Deleted " + targetPath);
       });
 
-      //get photo link
+      //get photo link signed
       var resultLink = s3.getPublicUrlHttp(keys.s3.russel.bucket,keys.s3.russel.secret);
-      console.log("Stage 4: " + resultLink);
+      console.log("Stage 3: " + resultLink);
+
+      //save link to user in database
+
 
       //render profile with image
       res.render('profile', {
