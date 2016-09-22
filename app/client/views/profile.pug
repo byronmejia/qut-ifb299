@@ -1,11 +1,26 @@
-
 extends _app_layout
 
 block content
     h1 My Profile
+
+    -var dim = "100"
+
+    article.pic
+      if error
+        h1 #{error}
+      form(method="post" action="/sendFile" enctype="multipart/form-data" name="upload")
+        if pic
+          img(src=pic height=dim width=dim)
+          br
+          input(type="file" name="file")
+          input(type="submit" value="Change Profile Pic!")
+        else
+          input(type="file" name="file")
+          input(type="submit" value="Upload A Profile Pic!")
+
     article.card
-        h3 My Linked Accounts
-        br
-        a.stack.pseudo.button(href='/auth/link/facebook') Link Facebook
-        a.stack.pseudo.button(href='/auth/link/google') Link Google
-        a.stack.pseudo.button(href='/auth/link/github') Link GitHub
+      h3 Your Linked Accounts
+      br
+      a.stack.pseudo.button(href='/auth/link/facebook') Link Facebook
+      a.stack.pseudo.button(href='/auth/link/google') Link Google
+      a.stack.pseudo.button(href='/auth/link/github') Link GitHub

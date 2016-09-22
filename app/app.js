@@ -12,13 +12,17 @@ require(dir.app)(app, path, express, passport);
 const jwt = require(dir.jwt);
 const jwtAuth = require(dir.jwt).auth(passport);
 
+//file handling
+const s3 = require(dir.s3).s3;
+const client = require(dir.s3).client;
+
 if (!module.parent) app.use(morgan('dev'));
 
 // Dynamically load routes
 const routePath = path.join(__dirname, 'routes');
 fs.readdirSync(routePath).forEach((file) => {
   const route = path.join(routePath, file);
-  require(route)(app, passport, jwt, jwtAuth); // eslint-disable-line global-require
+  require(route)(app, passport, jwt, jwtAuth, client, s3); // eslint-disable-line global-require
 });
 
 // If none of the above routes hit

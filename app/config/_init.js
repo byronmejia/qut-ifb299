@@ -8,4 +8,5 @@ module.exports = {
   db: path.join(__dirname, 'db.js'),
   passport: path.join(__dirname, 'passport.js'),
   jwt: path.join(__dirname, 'jwt.js'),
+  s3: path.join(__dirname, 's3.js'),
 };
