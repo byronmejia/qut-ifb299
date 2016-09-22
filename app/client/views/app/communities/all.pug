@@ -1,0 +1,10 @@
+extends ../../_app_layout
+
+block content
+    h1 All Communities
+    a(href="/communities/create" class="button") Create a community
+    article.card
+        each community in communities
+            a(href='/community/' + community.attributes.id)
+                h1= community.attributes.name
+            p= community.attributes.description
