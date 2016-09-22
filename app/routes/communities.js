@@ -39,6 +39,23 @@ module.exports = (app, passport, jwt, jwtAuth) => {
     res.render('app/communities/new')
   );
 
+  app.post('/communities/create', jwtAuth, (req, res) => {
+    new Communities({
+      name: req.body.community_name,
+      profile_picture: null,
+      description: req.body.community_desc,
+      location: req.body.community_location,
+    }).save().then((community) => {
+      // get profile_id from login_id
+      new Relationship({
+        profile_id: 1111,
+        community_id: community.attributes.id,
+      }).save().then(() => {
+        res.redirect('/communities');
+      });
+    });
+  });
+
   app.get('/communities', jwtAuth, (req, res) => {
     Communities.fetchAll().then((communities) =>
       res.render('app/communities/all', { communities: communities.models })
