@@ -1,6 +1,9 @@
 const path = require('path');
 
 const Community = require(path.join(__dirname, '..', 'models', 'Community.js'));
+const Relationship = require(
+  path.join(__dirname, '..', 'models', 'RelationshipProfileCommunity.js'));
+
 
 module.exports = (app, passport, jwt, jwtAuth) => {
   app.get('/communities/create', jwtAuth, (req, res) => res.render('create-community'));
@@ -11,8 +14,14 @@ module.exports = (app, passport, jwt, jwtAuth) => {
       profile_picture: null,
       description: req.body.community_desc,
       location: req.body.community_location,
-    }).save().then(() => {
-      res.send('Data sent?');
+    }).save().then((community) => {
+      // get profile_id from login_id
+      new Relationship({
+        profile_id: req.user.id,
+        community_id: community.attributes.id,
+      }).save().then(() => {
+        res.redirect('/communities');
+      });
     });
   });
 };

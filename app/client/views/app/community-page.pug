@@ -1,15 +1,15 @@
 extends ../_app_layout
 
 block content
-    h1 All Communities
-    a(href="/communities/create" class="button") Create a community
+    a(href="/donate" class="button") 
     article.card
+        h2 This Community
         section#CommunitiesSection
             community(v-for="item in items" ,:name="item.name" ,:profile_picture="item.profile_picture" ,:description="item.description")
     
     script#CommunityTemplate(type='x/template')
         img(:src="profile_picture")
-        a(href="#")
+        a(href="#") 
             h4 {{ name }}
         p {{ description }}
 
