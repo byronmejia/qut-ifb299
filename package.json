@@ -9,7 +9,7 @@
     "server": "node ./target/app.js",
     "start": "./node_modules/.bin/babel-node --presets es2015 ./app/app.js",
     "lint": "./node_modules/.bin/eslint ./app/**/*.js",
-    "unit-tests": "./node_modules/.bin/babel-node --presets es2015 ./node_modules/.bin/mocha --reporter nyan",
+    "unit-tests": "./node_modules/.bin/_mocha --reporter nyan",
     "compile": "./node_modules/.bin/babel app --out-dir target --copy-files"
   },
   "repository": {

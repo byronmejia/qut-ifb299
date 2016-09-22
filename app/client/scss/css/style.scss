@@ -45,7 +45,7 @@ nav {
   z-index: 1; /* Stay on top */
   top: 0;
   left: 0;
-  background-color: #111; /* Black*/
+  background-color: #0A0A35; /* Black*/
   overflow-x: hidden; /* Disable horizontal scroll */
   padding-top: 60px; /* Place content 60px from the top */
   transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
@@ -114,4 +114,19 @@ section#main {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
   padding: 40px;
+}
+
+header#landing {
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 40px;
+  width: 100%;
+  background-color: #0A0A35;
+  color: white;
+  text-align: center;
+
+  a.button {
+    background-color: yellow;
+    color: #0A0A35;
+  }
 }

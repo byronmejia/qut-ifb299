@@ -1,3 +1,4 @@
+/* eslint-disable */
 const Vue = require('vue');
 
 const apiRoutes = {

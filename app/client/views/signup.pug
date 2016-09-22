@@ -3,13 +3,13 @@ extends _home_layout
 block content
     section(id="main")
         h1 Sign up for Coterie Online
-        form(action="" method="POST")
+        form(action="/signup/local" method="POST")
             div
-                label(for='first-name') First Name
-                input(id='first-name' type='text' name='first-name' required)
+                label(for='first_name') First Name
+                input(id='first_name' type='text' name='first_name' required)
             div
-                label(for='last-name') Last Name
-                input(id='last-name' type='text' name='last-name' required)
+                label(for='last_name') Last Name
+                input(id='last_name' type='text' name='last_name' required)
             div
                 label(for='email') Email
                 input(id='email' type='email' name='email' required)
@@ -19,14 +19,5 @@ block content
             div
                 label(for='bio') Bio
                 textarea(id='bio' name='bio' placeholder='Add a small summary about yourself!')
-            div
-                label(for='username') Username
-                input(id='username', type='text' name='username' required)
-            div
-                label(for='password') Password
-                input(id='password', type='password' name='password' required)
-            div
-                label(for='password-confirmation') Password Confirmation
-                input(id='password-confirmation', type='password' name='password-confirmation' required)
             div
                 button(type='submit') Sign Up
