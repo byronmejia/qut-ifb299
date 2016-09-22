@@ -2,7 +2,7 @@ extends ../../_app_layout
 
 block content
     h1 Create a community
-    form(action="/communities/create/success" method="POST")
+    form(method="POST")
         div
             label(for='community_name') Name
             input(id='community_name' type='text' placeholder="Name of Community" name='community_name' required)
