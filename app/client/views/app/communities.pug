@@ -5,12 +5,12 @@ block content
     a(href="/communities/create" class="button") Create a community
     article.card
         section#CommunitiesSection
-            community(v-for="item in items" ,:name="item.name" ,:profile_picture="item.profile_picture" ,:description="item.description")
+            community(v-for="item in items" ,:name="item.name" ,:profile_picture="item.profile_picture" ,:description="item.description", :id="item.id")
     
     script#CommunityTemplate(type='x/template')
         img(:src="profile_picture")
-        a(href="#")
-            h4 {{ name }}
+        a(href="/community/"+id)
+          h4 {{ name }}
         p {{ description }}
 
     script(src='/js/community/index.js')

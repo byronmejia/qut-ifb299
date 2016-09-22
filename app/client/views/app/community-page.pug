@@ -1,16 +1,21 @@
 extends ../_app_layout
 
 block content
-    a(href="/donate" class="button") 
-    article.card
-        h2 This Community
-        section#CommunitiesSection
-            community(v-for="item in items" ,:name="item.name" ,:profile_picture="item.profile_picture" ,:description="item.description")
+    h2 #{community.name} 
+      a(href="/community/"+community.id+"/donate" class="button")      Donate
+    h4 #{community.description}
+    p #{community.location}
+    // If community manager
+    a(href="/community/"+community.id+"/edit" class="button") Edit Community
     
-    script#CommunityTemplate(type='x/template')
-        img(:src="profile_picture")
-        a(href="#") 
-            h4 {{ name }}
-        p {{ description }}
-
-    script(src='/js/community/index.js')
+    article.card
+      h3 Upcoming events for #{community.name}
+      p No upcoming events
+      // If community manager
+    a(href="/events/create" class="button") Create Event 
+      
+    article.card
+      h3 Members of #{community.name}
+      p Jessica Barron
+      p Byron Mejia
+    a(href="/community/"+community.id+"/join" class="button") Join

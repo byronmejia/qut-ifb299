@@ -17,7 +17,7 @@ module.exports = (app, passport, jwt, jwtAuth) => {
     }).save().then((community) => {
       // get profile_id from login_id
       new Relationship({
-        profile_id: req.user.id,
+        profile_id: 1111,
         community_id: community.attributes.id,
       }).save().then(() => {
         res.redirect('/communities');
