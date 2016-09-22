@@ -6,10 +6,10 @@ const Login = require(path.join(__dirname, '..', 'models', 'Login.js'));
 
 module.exports = (app) => {
   app.get('/signup', (req, res) => {
-    res.render('signup');
+    res.render('signup/index');
   });
 
-  app.post('/signup/success', (req, res) => {
+  app.post('/signup', (req, res) => {
     new Login({
       username: req.body.username,
       password: req.body.password,
