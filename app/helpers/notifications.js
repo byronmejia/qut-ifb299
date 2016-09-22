@@ -1,22 +1,23 @@
-const postmark = require("postmark");
-const client = new postmark.Client("d094b93e-5921-436e-b2a2-d26a69045681");
-
 const path = require('path');
+const postmark = require('postmark');
+
 const Profile = require(path.join(__dirname, '..', 'models', 'Profile'));
+const client = new postmark.Client('d094b93e-5921-436e-b2a2-d26a69045681');
 
 const emailConfig = {
   from: 'tylor@binaryorange.co',
   company: {
     name: 'Coterie Online',
-    address: '1 George St, Brisbane, QLD 4000'
-  }
+    address: '1 George St, Brisbane, QLD 4000',
+  },
 };
 
-const getUserProfile = (user) => {
-  return Profile.where({ id: user }).fetch().then((profile) => {
-    return (!profile) ? null : profile.attributes;
-  });
-};
+const getUserProfile = (user) => Profile.where({ id: user }).fetch().then((profile) => {
+  if (!profile) {
+    return null;
+  }
+  return profile.attributes;
+});
 
 const email = {
   send: (emailAddress, template, data) => {
@@ -24,12 +25,14 @@ const email = {
       From: emailConfig.from,
       TemplateId: template,
       To: emailAddress,
-      TemplateModel: data
-    }, (error, response) => (error) ? email.failure(error) : email.success(response))
+      TemplateModel: data,
+    }, (error, response) => (error) ? email.failure(error) : email.success(response));
   },
-  success: (response) => console.info("Sent to postmark for delivery:", response),
-  failure: (error) => console.error("Unable to send via postmark:", error.message)
+  success: (response) => response, // TODO: Add Success Logging.
+  failure: (error) => error, // TODO: Add Failure Logging.
 };
+
+// TODO: Add functionality to retrieve event data and append it to the email data.
 
 module.exports = {
   welcome: (user) => {
@@ -39,17 +42,16 @@ module.exports = {
           companyName: emailConfig.company.name,
           name: profile.firstName,
           username: 'username',
-          companyAddress: emailConfig.company.address
+          companyAddress: emailConfig.company.address,
         });
       }
 
-      else if (profile.notifications === 'sms') {
-        console.log('Oops! Notifications is set to SMS and we ain\'t done it yet!');
-      }
+      // TODO: Add SMS Functionality.
+      // else if (profile.notifications === 'sms') {}
     });
   },
 
-  eventRegistration: (user, event) => {
+  eventRegistration: (user) => {
     getUserProfile(user).then((profile) => {
       if (profile.notifications === 'email') {
         email.send(profile.email, 942442, {
@@ -60,17 +62,16 @@ module.exports = {
           eventDate: 'eventDate',
           eventStart: 'eventStart',
           eventFinish: 'eventFinish',
-          companyAddress: emailConfig.company.address
+          companyAddress: emailConfig.company.address,
         });
       }
 
-      else if (profile.notifications === 'sms') {
-        console.log('Oops! Notifications is set to SMS and we ain\'t done it yet!');
-      }
+      // TODO: Add SMS Functionality.
+      // else if (profile.notifications === 'sms') {}
     });
   },
 
-  eventUpdated: (user, event) => {
+  eventUpdated: (user) => {
     getUserProfile(user).then((profile) => {
       if (profile.notifications === 'email') {
         email.send(profile.email, 942443, {
@@ -81,32 +82,28 @@ module.exports = {
           eventDate: 'eventDate',
           eventStart: 'eventStart',
           eventFinish: 'eventFinish',
-          companyAddress: emailConfig.company.address
+          companyAddress: emailConfig.company.address,
         });
       }
 
-      else if (profile.notifications === 'sms') {
-        console.log('Oops! Notifications is set to SMS and we ain\'t done it yet!');
-      }
+      // TODO: Add SMS Functionality.
+      // else if (profile.notifications === 'sms') {}
     });
   },
 
-  eventCancelled: (user, event) => {
+  eventCancelled: (user) => {
     getUserProfile(user).then((profile) => {
       if (profile.notifications === 'email') {
         email.send(profile.email, 942461, {
           eventTitle: 'eventTitle',
           companyName: emailConfig.company.name,
           name: profile.firstName,
-          companyAddress: emailConfig.company.address
+          companyAddress: emailConfig.company.address,
         });
       }
 
-      else if (profile.notifications === 'sms') {
-        console.log('Oops! Notifications is set to SMS and we ain\'t done it yet!');
-      }
+      // TODO: Add SMS Functionality.
+      // else if (profile.notifications === 'sms') {}
     });
   },
 };
-
-console.log('Loaded Email Helpers!');
