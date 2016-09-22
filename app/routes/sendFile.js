@@ -2,95 +2,79 @@ const path = require('path');
 const del = require('del');
 const fs = require('fs');
 const multer = require('multer');
-const upload = multer({ dest: path.join(__dirname, "../temp/")});
 
-//require key
+const upload = multer({ dest: path.join(__dirname, '../temp/') });
+
+// require key
 let keys;
 
 try {
-  keys = require('../config/keys.json');
-} catch(err) {
-  console.log(err); // eslint-disable-line no-console
+  keys = require('../config/keys.json'); // eslint-disable-line
+} catch (err) {
   keys = {
     s3: {
       russel: {
         secret: process.env.S3_SEC,
-        bucket: process.env.S3_BUC
-      }
-    }
+        bucket: process.env.S3_BUC,
+      },
+    },
   };
 }
 
-//export this module
+// export this module
 module.exports = (app, passport, jwt, jwtAuth, client, s3) => {
-  //bork it
+  // bork it
   app.post('/sendFile', upload.single('file'), (req, res) => {
+    // get timestamp for file name
+    const stamp = String(new Date().getTime());
 
-    //get the uploaded image
-    var stamp = String(new Date().getTime());
+    // get the uploaded image
+    let inputPath;
+    let targetPath;
 
-    //or atleast try too..
+    // or atleast try too..
     try {
-      var inputPath = req.file.path;
-      var targetPath = path.join(__dirname, "../temp/" + stamp + path.extname(req.file.originalname).toLowerCase());
-    } catch(err){
+      inputPath = req.file.path;
+      targetPath = path.join(__dirname, '../temp/', stamp,
+      path.extname(req.file.originalname).toLowerCase());
+    } catch (err) {
       res.render('profile', {
-        error: "no file uploaded D:"
+        error: 'no file uploaded D:',
       });
       return;
     }
 
-    //keep files under 2MB
-    if(req.file.size/1000000 > 2){
-
-      //render
+    // keep files under 2MB
+    if (req.file.size / 1000000 > 2) {
+      // render
       res.render('profile', {
-        error: "please keep images under 2MB :)"
+        error: 'please keep images under 2MB :)',
       });
 
-      //delete file
-      del([req.file.path]).then(paths => {});
+      // delete file
+      del([req.file.path]);
 
       return;
     }
 
-    //handle png's
-    if (path.extname(req.file.originalname).toLowerCase() === '.png') {
-      console.log("Stage 1: PNG");
-       fs.rename(inputPath, targetPath, function(err) {
-         (err)?console.log(err):console.log("Stage 1: Upload To Server Completed!");
-       });
-   }
+    // handle formats
+    const extname = path.extname(req.file.originalname).toLowerCase();
+    if (extname === '.png') fs.rename(inputPath, targetPath);
+    else if (extname === '.jpg') fs.rename(inputPath, targetPath);
+    else if (extname === '.gif') fs.rename(inputPath, targetPath);
 
-   //handle jpg's
-   else if (path.extname(req.file.originalname).toLowerCase() === '.jpg') {
-     console.log("Stage 1: JPG");
-      fs.rename(inputPath, targetPath, function(err) {
-        (err)?console.log(err):console.log("Stage 1: Upload To Server Completed!");
+   // non supported file
+    else {
+      fs.unlink(inputPath, () => {
+        res.render('profile', {
+          error: '.png\'s .jpg\'s .gif\'s only :) sorry!',
+        });
       });
-  }
+      return;
+    }
 
-   //handle gif's
-   else if (path.extname(req.file.originalname).toLowerCase() === '.gif') {
-     console.log("Stage 1: GIF");
-      fs.rename(inputPath, targetPath, function(err) {
-        (err)?console.log(err):console.log("Stage 1: Upload To Server Completed!");
-      });
-  }
-
-   //non supported file
-   else {
-       fs.unlink(inputPath, function (err) {
-           if(err)console.log("file unlink error");
-           res.render('profile', {
-             error: ".png's .jpg's .gif's only :) sorry!"
-           });
-       });
-       return;
-   }
-
-    //upload file to remote
-    var params = {
+    // upload file to remote
+    const params = {
       localFile: targetPath,
       s3Params: {
         Bucket: keys.s3.russel.bucket,
@@ -98,35 +82,39 @@ module.exports = (app, passport, jwt, jwtAuth, client, s3) => {
       },
     };
 
-    //log the output for now
-    var uploader = client.uploadFile(params);
-    uploader.on('error', function(err) {
-      console.error("Stage 2: Unable to upload:", err.stack);
-    });
-    uploader.on('progress', function() {
-      console.log("Stage 2: Uploading " + parseInt(uploader.progressAmount/uploader.progressTotal*100) + "%");
-    });
-    uploader.on('end', function() {
-      console.log("Stage 2: Done uploading");
+    // create uploader
+    const uploader = client.uploadFile(params);
 
-      //delete the file locally
-      del([targetPath]).then(paths => {
-        console.log("Stage 3: Deleted " + targetPath);
-      });
+    // file couldnt upload
+    uploader.on('error', () => {
+      // delete the file locally
+      del([targetPath]);
 
-      //get photo link signed
-      var resultLink = s3.getPublicUrlHttp(keys.s3.russel.bucket,keys.s3.russel.secret);
-      console.log("Stage 3: " + resultLink);
-
-      //save link to user in database
-
-
-      //render profile with image
       res.render('profile', {
-        pic: resultLink
+        error: "Couldn't Upload :(",
       });
-
     });
 
+    // file is uploading
+    uploader.on('progress', () => {
+      // var percentage = uploader.progressAmount / uploader.progressTotal * 100;
+    });
+
+    // file is done
+    uploader.on('end', () => {
+      // delete the file locally
+      del([targetPath]);
+
+      // get photo link signed
+      const resultLink = s3.getPublicUrlHttp(keys.s3.russel.bucket, keys.s3.russel.secret);
+
+      // save link to user in database
+      // TODO
+
+      // render profile with image
+      res.render('profile', {
+        pic: resultLink,
+      });
+    });
   });
-}
+};
