@@ -31,3 +31,5 @@ app.use((req, res) => {
 if (!module.parent) {
   app.listen(app.get('port'));
 }
+
+module.exports.getApp = app;
