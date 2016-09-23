@@ -1,20 +1,16 @@
 import { Router } from 'express';
-import homepage from './homepage';
 import auth from './auth';
-import community from './community';
+import misc from './misc';
+import communities from './communities';
 import event from './event';
 import profile from './profile';
 import signup from './signup';
 
 export default (opts) => {
   const router = new Router();
-
-  /*router.get('/', homepage);*/
+  router.use(misc(opts));
   router.use('/auth', auth(opts));
-/*  router.get('/', community);
-  router.get('/', event);
-  router.get('/', profile);
-  router.get('/', signup);*/
+  router.use('/communities', communities(opts));
 
   return router;
 };

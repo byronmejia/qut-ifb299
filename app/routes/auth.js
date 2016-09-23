@@ -28,6 +28,7 @@ export default (opts) => {
    *
    * @function
    *
+   * @author Byron Mejia
    * @param {Object} req - Express request object
    * @param {Object} res - Express response object
    * @description Destroys the JWT token on the client
@@ -45,6 +46,7 @@ export default (opts) => {
    *
    * @function
    *
+   * @author Byron Mejia
    * @param {Object} req - Express request object
    * @param {Object} res - Express response object
    * @description Loads a form for signing in
@@ -65,6 +67,7 @@ export default (opts) => {
    *
    * @function
    *
+   * @author Byron Mejia
    * @param {Object} req - Express request object
    * @param {Object} res - Express response object
    * @description Challenges passport with local username and password
@@ -94,6 +97,7 @@ export default (opts) => {
    *
    * @function
    *
+   * @author Byron Mejia
    * @param {Object} req - Express request object
    * @param {Object} res - Express response object
    * @description Challenges passport with Facebook login
@@ -106,6 +110,7 @@ export default (opts) => {
    *
    * @function
    *
+   * @author Byron Mejia
    * @param {Object} req - Express request object
    * @param {Object} res - Express response object
    * @description Upon successful challenge, will set
@@ -132,6 +137,7 @@ export default (opts) => {
    *
    * @function
    *
+   * @author Byron Mejia
    * @param {Object} req - Express request object
    * @param {Object} res - Express response object
    * @description Prepares the Facebook strategy for
@@ -145,6 +151,7 @@ export default (opts) => {
    *
    * @function
    *
+   * @author Byron Mejia
    * @param {Object} req - Express request object
    * @param {Object} res - Express response object
    * @description Adds a new Facebook strategy to
@@ -175,6 +182,7 @@ export default (opts) => {
    *
    * @function
    *
+   * @author Byron Mejia
    * @param {Object} req - Express request object
    * @param {Object} res - Express response object
    * @description Challenges passport with GitHub login
@@ -187,6 +195,7 @@ export default (opts) => {
    *
    * @function
    *
+   * @author Byron Mejia
    * @param {Object} req - Express request object
    * @param {Object} res - Express response object
    * @description Adds a new GitHub strategy to
@@ -210,6 +219,7 @@ export default (opts) => {
    *
    * @function
    *
+   * @author Byron Mejia
    * @param {Object} req - Express request object
    * @param {Object} res - Express response object
    * @description Prepares the GitHub strategy for
@@ -223,6 +233,7 @@ export default (opts) => {
    *
    * @function
    *
+   * @author Byron Mejia
    * @param {Object} req - Express request object
    * @param {Object} res - Express response object
    * @description Adds a new GitHub strategy to
@@ -253,6 +264,7 @@ export default (opts) => {
    *
    * @function
    *
+   * @author Byron Mejia
    * @param {Object} req - Express request object
    * @param {Object} res - Express response object
    * @description Challenges passport with Google login
@@ -268,6 +280,7 @@ export default (opts) => {
    *
    * @function
    *
+   * @author Byron Mejia
    * @param {Object} req - Express request object
    * @param {Object} res - Express response object
    * @description Adds a new Google strategy to
@@ -292,6 +305,7 @@ export default (opts) => {
    *
    * @function
    *
+   * @author Byron Mejia
    * @param {Object} req - Express request object
    * @param {Object} res - Express response object
    * @description Prepares the Google strategy for
@@ -308,6 +322,7 @@ export default (opts) => {
    *
    * @function
    *
+   * @author Byron Mejia
    * @param {Object} req - Express request object
    * @param {Object} res - Express response object
    * @description Adds a new Google strategy to
