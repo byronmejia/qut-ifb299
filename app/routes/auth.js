@@ -1,6 +1,16 @@
 /**
- * Created by byron on 20/08/2016.
+ * auth.js manages the routes that users may challenge for
+ * different authentication methods. This includes:
+ * Local, Facebook, GitHub, Google, JWT
+ *
+ * @since 1.0.0
+ * @file Manages authentication routes
+ * @author Byron Mejia
+ * @author Russel Demos
+ * @soundtrack Of Mind - Tesseract
  */
+
+import { Router } from 'express';
 
 function payloadGenerator(userObject) {
   return {
@@ -10,7 +20,9 @@ function payloadGenerator(userObject) {
   };
 }
 
-module.exports = (app, passport, JWT, jwtAuth) => {
+export default (opts) => {
+  const router = new Router();
+
   /**
    * GET Logout page
    *
@@ -22,9 +34,10 @@ module.exports = (app, passport, JWT, jwtAuth) => {
    * @todo Explicitly state last logout time in persistence
    * @returns undefined
    */
-  app.get('/logout', jwtAuth, (req, res) => {
-    res.cookie('authToken', '');
-    res.render('logout');
+  router.get('/logout', opts.jwtAuth, (req, res) => {
+    res
+      .cookie('authToken', '')
+      .render('logout');
   });
 
   /**
@@ -37,14 +50,11 @@ module.exports = (app, passport, JWT, jwtAuth) => {
    * @description Loads a form for signing in
    * @returns undefined
    */
-  app.get('/login', (req, res) => {
-    passport.authenticate('jwt', (err, data) => {
+  router.get('/login', (req, res) => {
+    opts.passport.authenticate('jwt', (err, data) => {
       if (err) return res.redirect('/error?id=1');
       if (data) return res.redirect('/home');
-
-      if (req.query.attempt > 0) {
-        return res.render('login', { attempt: 1 });
-      }
+      if (req.query.attempt > 0) return res.render('login', { attempt: 1 });
 
       return res.render('login');
     })(req, res);
@@ -60,19 +70,21 @@ module.exports = (app, passport, JWT, jwtAuth) => {
    * @description Challenges passport with local username and password
    * @returns undefined
    */
-  app.post('/auth/local', (req, res) => {
-    passport.authenticate('local',
+  router.post('/local', (req, res) => {
+    opts.passport.authenticate('local',
       (err, user) => {
         if (err) return res.redirect('/error?id=1');
-        if (!user) return res.redirect('/login?attempt=1');
-        return req.logIn(user, (data) => {
-          if (!data) {
-            return res.redirect('/error?id=3');
+        if (!user) return res.redirect('/auth/login?attempt=1');
+
+        return req.logIn(user,
+          (data) => {
+            if (!data) return res.redirect('/error?id=3');
+
+            const payload = payloadGenerator(user.attributes.id);
+            res.cookie('authToken', opts.jwt.encode(payload));
+            return res.redirect('/dashboard');
           }
-          const payload = payloadGenerator(user.attributes.id);
-          res.cookie('authToken', JWT.encode(payload));
-          return res.redirect('/dashboard');
-        });
+        );
       }
     )(req, res);
   });
@@ -87,7 +99,7 @@ module.exports = (app, passport, JWT, jwtAuth) => {
    * @description Challenges passport with Facebook login
    * @returns undefined
    */
-  app.get('/auth/facebook', passport.authenticate('facebook'));
+  router.get('/facebook', opts.passport.authenticate('facebook'));
 
   /**
    * GET Facebook Callback Strategy
@@ -102,13 +114,14 @@ module.exports = (app, passport, JWT, jwtAuth) => {
    * error, or bad login credentials.
    * @returns undefined
    */
-  app.get('/auth/callback/facebook', (req, res) =>
-    passport.authenticate('facebook',
+  router.get('/callback/facebook', (req, res) =>
+    opts.passport.authenticate('facebook',
       (err, type) => {
         if (err) return res.redirect('/error?id=1');
         if (!type) return res.redirect('/login?attempt=34');
+
         const payload = payloadGenerator(type.attributes.login_id);
-        res.cookie('authToken', JWT.encode(payload));
+        res.cookie('authToken', opts.jwt.encode(payload));
         return res.redirect('/dashboard');
       }
     )(req, res)
@@ -125,7 +138,7 @@ module.exports = (app, passport, JWT, jwtAuth) => {
    * saving to the current logged in user.
    * @returns undefined
    */
-  app.get('/auth/link/facebook', jwtAuth, passport.authenticate('facebook_link'));
+  router.get('/link/facebook', opts.jwtAuth, opts.passport.authenticate('facebook_link'));
 
   /**
    * GET Facebook Link Callback Strategy
@@ -138,16 +151,16 @@ module.exports = (app, passport, JWT, jwtAuth) => {
    * the currently logged in user, if successful.
    * @returns undefined
    */
-  app.get('/auth/callback/facebook/new', (req, res) =>
-    passport.authenticate('facebook_link',
+  router.get('/callback/facebook/new', (req, res) =>
+    opts.passport.authenticate('facebook_link',
       (err, type) => {
         if (err) return res.redirect('/error?id=1');
-        if (req.cookies.authToken === '') return res.redirect('/login?attempt=42');
+        if (req.cookies.authToken === '') return res.redirect('/auth/login?attempt=42');
         if (!type) res.redirect('/profile?authError=1');
 
         let decoded = '';
         try {
-          decoded = JWT.decode(req.cookies.authToken);
+          decoded = opts.jwt.decode(req.cookies.authToken);
         } catch (e) {
           decoded = false;
         }
@@ -167,7 +180,7 @@ module.exports = (app, passport, JWT, jwtAuth) => {
    * @description Challenges passport with GitHub login
    * @returns undefined
    */
-  app.get('/auth/github', passport.authenticate('github'));
+  router.get('/github', opts.passport.authenticate('github'));
 
   /**
    * GET GitHub Link Callback Strategy
@@ -180,13 +193,13 @@ module.exports = (app, passport, JWT, jwtAuth) => {
    * the currently logged in user, if successful.
    * @returns undefined
    */
-  app.get('/auth/callback/github', (req, res) =>
-    passport.authenticate('github',
+  router.get('/callback/github', (req, res) =>
+    opts.passport.authenticate('github',
       (err, type) => {
         if (err) return res.redirect('/error?id=1');
-        if (!type) return res.redirect('/login?attempt=34');
+        if (!type) return res.redirect('/auth/login?attempt=34');
         const payload = payloadGenerator(type.attributes.login_id);
-        res.cookie('authToken', JWT.encode(payload));
+        res.cookie('authToken', opts.jwt.encode(payload));
         return res.redirect('/dashboard');
       }
     )(req, res)
@@ -203,7 +216,7 @@ module.exports = (app, passport, JWT, jwtAuth) => {
    * saving to the current logged in user.
    * @returns undefined
    */
-  app.get('/auth/link/github', jwtAuth, passport.authenticate('github_link'));
+  router.get('/link/github', opts.jwtAuth, opts.passport.authenticate('github_link'));
 
   /**
    * GET GitHub Link Callback Strategy
@@ -216,16 +229,16 @@ module.exports = (app, passport, JWT, jwtAuth) => {
    * the currently logged in user, if successful.
    * @returns undefined
    */
-  app.get('/auth/callback/github/new', (req, res) =>
-    passport.authenticate('github_link',
+  router.get('/callback/github/new', (req, res) =>
+    opts.passport.authenticate('github_link',
       (err, type) => {
         if (err) return res.redirect('/error?id=1');
-        if (req.cookies.authToken === '') return res.redirect('/login?attempt=42');
+        if (req.cookies.authToken === '') return res.redirect('/auth/login?attempt=42');
         if (!type) res.redirect('/profile?authError=1');
 
         let decoded = '';
         try {
-          decoded = JWT.decode(req.cookies.authToken);
+          decoded = opts.jwt.decode(req.cookies.authToken);
         } catch (e) {
           decoded = false;
         }
@@ -245,7 +258,7 @@ module.exports = (app, passport, JWT, jwtAuth) => {
    * @description Challenges passport with Google login
    * @returns undefined
    */
-  app.get('/auth/google', passport.authenticate('google', { scope: [
+  router.get('/google', opts.passport.authenticate('google', { scope: [
     'https://www.googleapis.com/auth/plus.login',
     'https://www.googleapis.com/auth/plus.profile.emails.read',
   ] }));
@@ -261,13 +274,14 @@ module.exports = (app, passport, JWT, jwtAuth) => {
    * the currently logged in user, if successful.
    * @returns undefined
    */
-  app.get('/auth/callback/google', (req, res) =>
-    passport.authenticate('google',
+  router.get('/callback/google', (req, res) =>
+    opts.passport.authenticate('google',
       (err, type) => {
         if (err) return res.redirect('/error?id=1');
-        if (!type) return res.redirect('/login?attempt=34');
+        if (!type) return res.redirect('/auth/login?attempt=34');
+
         const payload = payloadGenerator(type.attributes.login_id);
-        res.cookie('authToken', JWT.encode(payload));
+        res.cookie('authToken', opts.jwt.encode(payload));
         return res.redirect('/dashboard');
       }
     )(req, res)
@@ -284,7 +298,7 @@ module.exports = (app, passport, JWT, jwtAuth) => {
    * saving to the current logged in user.
    * @returns undefined
    */
-  app.get('/auth/link/google', jwtAuth, passport.authenticate('google_link', { scope: [
+  router.get('/link/google', opts.jwtAuth, opts.passport.authenticate('google_link', { scope: [
     'https://www.googleapis.com/auth/plus.login',
     'https://www.googleapis.com/auth/plus.profile.emails.read',
   ] }));
@@ -300,16 +314,16 @@ module.exports = (app, passport, JWT, jwtAuth) => {
    * the currently logged in user, if successful.
    * @returns undefined
    */
-  app.get('/auth/callback/google/new', (req, res) =>
-    passport.authenticate('google_link',
+  router.get('/callback/google/new', (req, res) =>
+    opts.passport.authenticate('google_link',
       (err, type) => {
         if (err) return res.redirect('/error?id=1');
-        if (req.cookies.authToken === '') return res.redirect('/login?attempt=42');
+        if (req.cookies.authToken === '') return res.redirect('/auth/login?attempt=42');
         if (!type) res.redirect('/profile?authError=1');
 
         let decoded = '';
         try {
-          decoded = JWT.decode(req.cookies.authToken);
+          decoded = opts.jwt.decode(req.cookies.authToken);
         } catch (e) {
           decoded = false;
         }
@@ -319,4 +333,6 @@ module.exports = (app, passport, JWT, jwtAuth) => {
       }
     )(req, res)
   );
+
+  return router;
 };
