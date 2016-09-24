@@ -38,7 +38,7 @@ export default (opts) => {
   router.get('/logout', opts.jwtAuth, (req, res) => {
     res
       .cookie('authToken', '')
-      .render('logout');
+      .render('login/logout');
   });
 
   /**
@@ -54,11 +54,12 @@ export default (opts) => {
    */
   router.get('/login', (req, res) => {
     opts.passport.authenticate('jwt', (err, data) => {
+      let options = {};
       if (err) return res.redirect('/error?id=1');
       if (data) return res.redirect('/home');
-      if (req.query.attempt > 0) return res.render('login', { attempt: 1 });
+      if (req.query.attempt > 0) options = { attempt: 1 };
 
-      return res.render('login');
+      return res.render('login/login', options);
     })(req, res);
   });
 
