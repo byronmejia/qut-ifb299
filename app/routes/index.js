@@ -3,7 +3,6 @@ import auth from './auth';
 import misc from './misc';
 import communities from './communities';
 import events from './events';
-import profile from './profile';
 import signup from './signup';
 
 export default (opts) => {
@@ -13,7 +12,7 @@ export default (opts) => {
   router.use('/auth', auth(opts));
   router.use('/communities', communities(opts));
   router.use('/events', events(opts));
-  router.use('/profile', profile(opts));
+  router.use('/signup', signup());
 
   return router;
 };

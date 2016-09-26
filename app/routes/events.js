@@ -54,9 +54,10 @@ export default (opts) => {
    * @param {Object} res - Express response object
    * @description Generates the event upon successful fields
    * @todo Ensure event's view is up to date
+   * @todo Ensure event saves to appropiate location
    * @returns undefined
    */
-  router.post('/events/create/success', opts.jwtAuth, (req, res) => {
+  router.post('/events/create', opts.jwtAuth, (req, res) => {
     const start = '${req.body.event_startdate} ${req.body.event_starttime}';
     const finish = '${req.body.event_enddate} ${req.body.event_endtime}';
     new Event({
