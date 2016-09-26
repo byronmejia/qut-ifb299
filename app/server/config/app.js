@@ -1,10 +1,17 @@
 /**
- * Created by byron on 21/08/2016.
+ * config/events.js manages the configuration
+ * for the application.
+ *
+ * @since 1.0.0
+ * @file Manages application configuration
+ * @author Byron Mejia
+ * @todo Get Single Event
+ * @todo Update Single Event
  */
-const bodyParser = require('body-parser');
-const cookieParser = require('cookie-parser');
-const sassMiddleware = require('node-sass-middleware');
-const browserify = require('browserify-middleware');
+import bodyParser from 'body-parser';
+import cookieParser from 'cookie-parser';
+import sassMiddleware from 'node-sass-middleware';
+import browserify from 'browserify-middleware';
 
 module.exports = (app, path, express, passport) => {
   app.set('showStackError', true);
