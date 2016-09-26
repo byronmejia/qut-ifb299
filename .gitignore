@@ -18,4 +18,4 @@
 *.key
 keys.json
 npm-debug*
-/app/public/*
+/app/server/public/*

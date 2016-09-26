@@ -10,7 +10,7 @@ module.exports = (app, path, express, passport) => {
   app.set('showStackError', true);
   app.set('port', process.env.PORT || 3000);
   app.set('view engine', 'pug');
-  app.set('views', path.join(__dirname, '..', 'client', 'views'));
+  app.set('views', path.join(__dirname, '..', '..', 'client', 'views'));
   app.use(bodyParser.json());
   app.use(cookieParser());
   app.use(bodyParser.urlencoded({ extended: false }));
@@ -18,11 +18,11 @@ module.exports = (app, path, express, passport) => {
   app.use(passport.initialize());
   app.use(
     '/js',
-    browserify(path.join(__dirname, '..', 'client', 'js'))
+    browserify(path.join(__dirname, '..', '..', 'client', 'js'))
   );
   app.use(sassMiddleware({
     /* Options */
-    src: path.join(__dirname, '..', 'client', 'scss'),
+    src: path.join(__dirname, '..', '..', 'client', 'scss'),
     dest: path.join(__dirname, '..', 'public'),
     debug: true,
     outputStyle: 'compressed',
