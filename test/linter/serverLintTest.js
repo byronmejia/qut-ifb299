@@ -1,6 +1,7 @@
 import glob from 'glob';
 import { CLIEngine } from 'eslint';
 import { assert } from 'chai';
+import { describe, it } from 'mocha';
 
 const paths = glob.sync('./app/server/**/*.js');
 const engine = new CLIEngine({
@@ -10,24 +11,24 @@ const engine = new CLIEngine({
 
 const results = engine.executeOnFiles(paths).results;
 
-describe('ESLint', function() {
-  results.forEach((result) => generateTest(result));
-});
+function formatMessages(messages) {
+  const errors = messages.map(message =>
+    `${message.line}:${message.column} ${message.message.slice(0, -1)} - ${message.ruleId}\n`
+  );
+
+  return `\n${errors.join('')}`;
+}
 
 function generateTest(result) {
   const { filePath, messages } = result;
 
-  it(`validates ${filePath}`, function() {
+  it(`validates ${filePath}`, () => {
     if (messages.length > 0) {
       assert.fail(false, true, formatMessages(messages));
     }
   });
 }
 
-function formatMessages(messages) {
-  const errors = messages.map((message) => {
-    return `${message.line}:${message.column} ${message.message.slice(0, -1)} - ${message.ruleId}\n`;
-  });
-
-  return `\n${errors.join('')}`;
-}
+describe('ESLint', () => {
+  results.forEach(result => generateTest(result));
+});

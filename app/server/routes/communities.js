@@ -14,10 +14,10 @@ import { Router } from 'express';
 
 const path = require('path');
 
-const Communities = require(path.join('..', 'models', 'Community.js'));
-const Charges = require(path.join('..', 'models', 'Charges.js'));
-const stripe = require(path.join('..', 'config', 'stripe.js')).stripe;
-const getCurrentProfile = require(path.join('..', 'helper', 'getCurrentProfile.js'));
+const Communities = require('../models/Community');
+const Charges = require('../models/Charges');
+const stripe = require('../config/stripe').stripe;
+const getCurrentProfile = require('../helper/getCurrentProfile');
 
 const keyPath = path.join('..', 'config', 'keys.json');
 
@@ -41,9 +41,7 @@ try {
   };
 }
 
-const Relationship = require(
-  path.join(__dirname, '..', 'models', 'RelationshipProfileCommunity.js')
-);
+const Relationship = require('../models/RelationshipProfileCommunity');
 
 export default (opts) => {
   const router = new Router();
@@ -61,7 +59,7 @@ export default (opts) => {
    * @returns undefined
    */
   router.get('/', opts.jwtAuth, (req, res) => {
-    Communities.fetchAll().then((communities) =>
+    Communities.fetchAll().then(communities =>
       res.render('app/communities/all', { communities: communities.models })
     );
   });

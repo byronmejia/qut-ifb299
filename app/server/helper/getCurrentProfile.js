@@ -1,10 +1,5 @@
-/**
- * Created by byron on 22/9/16.
- */
-const path = require('path');
-
-const profile = require(path.join('..', 'models', 'Profile.js'));
-const jwt = require(path.join('..', 'config', 'jwt.js'));
+const profile = require('../models/Profile');
+const jwt = require('../config/jwt');
 
 module.exports = function getCurrentProfile(req) {
   return profile

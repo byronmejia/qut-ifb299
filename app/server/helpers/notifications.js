@@ -1,7 +1,6 @@
-const path = require('path');
 const postmark = require('postmark');
+const Profile = require('../models/Profile');
 
-const Profile = require(path.join(__dirname, '..', 'models', 'Profile'));
 const client = new postmark.Client('d094b93e-5921-436e-b2a2-d26a69045681');
 
 const emailConfig = {
@@ -12,7 +11,7 @@ const emailConfig = {
   },
 };
 
-const getUserProfile = (user) => Profile.where({ id: user }).fetch().then((profile) => {
+const getUserProfile = user => Profile.where({ id: user }).fetch().then((profile) => {
   if (!profile) {
     return null;
   }
@@ -26,10 +25,16 @@ const email = {
       TemplateId: template,
       To: emailAddress,
       TemplateModel: data,
-    }, (error, response) => (error) ? email.failure(error) : email.success(response));
+    }, (error, response) => {
+      if (error) {
+        email.failure(error);
+      } else {
+        email.success(response);
+      }
+    });
   },
-  success: (response) => response, // TODO: Add Success Logging.
-  failure: (error) => error, // TODO: Add Failure Logging.
+  success: response => response, // TODO: Add Success Logging.
+  failure: error => error, // TODO: Add Failure Logging.
 };
 
 // TODO: Add functionality to retrieve event data and append it to the email data.

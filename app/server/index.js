@@ -15,12 +15,11 @@ import morgan from 'morgan';
 import passport from 'passport';
 import router from './routes';
 
-const dir = require(path.join(__dirname, 'config', '_init.js'));
 const app = express();
-require(dir.passport)(passport);
-require(dir.app)(app, path, express, passport);
-const jwt = require(dir.jwt);
-const jwtAuth = require(dir.jwt).auth(passport);
+require('./config/passport')(passport);
+require('./config/app')(app, path, express, passport);
+const jwt = require('./config/jwt');
+const jwtAuth = require('./config/jwt').auth(passport);
 
 if (!module.parent) app.use(morgan('dev'));
 

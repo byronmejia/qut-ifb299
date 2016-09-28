@@ -1,17 +1,13 @@
 const bcrypt = require('bcrypt');
-const path = require('path');
 const Promise = require('bluebird');
-
-const bookshelf = require(path.join('..', 'config', 'db.js')).bookshelf;
+const bookshelf = require('../config/db').bookshelf;
 
 const Login = bookshelf.Model.extend({
   tableName: 'logins',
-  /* eslint-disable */
-  initialize: function() {
+  initialize: function onCreate() {
     this.on('creating', this.hashPassword, this);
   },
-  /* eslint-enable */
-  hashPassword: (model) => new Promise(
+  hashPassword: model => new Promise(
     (resolve, reject) => bcrypt.hash(
       model.attributes.password, 10, (err, hash) => {
         if (err) reject(err);

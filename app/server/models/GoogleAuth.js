@@ -1,6 +1,4 @@
-const path = require('path');
-
-const bookshelf = require(path.join('..', 'config', 'db.js')).bookshelf;
+const bookshelf = require('../config/db').bookshelf;
 
 const Login = bookshelf.Model.extend({
   tableName: 'google_auth',

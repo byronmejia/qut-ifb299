@@ -17,5 +17,5 @@ function decode(payload) {
 
 module.exports.encode = encode;
 module.exports.decode = decode;
-module.exports.auth = (passport) =>
+module.exports.auth = passport =>
 passport.authenticate('jwt', { session: false, failureRedirect: '/auth/login' });

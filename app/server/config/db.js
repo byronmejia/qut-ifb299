@@ -1,8 +1,7 @@
-const path = require('path');
+const ENV = process.env.NODE_ENV || 'development';
 
-const knexPath = path.join(__dirname, '..', '..', '..', 'knexfile');
-const knexFile = require(knexPath);
-const knex = require('knex')(knexFile[process.env.NODE_ENV || 'development']);
+const knexFile = require('../../../knexfile');
+const knex = require('knex')(knexFile[ENV]);
 const bookshelf = require('bookshelf')(knex);
 
 module.exports.knex = knex;

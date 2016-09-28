@@ -1,4 +1,3 @@
-const path = require('path');
 const bcrypt = require('bcrypt');
 
 const Strategy = require('passport-local').Strategy;
@@ -29,11 +28,11 @@ try {
   };
 }
 
-const Login = require(path.join(__dirname, '..', 'models', 'Login.js'));
-const FacebookAuth = require(path.join(__dirname, '..', 'models', 'FacebookAuth.js'));
-const GitHubAuth = require(path.join(__dirname, '..', 'models', 'GitHubAuth.js'));
-const GoogleAuth = require(path.join(__dirname, '..', 'models', 'GoogleAuth.js'));
-const JWT = require(path.join(__dirname, 'jwt.js'));
+const Login = require('../models/Login');
+const FacebookAuth = require('../models/FacebookAuth');
+const GitHubAuth = require('../models/GitHubAuth');
+const GoogleAuth = require('../models/GoogleAuth');
+const JWT = require('./jwt');
 
 const isValidPassword = function isValidPassword(user, password) {
   return bcrypt.compareSync(password, user.attributes.password);
