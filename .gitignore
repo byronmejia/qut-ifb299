@@ -19,3 +19,4 @@
 keys.json
 npm-debug*
 /app/server/public/*
+/docs/0.0 Developer Documentation
