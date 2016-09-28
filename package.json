@@ -8,12 +8,13 @@
   "main": "app/server/index.js",
   "scripts": {
     "postinstall": "./node_modules/.bin/bower install && npm run compile",
-    "test": "npm run unit-tests && npm run lint",
+    "test": "npm run unit-tests",
     "server": "node ./target/server/index.js",
     "start": "./node_modules/.bin/babel-node --presets es2015 ./app/server/index.js",
     "lint": "./node_modules/.bin/eslint ./app/**/*.js",
     "unit-tests": "./node_modules/.bin/_mocha ./test/**/*Test.js --reporter nyan --compilers js:babel-core/register",
-    "compile": "./node_modules/.bin/babel app --out-dir target --copy-files"
+    "compile": "./node_modules/.bin/babel app --out-dir target --copy-files",
+    "bootstrap": "./node_modules/.bin/knex migrate:latest && ./node_modules/.bin/knex seed:run development"
   },
   "repository": {
     "type": "git",

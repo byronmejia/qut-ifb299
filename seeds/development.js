@@ -1,14 +1,12 @@
-const path = require('path');
-
-const modelPath = path.join(__dirname, '..', 'app', 'models');
-const Login = require(path.join(modelPath, 'Login.js'));
-const Profile = require(path.join(modelPath, 'Profile.js'));
-const Community = require(path.join(modelPath, 'Community.js'));
-const Event = require(path.join(modelPath, 'Event.js'));
-const Location = require(path.join(modelPath, 'Location.js'));
-const RelationshipProfileCommunity = require(path.join(modelPath, 'RelationshipProfileCommunity.js'));
-const RelationshipRsvpEventProfile = require(path.join(modelPath, 'RelationshipRsvpEventProfile.js'));
-const Rsvp = require(path.join(modelPath, 'Rsvp.js'));
+const Login = require('../app/server/models/Login');
+const Profile = require('../app/server/models/Profile');
+const Community = require('../app/server/models//Community');
+// TODO: const Event = require('../app/server/models/Event');
+const Location = require('../app/server/models/Location');
+const RelationshipProfileCommunity = require('../app/server/models/RelationshipProfileCommunity');
+// TODO: const RelationshipRsvpEventProfile =
+// require('../app/server/models/RelationshipRsvpEventProfile');
+// TODO: const Rsvp = require('../app/server/models/Rsvp');
 
 function seedLocations(knex, Promise) {
   return knex('locations').truncate().then(() => Promise.all([
@@ -69,7 +67,7 @@ function seedProfiles(knex, Promise) {
   return knex('profiles').truncate().then(() => (Promise.all([
     Login.where({ username: 'admin' }).fetch()
       .then(
-        (login) =>
+        login =>
         new Profile({
           firstName: 'Tylor',
           lastName: 'Stewart',
@@ -77,13 +75,13 @@ function seedProfiles(knex, Promise) {
           mobile: '0413192125',
           bio: 'My favourite colour is Orange',
           login_id: login.attributes.id,
-          notifications: 'email'
+          notifications: 'email',
         }).save()
       ),
 
     Login.where({ username: '12345' }).fetch()
       .then(
-        (login) =>
+        login =>
         new Profile({
           firstName: 'Nicholas',
           lastName: 'Shenton',
@@ -91,13 +89,13 @@ function seedProfiles(knex, Promise) {
           mobile: '0440790214',
           bio: 'My favourite colour is Black',
           login_id: login.attributes.id,
-          notifications: 'email'
+          notifications: 'email',
         }).save()
       ),
 
     Login.where({ username: 'dragon' }).fetch()
       .then(
-        (login) =>
+        login =>
           new Profile({
             firstName: 'Luca',
             lastName: 'Alder',
@@ -105,13 +103,13 @@ function seedProfiles(knex, Promise) {
             mobile: '0453859974',
             bio: 'My favourite colour is Blue',
             login_id: login.attributes.id,
-            notifications: 'email'
+            notifications: 'email',
           }).save()
       ),
 
     Login.where({ username: 'football' }).fetch()
       .then(
-        (login) =>
+        login =>
           new Profile({
             firstName: 'David',
             lastName: 'Creswell',
@@ -119,13 +117,13 @@ function seedProfiles(knex, Promise) {
             mobile: '0489419791',
             bio: 'My favourite colour is Purple',
             login_id: login.attributes.id,
-            notifications: 'email'
+            notifications: 'email',
           }).save()
       ),
 
     Login.where({ username: 'baseball' }).fetch()
       .then(
-        (login) =>
+        login =>
           new Profile({
             firstName: 'Kate',
             lastName: 'Waterfield',
@@ -133,7 +131,7 @@ function seedProfiles(knex, Promise) {
             mobile: '0487367226',
             bio: 'My favourite colour is Purple',
             login_id: login.attributes.id,
-            notifications: 'email'
+            notifications: 'email',
           }).save()
       ),
   ])));
@@ -143,7 +141,7 @@ function seedCommunities(knex, Promise) {
   return knex('communities').truncate().then(() => Promise.all([
     Location.where({ locationName: 'Google Chrome' }).fetch()
       .then(
-        (location) =>
+        location =>
           new Community({
             name: 'Erlang Anonymous',
             profile_picture: 'http://lorempixel.com/100/100',
@@ -153,7 +151,7 @@ function seedCommunities(knex, Promise) {
       ),
     Location.where({ locationName: 'Mozilla FireFox' }).fetch()
       .then(
-        (location) =>
+        location =>
           new Community({
             name: 'Ruby Anonymous',
             profile_picture: 'http://lorempixel.com/100/100',
@@ -163,7 +161,7 @@ function seedCommunities(knex, Promise) {
       ),
     Location.where({ locationName: 'ThoughtWorks' }).fetch()
       .then(
-        (location) =>
+        location =>
           new Community({
             name: 'Javascript Anonymous',
             profile_picture: 'http://lorempixel.com/100/100',
@@ -173,7 +171,7 @@ function seedCommunities(knex, Promise) {
       ),
     Location.where({ locationName: 'University of Queensland' }).fetch()
       .then(
-        (location) =>
+        location =>
           new Community({
             name: 'Facebook Anonymous',
             profile_picture: 'http://lorempixel.com/100/100',
@@ -183,7 +181,7 @@ function seedCommunities(knex, Promise) {
       ),
     Location.where({ locationName: 'Technology One' }).fetch()
       .then(
-        (location) =>
+        location =>
           new Community({
             name: 'Buffalo Anonymous',
             profile_picture: 'http://lorempixel.com/100/100',
@@ -197,13 +195,13 @@ function seedCommunities(knex, Promise) {
 function seedOneProfileCommunityRelationship(loginAttr, communityAttr) {
   return Login.where({ username: loginAttr }).fetch()
     .then(
-      (login) => Profile
+      login => Profile
         .where(
           { login_id: login.attributes.id }
-          ).fetch().then((profile) => profile)
+          ).fetch().then(profile => profile)
     )
     .then(
-      (profile) => Community
+      profile => Community
         .where(
           { name: communityAttr }
         ).fetch().then((community) => {
@@ -214,7 +212,7 @@ function seedOneProfileCommunityRelationship(loginAttr, communityAttr) {
         })
     )
     .then(
-      (data) => new RelationshipProfileCommunity({
+      data => new RelationshipProfileCommunity({
         profile_id: data.profile.attributes.id,
         community_id: data.community.attributes.id,
       }).save()
@@ -227,8 +225,8 @@ function seedProfileCommunityRelationship(knex, Promise) {
     'Javascript Anonymous', 'Facebook Anonymous', 'Buffalo Anonymous'];
   const promises = [];
 
-  users.forEach((user) =>
-    communities.forEach((community) =>
+  users.forEach(user =>
+    communities.forEach(community =>
       promises.push(seedOneProfileCommunityRelationship(user, community))));
 
   return knex('profile_community_relationship').truncate()
