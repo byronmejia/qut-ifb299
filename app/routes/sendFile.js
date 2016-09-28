@@ -78,7 +78,7 @@ module.exports = (app, passport, jwt, jwtAuth, client, s3) => {
       localFile: targetPath,
       s3Params: {
         Bucket: keys.s3.russel.bucket,
-        Key: keys.s3.russel.secret,
+        Key: path.basename(targetPath),
       },
     };
 
@@ -106,7 +106,7 @@ module.exports = (app, passport, jwt, jwtAuth, client, s3) => {
       del([targetPath]);
 
       // get photo link signed
-      const resultLink = s3.getPublicUrlHttp(keys.s3.russel.bucket, keys.s3.russel.secret);
+      const resultLink = s3.getPublicUrlHttp(keys.s3.russel.bucket, path.basename(targetPath));
 
       // save link to user in database
       // TODO
