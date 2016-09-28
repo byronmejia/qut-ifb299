@@ -1,0 +1,23 @@
+{
+  "tags": {
+    "allowUnknownTags": true
+  },
+  "source": {
+    "include": "./app/server",
+    "includePattern": ".js$"
+  },
+  "plugins": [
+    "plugins/markdown"
+  ],
+  "opts": {
+    "template": "./node_modules/docdash",
+    "encoding": "utf8",
+    "destination": "docs/0.0 Developer Documentation",
+    "recurse": true,
+    "verbose": true
+  },
+  "templates": {
+    "cleverLinks": false,
+    "monospaceLinks": false
+  }
+}

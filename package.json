@@ -2,18 +2,20 @@
   "name": "community-portal",
   "version": "0.1.0",
   "engines": {
-    "node": "6.3.1"
+    "node": "6.6.0"
   },
   "description": "A community portal.",
-  "main": "app/app.js",
+  "main": "app/server/index.js",
   "scripts": {
     "postinstall": "./node_modules/.bin/bower install && npm run compile",
-    "test": "npm run lint",
-    "server": "node ./target/app.js",
-    "start": "./node_modules/.bin/babel-node --presets es2015 ./app/app.js",
+    "test": "npm run unit-tests",
+    "server": "node ./target/server/index.js",
+    "start": "./node_modules/.bin/babel-node --presets es2015 ./app/server/index.js",
     "lint": "./node_modules/.bin/eslint ./app/**/*.js",
     "unit-tests": "./node_modules/.bin/_mocha ./test/**/*Test.js --reporter nyan --compilers js:babel-core/register",
-    "compile": "./node_modules/.bin/babel app --out-dir target --copy-files"
+    "compile": "./node_modules/.bin/babel app --out-dir target --copy-files",
+    "bootstrap": "./node_modules/.bin/knex migrate:latest && ./node_modules/.bin/knex seed:run development",
+    "generate-docs": "./node_modules/.bin/jsdoc -c .jsdoc.json"
   },
   "repository": {
     "type": "git",
@@ -57,14 +59,15 @@
   },
   "devDependencies": {
     "chai": "^3.5.0",
-    "eslint": "^3.4.0",
-    "eslint-config-airbnb": "^10.0.1",
-    "eslint-plugin-import": "^1.14.0",
-    "eslint-plugin-jsx-a11y": "^2.2.1",
-    "eslint-plugin-react": "^6.2.0",
-    "gulp": "^3.9.1",
+    "docdash": "^0.4.0",
+    "eslint": "^3.6.1",
+    "eslint-config-airbnb": "^12.0.0",
+    "eslint-plugin-import": "^1.16.0",
+    "eslint-plugin-jsx-a11y": "^2.2.2",
+    "eslint-plugin-react": "^6.3.0",
+    "glob": "^7.1.0",
+    "jsdoc": "^3.4.1",
     "mocha": "^2.5.3",
-    "mocha-eslint": "^2.1.1",
     "passport-debug": "^0.1.15",
     "sqlite3": "^3.1.4",
     "supertest": "^2.0.0"
