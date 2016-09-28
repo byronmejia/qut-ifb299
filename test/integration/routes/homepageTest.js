@@ -5,7 +5,7 @@ const request = require('supertest');
 const path = require('path');
 
 const app = require(
-  path.join(__dirname, '..', '..', '..', 'app', 'app.js')
+  path.join(__dirname, '..', '..', '..', 'app', 'server', 'index.js')
 ).getApp;
 
 describe('GET /', function() {
