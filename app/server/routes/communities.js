@@ -131,7 +131,6 @@ export default (opts) => {
       }).fetch({
         require: false,
       }).then((result) => {
-        console.log(result);
         if (result === null) {
           member = true;
         } else {

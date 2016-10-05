@@ -11,9 +11,6 @@
  * @todo Update Single Event
  */
 import { Router } from 'express';
-//import Events from '../models/Event';
-
-const path = require('path');
 
 const Events = require('../models/Event');
 const RSVP = require('../models/RelationshipRsvpEventProfile');
@@ -71,7 +68,7 @@ export default (opts) => {
   router.post('/events/create', opts.jwtAuth, (req, res) => {
     const start = `${req.body.event_startdate} ${req.body.event_starttime}`;
     const finish = `${req.body.event_enddate} ${req.body.event_endtime}`;
-    new Event({
+    new Events({
       name: req.body.event_name,
       description: req.body.event_desc,
       startTime: start,
