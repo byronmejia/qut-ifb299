@@ -13,7 +13,7 @@ import path from 'path';
 import express from 'express';
 import morgan from 'morgan';
 import passport from 'passport';
-import router from './routes';
+import controller from './controller';
 
 const app = express();
 require('./config/passport')(passport);
@@ -29,7 +29,7 @@ const options = {
   jwtAuth,
 };
 
-app.use(router(options));
+app.use(controller(options));
 
 // Listen
 if (!module.parent) app.listen(app.get('port'));
