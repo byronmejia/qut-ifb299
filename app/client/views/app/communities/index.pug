@@ -1,21 +1,43 @@
 extends ../../_app_layout
 
 block content
-    h2 #{community.name}
-        a(href="/community/"+community.id+"/donate" class="button")      Donate
-    h4 #{community.description}
-    p #{community.location}
-    // If community manager
-    a(href="/community/"+community.id+"/edit" class="button") Edit Community
-
-    article.card
-        h3 Upcoming events for #{community.name}
-        p No upcoming events
-        // If community manager
-    a(href="/events/create" class="button") Create Event
-
-    article.card
-        h3 Members of #{community.name}
-        p Jessica Barron
-        p Byron Mejia
-    a(href="/community/"+community.id+"/join" class="button") Join
+    div.jumbo
+        div.head
+            div.left
+                h1 #{community.name}
+            div.right
+                a(href="/community/"+community.id+"/edit" class="button") Edit Community
+        h4 #{community.description}
+    div.page
+        div.card_container.content
+            article.card
+                div.head
+                    div.left
+                        h3 Upcoming events for #{community.name}
+                    div.right
+                        // If community manager
+                        a(href="/events/create" class="button") Create Event
+                p No upcoming events
+        div.card_container.aside
+            article.card
+                div.head
+                    div.left
+                        h3 Details
+                    div.right
+                        a(href="/community/"+community.id+"/join" class="button") Join
+                p #{community.name} is located at #{community.location}.
+            article.card
+                div.head
+                    div.left
+                        h3 Donations
+                    div.right
+                        a(href="/community/"+community.id+"/donate" class="button") Donate
+                p Give us money pls.
+                hr
+                h5 $4500/$5000 Goal
+                div.bar
+                    div.progress
+            article.card
+                h3 Members
+                p Jessica Barron
+                p Byron Mejia

@@ -21,7 +21,6 @@ module.exports = (app, path, express, passport) => {
   app.use(bodyParser.json());
   app.use(cookieParser());
   app.use(bodyParser.urlencoded({ extended: false }));
-  app.use(express.static(path.join(__dirname, '..', 'public')));
   app.use(passport.initialize());
   app.use(
     '/js',
@@ -42,4 +41,5 @@ module.exports = (app, path, express, passport) => {
       ],
     },
   }));
+  app.use(express.static(path.join(__dirname, '..', 'public')));
 };

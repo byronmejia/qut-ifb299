@@ -38,14 +38,25 @@
 @import 'bower_components/picnic/src/plugins/tabs/plugin';
 @import 'bower_components/picnic/src/plugins/tooltip/plugin';
 
+$dark_grey: #333;
+$darkest_blue: #141484;
+$dark_blue: #1F1C9B;
+$medium_blue: #0061EF;
+$light_blue: #29ABE2;
+$yellow: #D9E021;
+
+body {
+  color: $dark-grey;
+}
+
 nav {
   height: 100%; /* 100% Full-height */
-  width: 250px; /* 0 width - change this with JavaScript */
+  width: 250px;  /* 0 width - change this with JavaScript */
   position: fixed; /* Stay in place */
   z-index: 1; /* Stay on top */
   top: 0;
   left: 0;
-  background-color: #0A0A35; /* Black*/
+  background-color: $darkest_blue;
   overflow-x: hidden; /* Disable horizontal scroll */
   padding-top: 60px; /* Place content 60px from the top */
   transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
@@ -54,12 +65,12 @@ nav {
     padding: 8px 8px 8px 32px;
     text-decoration: none;
     font-size: 25px;
-    color: #818181;
+    color: white;
     display: block;
     transition: 0.3s
   }
   a:hover, .offcanvas a:focus{
-    color: #f1f1f1;
+    color: $yellow;
   }
 
   &.closebtn {
@@ -68,6 +79,108 @@ nav {
     right: 25px;
     font-size: 36px;
     margin-left: 50px;
+  }
+}
+
+body {
+  background-color: #eee;
+}
+
+div.jumbo {
+  //background-color: #BBB;
+  width: 100%;
+  padding-bottom: 60px;
+  margin-bottom: 40px;
+  border-bottom: 2px solid $medium_blue;
+}
+
+div.head {
+  display: table;
+  width: 100%;
+
+  div.left, div.right {
+    display: table-cell;
+  }
+
+  div.right {
+    text-align: right;
+
+    .button {
+      margin-top: -10px;
+    }
+  }
+}
+
+article.card {
+  padding: 20px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  background-color: white;
+
+  .button {
+    font-size: 14px;
+    margin-bottom: 0;
+  }
+
+  p {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+div.page {
+  display: table;
+  border-collapse: separate;
+  width: 100%;
+  table-layout: fixed;
+}
+
+div.card_container {
+  display: table-cell;
+}
+
+div.aside {
+  width: 25%;
+}
+
+div.content article.card {
+  margin-right: 20px;
+  min-height: 100%;
+}
+
+div.bar {
+  height: 20px;
+  width: 100%;
+  background-color: #ddd;
+  //border: 2px solid $medium_blue;
+
+  div.progress {
+    height: 100%;
+    background-color: $medium_blue;
+    width: 82%;
+  }
+}
+
+a {
+  color: $medium_blue;
+
+  &:hover {
+    color: $dark_blue;
+  }
+}
+
+.button {
+  background-color: $medium_blue;
+  border: 2px solid $medium_blue;
+
+
+  &:hover {
+    box-sizing: border-box;
+   -moz-box-sizing: border-box;
+   -webkit-box-sizing: border-box;
+    border: 2px solid $dark_blue;
+    background-color: transparent;
   }
 }
 
@@ -121,12 +234,12 @@ header#landing {
   box-sizing: border-box;
   padding: 40px;
   width: 100%;
-  background-color: #0A0A35;
+  background-color: $darkest_blue;
   color: white;
   text-align: center;
 
   a.button {
-    background-color: yellow;
+    background-color: $yellow;
     color: #0A0A35;
   }
 }
