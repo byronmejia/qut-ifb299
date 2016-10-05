@@ -2,7 +2,7 @@ extends ../../_app_layout
 
 block content
     h1 Create a community
-    form(action="/community/"+community.id+"/edit/success" method="POST")
+    form(method="POST")
         div
             label(for='community_name') Name
             input(id='community_name' type='text' placeholder="Name of Community" name='community_name' value=community.name required)
@@ -14,6 +14,7 @@ block content
             input(id='community_location' type='text' placeholder="Location of community" name='community_location' value=community.location required)
         div
             label(for='community_pic') Upload a community profile picture
-            p picture uploader goes here
+            p
+                i picture uploader goes here
         div
             button(type='submit') Edit community
