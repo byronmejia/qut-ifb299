@@ -6,7 +6,7 @@ block content
             div.left
                 h1 #{community.name}
             div.right
-                a(href="/community/"+community.id+"/edit" class="button") Edit Community
+                    a(href="/communities/"+community.id+"/edit" class="button") Edit Community
         h4 #{community.description}
     div.page
         div.card_container.content
@@ -24,14 +24,15 @@ block content
                     div.left
                         h3 Details
                     div.right
-                        a(href="/community/"+community.id+"/join" class="button") Join
+                        if is_member
+                            a(href="/communities/"+community.id+"/join" class="button") Join
                 p #{community.name} is located at #{community.location}.
             article.card
                 div.head
                     div.left
                         h3 Donations
                     div.right
-                        a(href="/community/"+community.id+"/donate" class="button") Donate
+                        a(href="/communities/"+community.id+"/donate" class="button") Donate
                 p Give us money pls.
                 hr
                 h5 $4500/$5000 Goal

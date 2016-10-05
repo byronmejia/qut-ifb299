@@ -100,12 +100,13 @@ export default (opts) => {
       description: req.body.community_desc,
       location: req.body.community_location,
     }).save().then((community) => {
-      // get profile_id from login_id
-      new Relationship({
-        profile_id: 1111,
-        community_id: community.attributes.id,
-      }).save().then(() => {
-        res.redirect('/communities');
+      getCurrentProfile(req).then((id) => {
+        new Relationship({
+          profile_id: id,
+          community_id: community.attributes.id,
+        }).save().then(() => {
+          res.redirect('/communities');
+        });
       });
     });
   });
@@ -122,13 +123,30 @@ export default (opts) => {
    * @returns undefined
    */
   router.get('/:id', opts.jwtAuth, (req, res) => {
-    Communities.where({
-      id: req.params.id,
-    }).fetch({
-      require: true,
-    }).then((data) => {
-      res.render('app/communities/index', {
-        community: data.attributes,
+    let member;
+    getCurrentProfile(req).then((pid) => {
+      Relationship.where({
+        profile_id: pid,
+        community_id: req.params.id,
+      }).fetch({
+        require: false,
+      }).then((result) => {
+        console.log(result);
+        if (result === null) {
+          member = true;
+        } else {
+          member = false;
+        }
+        Communities.where({
+          id: req.params.id,
+        }).fetch({
+          require: true,
+        }).then((data) => {
+          res.render('app/communities/index', {
+            community: data.attributes,
+            is_member: member,
+          });
+        });
       });
     });
   });

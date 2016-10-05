@@ -3,9 +3,15 @@ extends ../../../_app_layout
 block content
     script(type='text/javascript', src="https://js.stripe.com/v2/")
 
-    article.card
-        h1 Donate to #{ community.attributes.name }
-        h3 Thank you for donating! Many appreciate!
+    div.jumbo
+        div.head
+            div.left
+                h1 Donate to #{ community.attributes.name }
+            div.right
+                a(href="/community/"+community.id+"/edit" class="button") Edit Community
+        h3 We have currently raised $4500 of our $5000 Goal!
+        div.bar
+            div.progress
 
     form#payment-form(role='form', autocomplete='on', method='POST')
         error#errorRegion
@@ -29,7 +35,7 @@ block content
                 label Year
                 input.card-expiry-year(type='text', data-stripe='exp-year', placeholder='YYYY', required)
         submit
-            button#submitButton(type='submit') Submit
+            button#submitButton(type='submit') Donate
 
     script(type='text/javascript').
         var globalAmount = 0;
