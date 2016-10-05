@@ -8,6 +8,7 @@
  * @author Byron Mejia
  * @author Jessica Barron
  * @soundtrack Of Energy - Tesseract
+ * @module controller/communities
  * @todo cleanup import system
  */
 import { Router } from 'express';

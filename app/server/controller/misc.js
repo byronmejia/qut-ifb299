@@ -6,6 +6,7 @@
  * @file Manages authentication routes
  * @author Byron Mejia
  * @soundtrack Of Reality - Tesseract
+ * @module controller/misc
  */
 import { Router } from 'express';
 

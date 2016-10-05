@@ -5,12 +5,14 @@
  * @since 1.0.0
  * @file Manages authentication routes
  * @author Jessica Barron
+ * @module controller/signup
  * @todo Write appropiate tests
  */
 import { Router } from 'express';
 import Profile from '../models/Profile';
 import Login from '../models/Login';
 
+/** Gives users access to signup */
 export default () => {
   const router = new Router();
 

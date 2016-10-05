@@ -7,6 +7,7 @@
  * @file Manages authentication routes
  * @author Byron Mejia
  * @author Jessica Barron
+ * @module controller/events
  * @todo Get Single Event
  * @todo Update Single Event
  */

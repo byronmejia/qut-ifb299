@@ -5,6 +5,7 @@
  *
  * @since 1.0.0
  * @file Manages authentication routes
+ * @module controller/auth
  * @author Byron Mejia
  * @author Russel Demos
  * @soundtrack Of Mind - Tesseract
