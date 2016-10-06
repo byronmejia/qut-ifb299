@@ -11,4 +11,4 @@ block content
         article.card
             a(href='/communities/' + community.attributes.id)
                 h1= community.attributes.name
-            p= community.attributes.description
+            p!= community.attributes.description
