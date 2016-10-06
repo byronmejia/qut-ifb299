@@ -1,0 +1,45 @@
+extends ../../_app_layout
+
+block content
+    div.jumbo
+        div.head
+            div.left
+                h1 #{event.name}
+            div.right
+                    a(href="/events/"+event.id+"/edit" class="button") Edit event
+        h4 #{event.description}
+    div.page
+        div.card_container.content
+            article.card
+              h3 Attending members
+              p Russel Demos
+              p Tylor Stewart
+        div.card_container.aside
+            article.card
+                div.head
+                    div.left
+                        h3 Details
+                    div.right
+                        if is_going
+                            a(href="/events/"+event.id+"/join" class="button") RSVP
+                p Location: #{event.location}
+                p Time: #{event.startTime} - #{event.endTime}
+            article.card
+                div.head
+                    div.left
+                        h3 Donations
+                    div.right
+                        a(href="/events/"+event.id+"/donate" class="button") Donate
+                p Give us money pls.
+                hr
+                h5 $4500/$5000 Goal
+                div.bar
+                    div.progress
+            article.card
+              div.head
+                  div.left
+                      h3 You might like
+                  div.right
+                      // If event manager
+                      // a(href="/events/create" class="button") Create Event
+              p No other upcoming events for this community.
