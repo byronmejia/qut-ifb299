@@ -31,7 +31,6 @@ module.exports.upload = function upload(app, req, params, callback) {
   if (req.files.length < fileAmount) { callback(null, ['Minimum ', String(fileAmount), ' images.']); return; }
 
   for (let i = 0; i < req.files.length; i += 1) {
-
     //  * * * * BEGIN LOCAL * * * *
 
     // or atleast try too..
@@ -39,10 +38,11 @@ module.exports.upload = function upload(app, req, params, callback) {
       inputPath.push(req.files[i].path);
       targetPath.push(path.join(__dirname, '../temp/', String(stamp) + String(i) +
       path.extname(req.files[i].originalname).toLowerCase()));
-    } catch(err) {
-
+    } catch (err) {
       // delete files
-      for(let deleteIndex = 0; deleteIndex < req.files.length; deleteIndex += 1){ del(req.files[deleteIndex].path); }
+      for (let deleteIndex = 0; deleteIndex < req.files.length; deleteIndex += 1) {
+        del(req.files[deleteIndex].path);
+      }
 
       callback(null, ['No File Uploaded']);
 
@@ -51,26 +51,28 @@ module.exports.upload = function upload(app, req, params, callback) {
 
     // size checking
     if (req.files[i].size / 1000000 > maxFileSize) {
-
       // delete files
-      for(let deleteIndex = 0; deleteIndex < req.files.length; deleteIndex += 1){ del(req.files[deleteIndex].path); }
+      for (let deleteIndex = 0; deleteIndex < req.files.length; deleteIndex += 1) {
+        del(req.files[deleteIndex].path);
+      }
 
-      callback(null, ['Please Keep Images Under ' + String(maxFileSize) + 'MB']);
+      callback(null, ['Please Keep Images Under ', String(maxFileSize), 'MB']);
 
       return;
     }
 
     // handle formats
-    var extname = path.extname(req.files[i].originalname).toLowerCase();
+    const extname = path.extname(req.files[i].originalname).toLowerCase();
     if (extname === '.png') fs.renameSync(inputPath[i], targetPath[i]);
     else if (extname === '.jpg') fs.renameSync(inputPath[i], targetPath[i]);
     else if (extname === '.gif') fs.renameSync(inputPath[i], targetPath[i]);
 
     // non supported file
     else {
-
       // delete files
-      for(let deleteIndex = 0; deleteIndex < req.files.length; deleteIndex += 1){ del(req.files[deleteIndex].path); }
+      for (let deleteIndex = 0; deleteIndex < req.files.length; deleteIndex += 1) {
+        del(req.files[deleteIndex].path);
+      }
 
       callback(null, ['.png\'s .jpg\'s .gif\'s only!']);
 
@@ -81,7 +83,7 @@ module.exports.upload = function upload(app, req, params, callback) {
 
 
     // uploader parameters
-    var params = {
+    const uploaderParams = {
       localFile: targetPath[i],
       s3Params: {
         Bucket: bucketName,
@@ -90,51 +92,44 @@ module.exports.upload = function upload(app, req, params, callback) {
     };
 
     // create uploader
-    var uploader = client.uploadFile(params);
+    const uploader = client.uploadFile(uploaderParams);
 
     // file couldnt upload
-    uploader.on('error', (err) => {
-
+    uploader.on('error', () => {
       // delete the files locally for now
-      for(let deleteIndex = 0; deleteIndex < targetPath.length; deleteIndex += 1){ del(targetPath[deleteIndex]); }
-
+      for (let deleteIndex = 0; deleteIndex < targetPath.length; deleteIndex += 1) {
+        del(targetPath[deleteIndex]);
+      }
     });
 
     // file is uploading
     uploader.on('progress', () => {
-
       // TODO This could be sent over as json
-      var percentage = uploader.progressAmount / uploader.progressTotal * 100;
-
+      // var percentage = uploader.progressAmount / uploader.progressTotal * 100;
     });
 
     // file is done
-    uploader.on('end', () => {
-
+    uploader.on('end', () => { // eslint-disable-line no-loop-func
       filesUploaded += 1;
 
       // once all files are uploaded
-      if(filesUploaded == req.files.length){
-
+      if (filesUploaded === req.files.length) {
         // get the links for every file
-        for(let urlIndex = 0; urlIndex < targetPath.length; urlIndex += 1){
+        for (let urlIndex = 0; urlIndex < targetPath.length; urlIndex += 1) {
           resultImages.push(s3.getPublicUrlHttp(bucketName, path.basename(targetPath[i])));
         }
 
         // check if the links match length
-        if(resultImages.length == req.files.length){
-
+        if (resultImages.length === req.files.length) {
           // delete the files locally for now
-          for(let deleteIndex = 0; deleteIndex < targetPath.length; deleteIndex += 1){ del(targetPath[deleteIndex]); }
+          for (let deleteIndex = 0; deleteIndex < targetPath.length; deleteIndex += 1) {
+            del(targetPath[deleteIndex]);
+          }
 
           // finish
           callback(resultImages);
-
         }
-
       }
-
     });
-
   } // end file loop
-} // module export
+}; // module export
