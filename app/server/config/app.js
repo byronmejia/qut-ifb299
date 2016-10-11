@@ -8,16 +8,23 @@
  * @todo Get Single Event
  * @todo Update Single Event
  */
+
+ // Node Modules
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import sassMiddleware from 'node-sass-middleware';
 import browserify from 'browserify-middleware';
+
+// Local Modules
+const s3File = require('./s3.js');
 
 module.exports = (app, path, express, passport) => {
   app.set('showStackError', true);
   app.set('port', process.env.PORT || 3000);
   app.set('view engine', 'pug');
   app.set('views', path.join(__dirname, '..', '..', 'client', 'views'));
+  app.set('s3', s3File.s3);
+  app.set('s3Client', s3File.client);
   app.use(bodyParser.json());
   app.use(cookieParser());
   app.use(bodyParser.urlencoded({ extended: false }));
