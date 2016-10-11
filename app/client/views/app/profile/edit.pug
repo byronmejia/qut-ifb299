@@ -1,0 +1,28 @@
+extends ../../_app_layout
+
+block content
+    div.jumbo
+        div.head
+            div.left
+                h1 #{profile.firstName}  #{profile.lastName} 
+            div.right
+    div.page
+        div.card_container.content
+            form(method="POST")
+                div
+                    label(for='first-name') First Name
+                    input(id='first-name' type='text' name='first_name' value=profile.firstName required)
+                div
+                    label(for='last-name') Last Name
+                    input(id='last-name' type='text' name='last_name' value=profile.lastName required)
+                div
+                    label(for='email') Email
+                    input(id='email' type='email' name='email' value=profile.email required)
+                div
+                    label(for='mobile') Mobile
+                    input(id='mobile' type='tel' name='mobile' value=profile.mobile required)
+                div
+                    label(for='bio') Bio
+                    textarea(id='bio' name='bio') !{profile.bio}
+                div
+                    button(type='submit') Save

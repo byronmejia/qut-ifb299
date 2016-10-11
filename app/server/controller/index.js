@@ -12,6 +12,7 @@ import misc from './misc';
 import communities from './communities';
 import events from './events';
 import signup from './signup';
+import profile from './profile';
 
 /**
  * Combines all controllers together
@@ -27,6 +28,7 @@ export default function allControllers(opts) {
   router.use('/communities', communities(opts));
   router.use('/events', events(opts));
   router.use('/signup', signup());
+  router.use('/profile', profile(opts));
 
   return router;
 }
