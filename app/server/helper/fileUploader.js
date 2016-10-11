@@ -5,10 +5,11 @@ const fs = require('fs');
 // To use this module incorporate the following into your route
 // const multer = require('multer');
 // const upload = multer({ dest: path.join(__dirname, '../temp/')});
+// const fileUploader = require('../helper/fileUploader.js');
 // app.post('path', upload.array('files'), (req,res)
 
 // export this module
-module.exports.upload = function upload(app, req, params, callback) {
+module.exports.upload = function upload(req, params, callback) {
   // upload parameters
   const fileAmount = (params.fileAmount) ? params.fileAmount : 2;
   const maxFileSize = (params.maxFileSize) ? params.maxFileSize : 2;
@@ -100,6 +101,9 @@ module.exports.upload = function upload(app, req, params, callback) {
       for (let deleteIndex = 0; deleteIndex < targetPath.length; deleteIndex += 1) {
         del(targetPath[deleteIndex]);
       }
+
+      // return back
+      callback(null, "Couldn't Upload Picture");
     });
 
     // file is uploading

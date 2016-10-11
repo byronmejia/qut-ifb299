@@ -3,6 +3,17 @@ extends _app_layout
 
 block content
     h1 My Profile
+
+    if image
+      img(src=image width="150" height="150")
+      form(method="post" enctype="multipart/form-data" name="upload")
+        input(input="input-1" type="file" name="files")
+        button(type="submit") Change Profile Picture
+    else
+      form(method="post" enctype="multipart/form-data" name="upload")
+        input(input="input-1" type="file" name="files")
+        button(type="submit") Upload Profile Picture
+
     textarea Simple WYSIWYG Text Editing
     br
     article.card

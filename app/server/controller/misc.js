@@ -10,6 +10,15 @@
  */
 import { Router } from 'express';
 
+// S3
+const path = require('path');
+
+const multer = require('multer');
+
+const upload = multer({ dest: path.join(__dirname, '../temp/') });
+
+const fileUploader = require('../helper/fileUploader.js');
+
 export default (opts) => {
   const router = new Router();
 
@@ -39,7 +48,42 @@ export default (opts) => {
    * @returns undefined
    */
   router.get('/profile', opts.jwtAuth, (req, res) => {
+    // TODO Attempt to pull picture from database
     res.render('profile');
+  });
+
+  /**
+   * POST Profile page
+   *
+   * @function
+   *
+   * @author Russel Demos
+   * @param {Object} req - Express request object
+   * @param {Object} res - Express response object
+   * @description Stores user picture, adds link to database
+   * @returns undefined
+   */
+  router.post('/profile', opts.jwtAuth, upload.array('files'), (req, res) => {
+    // TODO check if logged in
+
+    // Magical Instructions
+    const uploadParams = {
+      fileAmount: 1,
+      maxFileSize: 2,
+      // Make Sure The Bucket Exists, You Can't Create One From API
+      bucketName: 'profile-pictures',
+    };
+
+    // Convert Images To Links Via Magic
+    fileUploader.upload(req, uploadParams, (imageUrl, error) => {
+      // TODO Display error prompt
+      if (error) { res.render('profile'); return; }
+
+      // TODO Store Links In Database
+
+      // Render Profile
+      res.render('profile', { image: imageUrl });
+    });
   });
 
   /**
