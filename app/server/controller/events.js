@@ -14,8 +14,8 @@
 import { Router } from 'express';
 
 const Events = require('../models/Event');
-const RSVP = require('../models/RelationshipRsvpEventProfile');
-const getCurrentProfile = require('../helper/getCurrentProfile');
+// const RSVP = require('../models/RelationshipRsvpEventProfile');
+// const getCurrentProfile = require('../helper/getCurrentProfile');
 
 export default (opts) => {
   const router = new Router();
@@ -37,7 +37,7 @@ export default (opts) => {
     Events.fetchAll().then(events =>
       res.render('app/events/all', { events: events.models })
     );
-   });
+  });
 
   /**
    * GET create event
@@ -69,7 +69,7 @@ export default (opts) => {
   router.post('/events/create', opts.jwtAuth, (req, res) => {
     const start = `${req.body.event_startdate} ${req.body.event_starttime}`;
     const finish = `${req.body.event_enddate} ${req.body.event_endtime}`;
-    new Event({
+    new Events({
       name: req.body.event_name,
       description: req.body.event_desc,
       startTime: start,
