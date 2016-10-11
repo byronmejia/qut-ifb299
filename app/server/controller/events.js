@@ -12,7 +12,10 @@
  * @todo Update Single Event
  */
 import { Router } from 'express';
-import Event from '../models/Event';
+
+const Events = require('../models/Event');
+const RSVP = require('../models/RelationshipRsvpEventProfile');
+const getCurrentProfile = require('../helper/getCurrentProfile');
 
 export default (opts) => {
   const router = new Router();
@@ -23,13 +26,18 @@ export default (opts) => {
    * @function
    *
    * @author Byron Mejia
+   * @author Jessica Barron
    * @param {Object} req - Express request object
    * @param {Object} res - Express response object
    * @description Show all events available to the signed in user
    * @todo Ensure event's view is up to date
    * @returns undefined
    */
-  router.get('/', opts.jwtAuth, (req, res) => res.render('app/events/all'));
+  router.get('/', opts.jwtAuth, (req, res) => {
+    Events.fetchAll().then(events =>
+      res.render('app/events/all', { events: events.models })
+    );
+   });
 
   /**
    * GET create event
