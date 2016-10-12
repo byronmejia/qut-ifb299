@@ -66,7 +66,7 @@ export default (opts) => {
    * @todo Ensure event saves to appropiate location
    * @returns undefined
    */
-  router.post('/events/create', opts.jwtAuth, (req, res) => {
+  router.post('/create', opts.jwtAuth, (req, res) => {
     const start = `${req.body.event_startdate} ${req.body.event_starttime}`;
     const finish = `${req.body.event_enddate} ${req.body.event_endtime}`;
     new Events({
@@ -75,6 +75,7 @@ export default (opts) => {
       startTime: start,
       endTime: finish,
       location_id: 1,
+      community_id: 1,
     }).save().then(() => {
       res.redirect('/events');
     });

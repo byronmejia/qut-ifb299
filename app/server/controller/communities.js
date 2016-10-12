@@ -16,6 +16,7 @@ import { Router } from 'express';
 const path = require('path');
 
 const Communities = require('../models/Community');
+const Events = require('../models/Event');
 const Charges = require('../models/Charges');
 const stripe = require('../config/stripe').stripe;
 const getCurrentProfile = require('../helper/getCurrentProfile');
@@ -128,11 +129,16 @@ export default (opts) => {
       id: req.params.id,
     }).fetch({
       require: true,
-    }).then((data) => {
-      res.render('app/communities/index', {
-        community: data.attributes,
-      });
-    });
+    }).then(
+      community => Events.where({
+        community_id: community.attributes.id,
+      }).fetchAll().then((events) => {
+        res.render('app/communities/index', {
+          community: community.attributes,
+          events: events.models,
+        });
+      })
+    );
   });
 
   /**
