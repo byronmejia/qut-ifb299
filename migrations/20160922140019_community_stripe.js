@@ -1,7 +1,8 @@
 exports.up = (knex, Promise) => (
   Promise.all([
     knex.schema.table('communities', (t) => {
-      t.decimal('currentAmount');
+      t.decimal('currentAmount')
+        .defaultTo(0.00);
     }),
   ])
 );
