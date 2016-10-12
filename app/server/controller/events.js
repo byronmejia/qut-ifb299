@@ -76,7 +76,46 @@ export default (opts) => {
       endTime: finish,
       location_id: 1,
     }).save().then(() => {
-      res.send('Data sent?');
+      res.redirect('/events');
+    });
+  });
+
+  /**
+   * GET One Event
+   *
+   * @function
+   *
+   * @author Jessica Barron
+   * @param {Object} req - Express request object
+   * @param {Object} res - Express response object
+   * @description Returns a view for ONE event
+   * @returns undefined
+   */
+  router.get('/:id', opts.jwtAuth, (req, res) => {
+    let going;
+    getCurrentProfile(req).then((pid) => {
+      RSVP.where({
+        profile_id: pid,
+        event_id: req.params.id,
+      }).fetch({
+        require: false,
+      }).then((result) => {
+        if (result === null) {
+          going = false;
+        } else {
+          going = true;
+        }
+        Events.where({
+          id: req.params.id,
+        }).fetch({
+          require: true,
+        }).then((data) => {
+          res.render('app/events/index', {
+            event: data.attributes,
+            is_going: going,
+          });
+        });
+      });
     });
   });
 
