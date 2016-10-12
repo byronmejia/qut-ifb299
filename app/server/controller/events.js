@@ -14,8 +14,8 @@
 import { Router } from 'express';
 
 const Events = require('../models/Event');
-// const RSVP = require('../models/RelationshipRsvpEventProfile');
-// const getCurrentProfile = require('../helper/getCurrentProfile');
+const RSVP = require('../models/RelationshipRsvpEventProfile');
+const getCurrentProfile = require('../helper/getCurrentProfile');
 
 export default (opts) => {
   const router = new Router();
