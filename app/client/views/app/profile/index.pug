@@ -1,0 +1,54 @@
+
+extends ../../_app_layout
+
+block content
+    div.jumbo
+        div.head
+            div.left
+                h1 #{profile.firstName}  #{profile.lastName} 
+            div.right
+                if current_user
+                    a(href="/profile/edit" class="button") Edit Profile
+    div.page
+        div.card_container.content
+            article.card
+                div.head
+                    div.left
+                        h3 About #{profile.name}
+                    div.right
+                div !{profile.bio}
+        div.card_container.aside
+            article.card
+                div.head
+                    div.left
+                        h3 Contact
+                    div.right
+                p Email: #{profile.email}
+                p Mobile: #{profile.mobile}
+            article.card
+                div.head
+                    div.left
+                        h3 Total Donations
+                    div.right
+                p Total community contributions:
+                hr
+                h5 $3210/$5000 Goal
+                div.bar
+                    div.progress
+            article.card
+                h3 Communities
+                p The Dog Society
+                p The Ruby club
+
+    br
+    article.card
+        h3 My Linked Accounts
+        a(href='/auth/link/facebook')
+          i.fa.fa-facebook-official.fa-2x(aria-hidden='true')
+          |  Link Facebook
+        a(href='/auth/link/google')
+          i.fa.fa-google.fa-2x(aria-hidden='true')
+          |  Link Google
+        a(href='/auth/link/github')
+          i.fa.fa-github.fa-2x(aria-hidden='true')
+          |  Link Github

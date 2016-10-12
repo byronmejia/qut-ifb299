@@ -28,21 +28,6 @@ export default (opts) => {
   });
 
   /**
-   * GET Profile page
-   *
-   * @function
-   *
-   * @author Byron Mejia
-   * @param {Object} req - Express request object
-   * @param {Object} res - Express response object
-   * @description Render's the current user's profile page
-   * @returns undefined
-   */
-  router.get('/profile', opts.jwtAuth, (req, res) => {
-    res.render('profile');
-  });
-
-  /**
    * GET Home page
    *
    * @function
