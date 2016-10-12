@@ -5,6 +5,7 @@ IFB299 'Community Management' project.
 __Build Status__
 
 [![Build Status](https://travis-ci.com/byronmejia/qut-ifb299.svg?token=acN8U3sQnG2yr6qQ4ozY&branch=develop)](https://travis-ci.com/byronmejia/qut-ifb299)
+[![Badges](https://img.shields.io/badge/badges-awesome-green.svg)](https://github.com/bevacqua/awesome-badges)
 
 ## Getting Started
 ### Preface
