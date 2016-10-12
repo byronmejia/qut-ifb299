@@ -17,7 +17,16 @@ block content
                     div.right
                         // If community manager
                         a(href="/events/create" class="button") Create Event
-                p No upcoming events
+                if events.length == 0
+                    p No Events
+                else
+                    each event in events
+                        div 
+                            a(href='/communities/' + event.attributes.id)
+                                h4= event.attributes.name
+                            p= event.attributes.description
+                            h5= event.attributes.startTime
+
         div.card_container.aside
             article.card
                 div.head
