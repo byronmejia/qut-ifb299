@@ -95,18 +95,19 @@ export default (opts) => {
    * @returns undefined
    */
   router.post('/create', opts.jwtAuth, (req, res) => {
-    new Communities({
-      name: req.body.community_name,
-      profile_picture: null,
-      description: req.body.community_desc,
-      location: req.body.community_location,
-    }).save().then((community) => {
-      // get profile_id from login_id
-      new Relationship({
-        profile_id: 1111,
-        community_id: community.attributes.id,
-      }).save().then(() => {
-        res.redirect('/communities');
+    getCurrentProfile(req).then((profileId) => {
+      new Communities({
+        name: req.body.community_name,
+        profile_picture: null,
+        description: req.body.community_desc,
+        location: req.body.community_location,
+      }).save().then((community) => {
+        new Relationship({
+          profile_id: profileId,
+          community_id: community.attributes.id,
+        }).save().then(() => {
+          res.redirect('/communities');
+        });
       });
     });
   });
