@@ -28,22 +28,6 @@ export default (opts) => {
   });
 
   /**
-   * GET Home page
-   *
-   * @function
-   *
-   * @author Byron Mejia
-   * @param {Object} req - Express request object
-   * @param {Object} res - Express response object
-   * @description Generates the homepage, with current top news
-   * @todo Add Home to sidebar
-   * @returns undefined
-   */
-  router.get('/home', opts.jwtAuth, (req, res) => {
-    res.render('home');
-  });
-
-  /**
    * GET Dashboard page
    *
    * @function

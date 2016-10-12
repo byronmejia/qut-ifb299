@@ -17,20 +17,6 @@ describe('GET /profile', () => {
   });
 });
 
-describe('GET /home', () => {
-  it('Fails when not authenticated', (done) => {
-    request(app)
-      .get('/home')
-      .expect(302, done);
-  });
-
-  it('Will return 200/OK after authenticated', (done) => {
-    request(app)
-      .get('/home')
-      .expect(302, done);
-  });
-});
-
 describe('GET /dashboard', () => {
   it('Fails when not authenticated', (done) => {
     request(app)

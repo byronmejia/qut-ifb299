@@ -1,7 +1,7 @@
 const Login = require('../app/server/models/Login');
 const Profile = require('../app/server/models/Profile');
 const Community = require('../app/server/models//Community');
-// TODO: const Event = require('../app/server/models/Event');
+const Event = require('../app/server/models/Event');
 const Location = require('../app/server/models/Location');
 const RelationshipProfileCommunity = require('../app/server/models/RelationshipProfileCommunity');
 // TODO: const RelationshipRsvpEventProfile =
@@ -192,6 +192,38 @@ function seedCommunities(knex, Promise) {
   ]));
 }
 
+function seedEvents(knex, Promise) {
+  return knex('events')
+  .truncate().then(
+    () => Promise.all([
+      new Event({
+        name: 'UX Meetup',
+        description: 'My favourite colour is black',
+        startTime: Date.now(),
+        endTime: (Date.now() + (2 * 60 * 60 * 1000)),
+        location_id: 1,
+        community_id: 1,
+      }).save(),
+      new Event({
+        name: 'UQCS Meetup',
+        description: 'My favourite colour is purple',
+        startTime: Date.now(),
+        endTime: (Date.now() + (2 * 60 * 60 * 1000)),
+        location_id: 2,
+        community_id: 2,
+      }).save(),
+      new Event({
+        name: 'JDP Meetup',
+        description: 'My favourite colour is lambda',
+        startTime: Date.now(),
+        endTime: (Date.now() + (2 * 60 * 60 * 1000)),
+        location_id: 3,
+        community_id: 3,
+      }).save(),
+    ])
+  );
+}
+
 function seedOneProfileCommunityRelationship(loginAttr, communityAttr) {
   return Login.where({ username: loginAttr }).fetch()
     .then(
@@ -244,6 +276,7 @@ exports.seed = function generateSeeds(knex, Promise) {
     ]).then(
       () => Promise.all([
         seedProfileCommunityRelationship(knex, Promise),
+        seedEvents(knex, Promise),
       ])
     )
   );

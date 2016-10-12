@@ -12,6 +12,10 @@ exports.up = (knex, Promise) => (
         .notNullable()
         .references('id')
         .inTable('locations');
+      t.integer('community_id')
+        .references('id')
+        .inTable('communities')
+        .notNullable();
     }),
   ])
 );
