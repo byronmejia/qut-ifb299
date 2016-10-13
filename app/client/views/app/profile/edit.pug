@@ -8,21 +8,33 @@ block content
             div.right
     div.page
         div.card_container.content
-            form(method="POST")
-                div
-                    label(for='first-name') First Name
-                    input(id='first-name' type='text' name='first_name' value=profile.firstName required)
-                div
-                    label(for='last-name') Last Name
-                    input(id='last-name' type='text' name='last_name' value=profile.lastName required)
-                div
-                    label(for='email') Email
-                    input(id='email' type='email' name='email' value=profile.email required)
-                div
-                    label(for='mobile') Mobile
-                    input(id='mobile' type='tel' name='mobile' value=profile.mobile required)
-                div
-                    label(for='bio') Bio
-                    textarea(id='bio' name='bio') !{profile.bio}
-                div
-                    button(type='submit') Save
+            article.card
+                form(method="POST")
+                    div
+                        label(for='first-name') First Name
+                        input(id='first-name' type='text' name='first_name' value=profile.firstName required)
+                    div
+                        label(for='last-name') Last Name
+                        input(id='last-name' type='text' name='last_name' value=profile.lastName required)
+                    div
+                        label(for='email') Email
+                        input(id='email' type='email' name='email' value=profile.email required)
+                    div
+                        label(for='mobile') Mobile
+                        input(id='mobile' type='tel' name='mobile' value=profile.mobile required)
+                    div
+                        label(for='bio') Bio
+                        textarea(id='bio' name='bio') !{profile.bio}
+                    div
+                        button(type='submit') Save
+            article.card
+                h3 My Linked Accounts
+                a(href='/auth/link/facebook')
+                i.fa.fa-facebook-official.fa-2x(aria-hidden='true')
+                |  Link Facebook
+                a(href='/auth/link/google')
+                i.fa.fa-google.fa-2x(aria-hidden='true')
+                |  Link Google
+                a(href='/auth/link/github')
+                i.fa.fa-github.fa-2x(aria-hidden='true')
+                |  Link Github
