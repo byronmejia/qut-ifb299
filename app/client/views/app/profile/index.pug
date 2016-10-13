@@ -14,41 +14,37 @@ block content
             article.card
                 div.head
                     div.left
-                        h3 About #{profile.name}
+                        h3 About #{profile.firstName}
                     div.right
                 div !{profile.bio}
+            article.card
+                h3 Communities #{profile.firstName} has joined
+                each community in communities
+                    div
+                        a(href="/communities/"+community.attributes.id)
+                            h4 #{community.attributes.name}
+            article.card
+                h3 Events #{profile.firstName} is attending
+                each event in events
+                    div
+                        a(href="/events/"+event.attributes.id)
+                            h4 #{event.attributes.name} 
         div.card_container.aside
             article.card
                 div.head
                     div.left
                         h3 Contact
                     div.right
-                p Email: #{profile.email}
-                p Mobile: #{profile.mobile}
+                h5 Email: 
+                p #{profile.email}
+                h5 Mobile: 
+                p #{profile.mobile}
             article.card
                 div.head
                     div.left
                         h3 Total Donations
                     div.right
                 p Total community contributions:
-                hr
                 h5 $3210/$5000 Goal
                 div.bar
                     div.progress
-            article.card
-                h3 Communities
-                p The Dog Society
-                p The Ruby club
-
-    br
-    article.card
-        h3 My Linked Accounts
-        a(href='/auth/link/facebook')
-          i.fa.fa-facebook-official.fa-2x(aria-hidden='true')
-          |  Link Facebook
-        a(href='/auth/link/google')
-          i.fa.fa-google.fa-2x(aria-hidden='true')
-          |  Link Google
-        a(href='/auth/link/github')
-          i.fa.fa-github.fa-2x(aria-hidden='true')
-          |  Link Github

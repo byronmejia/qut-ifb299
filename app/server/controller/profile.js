@@ -11,7 +11,12 @@
 import { Router } from 'express';
 
 const Profiles = require('../models/Profile');
+const Communities = require('../models/Community');
+const Relationships = require('../models/RelationshipProfileCommunity');
+const RSVPs = require('../models/RelationshipRsvpEventProfile');
+const Events = require('../models/Event');
 const getCurrentProfile = require('../helper/getCurrentProfile');
+
 
 export default (opts) => {
   const router = new Router();
@@ -34,16 +39,42 @@ export default (opts) => {
         id: profileId,
       }).fetch({
         require: true,
-      }).then((data) => {
-        res.render('app/profile/index', {
-          profile: data.attributes,
-          current_user: true,
+      }).then((profile) => {
+        Relationships.where({
+          profile_id: profileId,
+        }).fetchAll({
+          require: true,
+        }).then((relations) => {
+          const comArr = [];
+          for (let i = 0, len = relations.length; i < len; i += 1) {
+            comArr[i] = relations.models[i].attributes.community_id;
+          }
+          Communities.where('id', 'in', comArr)
+          .fetchAll().then((communities) => {
+            RSVPs.where({
+              profile_id: profileId,
+            }).fetchAll().then((rsvp) => {
+              const evArr = [];
+              for (let i = 0, len = rsvp.length; i < len; i += 1) {
+                evArr[i] = rsvp.models[i].attributes.event_id;
+              }
+              Events.where('id', 'in', evArr)
+              .fetchAll().then((events) => {
+                res.render('app/profile/index', {
+                  profile: profile.attributes,
+                  communities: communities.models,
+                  events: events.models,
+                  current_user: true,
+                });
+              });
+            });
+          });
         });
       });
     });
   });
 
-        /**
+  /**
    * GET One Profile and Edit
    *
    * @function
@@ -86,9 +117,36 @@ export default (opts) => {
       id: req.params.id,
     }).fetch({
       require: true,
-    }).then((data) => {
-      res.render('app/profile/index', {
-        profile: data.attributes,
+    }).then((profile) => {
+      Relationships.where({
+        profile_id: req.params.id,
+      }).fetchAll({
+        require: true,
+      }).then((relations) => {
+        const comArr = [];
+        for (let i = 0, len = relations.length; i < len; i += 1) {
+          comArr[i] = relations.models[i].attributes.community_id;
+        }
+        Communities.where('id', 'in', comArr)
+        .fetchAll().then((communities) => {
+          RSVPs.where({
+            profile_id: req.params.id,
+          }).fetchAll().then((rsvp) => {
+            const evArr = [];
+            for (let i = 0, len = rsvp.length; i < len; i += 1) {
+              evArr[i] = rsvp.models[i].attributes.event_id;
+            }
+            Events.where('id', 'in', evArr)
+            .fetchAll().then((events) => {
+              res.render('app/profile/index', {
+                profile: profile.attributes,
+                communities: communities.models,
+                events: events.models,
+                current_user: true,
+              });
+            });
+          });
+        });
       });
     });
   });
