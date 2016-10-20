@@ -22,8 +22,11 @@ block content
                     div.right
                         if is_going
                             a(href="/events/"+event.id+"/join" class="button") RSVP
-                p Location: #{event.location}
-                p Time: #{event.startTime} - #{event.endTime}
+                h5 Location: 
+                p #{event.location}
+                h5 Time: 
+                p Start: #{event.startTime}
+                p End #{event.endTime}
             article.card
                 div.head
                     div.left

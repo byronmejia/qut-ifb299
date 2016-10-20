@@ -142,7 +142,6 @@ export default (opts) => {
                 profile: profile.attributes,
                 communities: communities.models,
                 events: events.models,
-                current_user: true,
               });
             });
           });

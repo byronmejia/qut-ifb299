@@ -1,36 +1,53 @@
 extends ../../_app_layout
 
 block content
+
     h1 Create an event
-    form(method="POST")
-        div
-            label(for='event_name') Name
-            input(id='event_name' type='text' placeholder="Name of Event" name='event_name' required)
-        div
-            label(for='event_desc') Event Description
-            textarea(id='event_desc' name='event_desc' required)
-        div
-            label(for='event_location') Location
-            input(id='event_location' type='text' placeholder="Location of Event" name='event_location' required)
-
-        fieldset
+    article.card
+        form(method="POST")
             div
-                legend Event Start
-                div
-                    label(for='event_startdate') Date
-                    input(id='event_startdate' type='date' placeholder="Date of Event" name='event_startdate' required)
-                div
-                    label(for='event_starttime') Time
-                    input(id='event_starttime' type='time' placeholder="Time of Event" name='event_starttime' required)
-
-        fieldset
+                label(for='event_name') Name
+                input(id='event_name' type='text' placeholder="Name of Event" name='event_name' required)
             div
-                legend Event Finish
+                label(for='event_desc') Event Description
+                textarea(id='event_desc' name='event_desc' required)
+            div
+                label(for='event_location') Location
+                input(id='event_location' type='text' placeholder="Location of Event" name='event_location' required)
+                input(id="place_lat" type='hidden' name='place_lat')
+                input(id="place_lng" type='hidden' name='place_lng')
+            fieldset
                 div
-                    label(for='event_enddate') Date
-                    input(id='event_enddate' type='date' placeholder="Date of Event" name='event_enddate' required)
+                    legend Event Start
+                    div
+                        label(for='event_startdate') Date
+                        input(id='event_startdate' type='date' placeholder="Date of Event" name='event_startdate' required)
+                    div
+                        label(for='event_starttime') Time
+                        input(id='event_starttime' type='time' placeholder="Time of Event" name='event_starttime' required)
+
+            fieldset
                 div
-                    label(for='event_endtime') Time
-                    input(id='event_endtime' type='time' placeholder="Time of Event" name='event_endtime' required)
-        div
-            button(type='submit') Create Event
+                    legend Event Finish
+                    div
+                        label(for='event_enddate') Date
+                        input(id='event_enddate' type='date' placeholder="Date of Event" name='event_enddate' required)
+                    div
+                        label(for='event_endtime') Time
+                        input(id='event_endtime' type='time' placeholder="Time of Event" name='event_endtime' required)
+            div
+                button(id="submit" type='submit') Create Event
+        
+    script(src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDKV5YrtunBCcl802MF-H3ZYnwopK1ewl4&libraries=places")
+    script(type="text/javascript").   
+        var input = document.getElementById('event_location');
+        var autocomplete = new google.maps.places.Autocomplete(input);
+        var store_lat = document.getElementById('place_lat');
+        var store_lng = document.getElementById('place_lng');
+
+        autocomplete.addListener('place_changed', function() {
+            var place = autocomplete.getPlace();
+            store_lat.value = place.geometry.location.lat();
+            store_lng.value = place.geometry.location.lng();
+            console.log(place.geometry.location);
+        });

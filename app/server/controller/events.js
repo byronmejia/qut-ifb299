@@ -16,6 +16,7 @@ import { Router } from 'express';
 const Events = require('../models/Event');
 const RSVP = require('../models/RelationshipRsvpEventProfile');
 const getCurrentProfile = require('../helper/getCurrentProfile');
+const Location = require('../models/Location');
 
 export default (opts) => {
   const router = new Router();
@@ -34,9 +35,9 @@ export default (opts) => {
    * @returns undefined
    */
   router.get('/', opts.jwtAuth, (req, res) => {
-    Events.fetchAll().then(events =>
-      res.render('app/events/all', { events: events.models })
-    );
+    Events.fetchAll().then((events) => {
+      res.render('app/events/all', { events: events.models });
+    });
   });
 
   /**
@@ -69,15 +70,21 @@ export default (opts) => {
   router.post('/create', opts.jwtAuth, (req, res) => {
     const start = `${req.body.event_startdate} ${req.body.event_starttime}`;
     const finish = `${req.body.event_enddate} ${req.body.event_endtime}`;
-    new Events({
-      name: req.body.event_name,
-      description: req.body.event_desc,
-      startTime: start,
-      endTime: finish,
-      location_id: 1,
-      community_id: 1,
-    }).save().then(() => {
-      res.redirect('/events');
+    new Location({
+      lat: req.body.place_lat,
+      lon: req.body.place_lng,
+      locationName: req.body.event_location,
+    }).save().then((location) => {
+      new Events({
+        name: req.body.event_name,
+        description: req.body.event_desc,
+        startTime: start,
+        endTime: finish,
+        location_id: location.attributes.id,
+        community_id: 1,
+      }).save().then(() => {
+        res.redirect('/events');
+      });
     });
   });
 
@@ -117,6 +124,61 @@ export default (opts) => {
           });
         });
       });
+    });
+  });
+
+    /**
+   * GET One Event and Edit
+   *
+   * @function
+   *
+   * @author Jessica Barron
+   * @param {Object} req - Express request object
+   * @param {Object} res - Express response object
+   * @description Returns a view of a form to edit
+   * the current event
+   * @returns undefined
+   */
+  router.get('/:id/edit', opts.jwtAuth, (req, res) => {
+    Events.where({
+      id: req.params.id,
+    }).fetch({
+      require: true,
+    }).then((data) => {
+      res.render('app/events/edit', {
+        event: data.attributes,
+      });
+    });
+  });
+
+  
+  /**
+   * POST One Event and Edit
+   *
+   * @function
+   *
+   * @author Jessica Barron
+   * @param {Object} req - Express request object
+   * @param {Object} res - Express response object
+   * @description Returns a view upon successfully
+   * updating the current community
+   * @todo Ensure only certain users may edit the community
+   * @returns undefined
+   */
+  router.post('/:id/edit', opts.jwtAuth, (req, res) => {
+    const start = `${req.body.event_startdate} ${req.body.event_starttime}`;
+    const finish = `${req.body.event_enddate} ${req.body.event_endtime}`;
+    Events.where({
+      id: req.params.id,
+    }).save({
+      name: req.body.event_name,
+      description: req.body.event_desc,
+      startTime: start,
+      endTime: finish,
+    }, {
+      patch: true,
+    }).then(() => {
+      res.redirect('/events');
     });
   });
 

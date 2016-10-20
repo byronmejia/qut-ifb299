@@ -5,7 +5,7 @@ block content
         div.left
             h1 All Events
         div.right
-            // a(href="/events/create" class="button") Create an event
+            a(href="/events/create" class="button") Create an event
     each event in events
         article.card
             a(href='/events/' + event.attributes.id)
