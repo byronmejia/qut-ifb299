@@ -14,6 +14,7 @@
 import { Router } from 'express';
 
 const Events = require('../models/Event');
+const Communities = require('../models/Community');
 const RSVP = require('../models/RelationshipRsvpEventProfile');
 const getCurrentProfile = require('../helper/getCurrentProfile');
 const Location = require('../models/Location');
@@ -52,7 +53,13 @@ export default (opts) => {
    * @todo Ensure event's view is up to date
    * @returns undefined
    */
-  router.get('/create', opts.jwtAuth, (req, res) => res.render('app/events/new'));
+  router.get('/create', opts.jwtAuth, (req, res) => {
+    Communities.fetchAll().then((communities) => {
+      res.render('app/events/new', {
+        communities: communities.models,
+      });
+    });
+  });
 
   /**
    * POST create event
@@ -81,7 +88,7 @@ export default (opts) => {
         startTime: start,
         endTime: finish,
         location_id: location.attributes.id,
-        community_id: 1,
+        community_id: req.body.community_name,
       }).save().then(() => {
         res.redirect('/events');
       });
@@ -118,9 +125,16 @@ export default (opts) => {
         }).fetch({
           require: true,
         }).then((data) => {
-          res.render('app/events/index', {
-            event: data.attributes,
-            is_going: going,
+          Location.where({
+            id: data.attributes.location_id,
+          }).fetch({
+            require: true,
+          }).then((location) => {
+            res.render('app/events/index', {
+              event: data.attributes,
+              location: location.attributes,
+              is_going: going,
+            });
           });
         });
       });

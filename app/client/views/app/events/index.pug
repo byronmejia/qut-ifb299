@@ -14,6 +14,8 @@ block content
               h3 Attending members
               p Russel Demos
               p Tylor Stewart
+            article.card
+              div#map
         div.card_container.aside
             article.card
                 div.head
@@ -23,7 +25,7 @@ block content
                         if is_going
                             a(href="/events/"+event.id+"/join" class="button") RSVP
                 h5 Location: 
-                p #{event.location}
+                p #{location.locationName}
                 h5 Time: 
                 p Start: #{event.startTime}
                 p End #{event.endTime}
@@ -46,3 +48,16 @@ block content
                       // If event manager
                       // a(href="/events/create" class="button") Create Event
               p No other upcoming events for this community.
+    script(type="text/javascript"). 
+        function initMap() {
+            var place = {lat: #{location.lat}, lng: #{location.lon}};
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 10,
+                center: place
+            });
+            var marker = new google.maps.Marker({
+                position: place,
+                map: map
+            });
+        }
+    script(src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDKV5YrtunBCcl802MF-H3ZYnwopK1ewl4&libraries=places&callback=initMap")

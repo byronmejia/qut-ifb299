@@ -6,8 +6,13 @@ block content
     article.card
         form(method="POST")
             div
+                label(for='community_name') Community
+                select(id="community_name" name="community_name")
+                    each community in communities
+                        option(value=community.attributes.id) #{community.attributes.name}
+            div
                 label(for='event_name') Name
-                input(id='event_name' type='text' placeholder="Name of Event" name='event_name' required)
+                input(id='event_name' type='text' placeholder="Name of Event" name='event_name' required)         
             div
                 label(for='event_desc') Event Description
                 textarea(id='event_desc' name='event_desc' required)
