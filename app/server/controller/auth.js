@@ -57,7 +57,7 @@ export default (opts) => {
     opts.passport.authenticate('jwt', (err, data) => {
       let options = {};
       if (err) return res.redirect('/error?id=1');
-      if (data) return res.redirect('/home');
+      if (data) return res.redirect('/dashboard');
       if (req.query.attempt > 0) options = { attempt: 1 };
 
       return res.render('login/login', options);
