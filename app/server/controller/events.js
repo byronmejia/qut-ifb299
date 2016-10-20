@@ -151,7 +151,6 @@ export default (opts) => {
     });
   });
 
-  
   /**
    * POST One Event and Edit
    *
