@@ -29,7 +29,7 @@ module.exports = (app, path, express, passport) => {
   app.use(sassMiddleware({
     /* Options */
     src: path.join(__dirname, '..', '..', 'client', 'scss'),
-    dest: path.join(__dirname, '..', 'public'),
+    dest: path.join(__dirname, '..', '..', 'client', 'public'),
     debug: true,
     outputStyle: 'compressed',
     prefix: '/',
@@ -41,5 +41,5 @@ module.exports = (app, path, express, passport) => {
       ],
     },
   }));
-  app.use(express.static(path.join(__dirname, '..', 'public')));
+  app.use(express.static(path.join(__dirname, '..', '..', 'client', 'public')));
 };

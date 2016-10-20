@@ -211,7 +211,7 @@ a {
 form {
   div {
     padding-top: 20px;
-    padding-bottom-alt: 20px;
+    padding-bottom: 20px;
   }
 }
 
@@ -234,19 +234,43 @@ section#main {
 header#landing {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  padding: 40px;
+  padding: 60px;
   width: 100%;
-  background-color: $darkest_blue;
+  height: 100%;
+  background-color: #0A0A35;
+  background-position: center;
+  background-image: url('/img/bg.jpg');
   color: white;
   text-align: center;
+  display: table;
+
+  .cell {
+    display: table-cell;
+    vertical-align: middle;
+    padding: 0;
+    width: 100%;
+  }
+
 
   a.button {
     background-color: $yellow;
+    border-color: $yellow; 
     color: #0A0A35;
+    font-size: 22px;
+  }
+
+  img {
+    width: 500px;
+    margin-bottom: 50px;
+  } 
+
+  h2 {
+    font-weight: 400;
   }
 }
 
 #map {
   height: 200px;
   width: 100%;
-  }
+}
+

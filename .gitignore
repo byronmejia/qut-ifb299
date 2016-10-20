@@ -19,5 +19,5 @@
 *.key
 keys.json
 npm-debug*
-/app/server/public/*
+/app/client/public/css/style.css
 /docs/0.0 Developer Documentation
