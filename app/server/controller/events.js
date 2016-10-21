@@ -37,7 +37,9 @@ export default (opts) => {
    */
   router.get('/', opts.jwtAuth, (req, res) => {
     Events.fetchAll().then((events) => {
-      res.render('app/events/all', { events: events.models });
+      res.render('app/events/all', {
+        events: events.models,
+      });
     });
   });
 
@@ -133,6 +135,7 @@ export default (opts) => {
             res.render('app/events/index', {
               event: data.attributes,
               location: location.attributes,
+              profiles: data.profiles,
               is_going: going,
             });
           });
