@@ -22,7 +22,7 @@ block content
                 else
                     each event in events
                         div 
-                            a(href='/communities/' + event.attributes.id)
+                            a(href='/events/' + event.attributes.id)
                                 h4= event.attributes.name
                             p= event.attributes.description
                             h5= event.attributes.startTime
@@ -49,5 +49,7 @@ block content
                     div.progress
             article.card
                 h3 Members
-                p Jessica Barron
-                p Byron Mejia
+                each profile in profiles
+                    a(href='/profile/' + profile.attributes.id)
+                        p= profile.attributes.firstName + ' ' 
+                            = profile.attributes.lastName

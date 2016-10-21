@@ -129,16 +129,18 @@ export default (opts) => {
       id: req.params.id,
     }).fetch({
       require: true,
-    }).then(
-      community => Events.where({
+      withRelated: ['profiles'],
+    }).then((community) => {
+      Events.where({
         community_id: community.attributes.id,
       }).fetchAll().then((events) => {
         res.render('app/communities/index', {
           community: community.attributes,
           events: events.models,
+          profiles: community.relations.profiles.models,
         });
-      })
-    );
+      });
+    });
   });
 
   /**
