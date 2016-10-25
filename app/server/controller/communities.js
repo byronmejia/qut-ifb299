@@ -45,7 +45,7 @@ try {
 
 const Relationship = require('../models/RelationshipProfileCommunity');
 
-export default (opts) => {
+export default () => {
   const router = new Router();
 
   /**

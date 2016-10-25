@@ -19,7 +19,7 @@ const RSVP = require('../models/RelationshipRsvpEventProfile');
 const getCurrentProfile = require('../helper/getCurrentProfile');
 const Location = require('../models/Location');
 
-export default (opts) => {
+export default () => {
   const router = new Router();
 
   /**

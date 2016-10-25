@@ -18,7 +18,7 @@ const Events = require('../models/Event');
 const getCurrentProfile = require('../helper/getCurrentProfile');
 
 
-export default (opts) => {
+export default () => {
   const router = new Router();
 
   /**
