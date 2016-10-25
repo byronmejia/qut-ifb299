@@ -3,6 +3,7 @@ sudo: false
 env:
   - CXX=g++-4.8
 before_install:
+  - npm run bootstrap
 addons:
   apt:
     sources:
