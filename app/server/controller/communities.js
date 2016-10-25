@@ -15,12 +15,6 @@ import { Router } from 'express';
 
 const path = require('path');
 
-const Communities = require('../models/Community');
-const Events = require('../models/Event');
-const Charges = require('../models/Charges');
-const stripe = require('../config/stripe').stripe;
-const getCurrentProfile = require('../helper/getCurrentProfile');
-
 const keyPath = path.join('..', 'config', 'keys.json');
 
 let keys;
@@ -43,9 +37,7 @@ try {
   };
 }
 
-const Relationship = require('../models/RelationshipProfileCommunity');
-
-export default () => {
+export default (Models, getCurrentProfile, Stripe) => {
   const router = new Router();
 
   /**
@@ -61,7 +53,7 @@ export default () => {
    * @returns undefined
    */
   router.get('/', (req, res) => {
-    Communities.fetchAll().then(communities =>
+    Models.Community.fetchAll().then(communities =>
       res.render('app/communities/all', { communities: communities.models })
     );
   });
@@ -97,13 +89,13 @@ export default () => {
    */
   router.post('/create', (req, res) => {
     getCurrentProfile(req).then((profileId) => {
-      new Communities({
+      new Models.Community({
         name: req.body.community_name,
         profile_picture: null,
         description: req.body.community_desc,
         location: req.body.community_location,
       }).save().then((community) => {
-        new Relationship({
+        new Models.RelationshipProfileCommunity({
           profile_id: profileId,
           community_id: community.attributes.id,
         }).save().then(() => {
@@ -125,13 +117,13 @@ export default () => {
    * @returns undefined
    */
   router.get('/:id', (req, res) => {
-    Communities.where({
+    Models.Community.where({
       id: req.params.id,
     }).fetch({
       require: true,
       withRelated: ['profiles'],
     }).then((community) => {
-      Events.where({
+      Models.Event.where({
         community_id: community.attributes.id,
       }).fetchAll().then((events) => {
         res.render('app/communities/index', {
@@ -157,7 +149,7 @@ export default () => {
    */
   router.get('/:id/join', (req, res) => {
     getCurrentProfile(req).then((id) => {
-      new Relationship({
+      new Models.RelationshipProfileCommunity({
         community_id: req.params.id,
         profile_id: id,
       }).save().then(() => {
@@ -180,7 +172,7 @@ export default () => {
    * @returns undefined
    */
   router.get('/:id/edit', (req, res) => {
-    Communities.where({
+    Models.Community.where({
       id: req.params.id,
     }).fetch({
       require: true,
@@ -205,7 +197,7 @@ export default () => {
    * @returns undefined
    */
   router.post('/:id/edit', (req, res) => {
-    Communities.where({
+    Models.Community.where({
       id: req.params.id,
     }).save({
       name: req.body.community_name,
@@ -232,7 +224,7 @@ export default () => {
    * @returns undefined
    */
   router.get('/:id/donate', (req, res) => {
-    Communities.where({ id: req.params.id }).fetch()
+    Models.Community.where({ id: req.params.id }).fetch()
       .then((data) => {
         res.render(
           'app/communities/donate/index', { community: data, stripe_pub: keys.stripe.test.publish }
@@ -260,21 +252,21 @@ export default () => {
 
     if (isNaN(amount)) res.render('app/communities/donate/amount_error');
 
-    stripe.charges.create({
+    Stripe.charges.create({
       amount,
       currency: 'aud',
       source: token,
       description: 'Charge for Coterie Online',
     }, (err, charge) => {
       if (!err) {
-        Communities.where({ id: req.params.id })
+        Models.Community.where({ id: req.params.id })
           .fetch()
           .then((community) => {
-            new Charges({
+            new Models.Charges({
               id: charge.id,
               community_id: community.attributes.id,
             }).save(null, { method: 'insert' });
-            new Communities({
+            new Models.Community({
               id: community.attributes.id,
               currentAmount: community.attributes.currentAmount + amount,
             }).save();
