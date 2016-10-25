@@ -33,7 +33,7 @@ export default (opts) => {
    * @todo Ensure profile's view is up to date
    * @returns undefined
    */
-  router.get('/', opts.jwtAuth, (req, res) => {
+  router.get('/', (req, res) => {
     getCurrentProfile(req).then((profileId) => {
       Profiles.where({
         id: profileId,
@@ -86,7 +86,7 @@ export default (opts) => {
    * the current profile
    * @returns undefined
    */
-  router.get('/edit', opts.jwtAuth, (req, res) => {
+  router.get('/edit', (req, res) => {
     getCurrentProfile(req).then((profileId) => {
       Profiles.where({
         id: profileId,
@@ -112,7 +112,7 @@ export default (opts) => {
    * @description Returns a view for ONE profile
    * @returns undefined
    */
-  router.get('/:id', opts.jwtAuth, (req, res) => {
+  router.get('/:id', (req, res) => {
     Profiles.where({
       id: req.params.id,
     }).fetch({
@@ -164,7 +164,7 @@ export default (opts) => {
    * @todo Ensure only certain users may edit the community
    * @returns undefined
    */
-  router.post('/edit', opts.jwtAuth, (req, res) => {
+  router.post('/edit', (req, res) => {
     getCurrentProfile(req).then((profileId) => {
       Profiles.where({
         id: profileId,

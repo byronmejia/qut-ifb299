@@ -35,7 +35,7 @@ export default (opts) => {
    * @todo Ensure event's view is up to date
    * @returns undefined
    */
-  router.get('/', opts.jwtAuth, (req, res) => {
+  router.get('/', (req, res) => {
     Events.fetchAll().then((events) => {
       res.render('app/events/all', {
         events: events.models,
@@ -55,7 +55,7 @@ export default (opts) => {
    * @todo Ensure event's view is up to date
    * @returns undefined
    */
-  router.get('/create', opts.jwtAuth, (req, res) => {
+  router.get('/create', (req, res) => {
     Communities.fetchAll().then((communities) => {
       res.render('app/events/new', {
         communities: communities.models,
@@ -76,7 +76,7 @@ export default (opts) => {
    * @todo Ensure event saves to appropiate location
    * @returns undefined
    */
-  router.post('/create', opts.jwtAuth, (req, res) => {
+  router.post('/create', (req, res) => {
     const start = `${req.body.event_startdate} ${req.body.event_starttime}`;
     const finish = `${req.body.event_enddate} ${req.body.event_endtime}`;
     new Location({
@@ -108,7 +108,7 @@ export default (opts) => {
    * @description Returns a view for ONE event
    * @returns undefined
    */
-  router.get('/:id', opts.jwtAuth, (req, res) => {
+  router.get('/:id', (req, res) => {
     let going;
     getCurrentProfile(req).then((pid) => {
       RSVP.where({
@@ -156,7 +156,7 @@ export default (opts) => {
    * the current event
    * @returns undefined
    */
-  router.get('/:id/edit', opts.jwtAuth, (req, res) => {
+  router.get('/:id/edit', (req, res) => {
     Events.where({
       id: req.params.id,
     }).fetch({
@@ -181,7 +181,7 @@ export default (opts) => {
    * @todo Ensure only certain users may edit the community
    * @returns undefined
    */
-  router.post('/:id/edit', opts.jwtAuth, (req, res) => {
+  router.post('/:id/edit', (req, res) => {
     const start = `${req.body.event_startdate} ${req.body.event_starttime}`;
     const finish = `${req.body.event_enddate} ${req.body.event_endtime}`;
     Events.where({

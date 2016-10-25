@@ -60,7 +60,7 @@ export default (opts) => {
    * on the platform
    * @returns undefined
    */
-  router.get('/', opts.jwtAuth, (req, res) => {
+  router.get('/', (req, res) => {
     Communities.fetchAll().then(communities =>
       res.render('app/communities/all', { communities: communities.models })
     );
@@ -78,7 +78,7 @@ export default (opts) => {
    * creating a community
    * @returns undefined
    */
-  router.get('/create', opts.jwtAuth, (req, res) =>
+  router.get('/create', (req, res) =>
     res.render('app/communities/new')
   );
 
@@ -95,7 +95,7 @@ export default (opts) => {
    * @todo Ensure the currently logged in user will join the community
    * @returns undefined
    */
-  router.post('/create', opts.jwtAuth, (req, res) => {
+  router.post('/create', (req, res) => {
     getCurrentProfile(req).then((profileId) => {
       new Communities({
         name: req.body.community_name,
@@ -124,7 +124,7 @@ export default (opts) => {
    * @description Returns a view for ONE community
    * @returns undefined
    */
-  router.get('/:id', opts.jwtAuth, (req, res) => {
+  router.get('/:id', (req, res) => {
     Communities.where({
       id: req.params.id,
     }).fetch({
@@ -155,7 +155,7 @@ export default (opts) => {
    * a community
    * @returns undefined
    */
-  router.get('/:id/join', opts.jwtAuth, (req, res) => {
+  router.get('/:id/join', (req, res) => {
     getCurrentProfile(req).then((id) => {
       new Relationship({
         community_id: req.params.id,
@@ -179,7 +179,7 @@ export default (opts) => {
    * @todo Ensure only certain users may edit the community
    * @returns undefined
    */
-  router.get('/:id/edit', opts.jwtAuth, (req, res) => {
+  router.get('/:id/edit', (req, res) => {
     Communities.where({
       id: req.params.id,
     }).fetch({
@@ -204,7 +204,7 @@ export default (opts) => {
    * @todo Ensure only certain users may edit the community
    * @returns undefined
    */
-  router.post('/:id/edit', opts.jwtAuth, (req, res) => {
+  router.post('/:id/edit', (req, res) => {
     Communities.where({
       id: req.params.id,
     }).save({
@@ -231,7 +231,7 @@ export default (opts) => {
    * the logged in user to donate to the current community
    * @returns undefined
    */
-  router.get('/:id/donate', opts.jwtAuth, (req, res) => {
+  router.get('/:id/donate', (req, res) => {
     Communities.where({ id: req.params.id }).fetch()
       .then((data) => {
         res.render(
@@ -253,7 +253,7 @@ export default (opts) => {
    * @todo remove some logic from controller!
    * @returns undefined
    */
-  router.post('/:id/donate', opts.jwtAuth, (req, res) => {
+  router.post('/:id/donate', (req, res) => {
     let amount = parseFloat(req.body.finalAmount).toFixed(2);
     const token = req.body.stripeToken;
     amount = Math.round(amount * 100);

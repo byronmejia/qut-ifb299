@@ -25,10 +25,10 @@ export default function allControllers(opts) {
 
   router.use(misc(opts));
   router.use('/auth', auth(opts));
-  router.use('/communities', communities(opts));
-  router.use('/events', events(opts));
+  router.use('/communities', opts.jwtAuth, communities(opts));
+  router.use('/events', opts.jwtAuth, events(opts));
   router.use('/signup', signup());
-  router.use('/profile', profile(opts));
+  router.use('/profile', opts.jwtAuth, profile(opts));
 
   return router;
 }
