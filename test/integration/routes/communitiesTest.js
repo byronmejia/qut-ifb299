@@ -12,7 +12,7 @@ const account = {
 };
 
 
-describe('Profile Router Integration', () => {
+describe('Integration: Communities Router', () => {
   before((done) => {
     agent
       .post('/auth/local')
