@@ -30,7 +30,7 @@ export default (opts) => {
    * @function
    *
    * @author Byron Mejia
-   * @param {Object} req - Express request object
+   * @param {Object} req - Express supertest object
    * @param {Object} res - Express response object
    * @description Destroys the JWT token on the client
    * @todo Explicitly state last logout time in persistence
@@ -48,7 +48,7 @@ export default (opts) => {
    * @function
    *
    * @author Byron Mejia
-   * @param {Object} req - Express request object
+   * @param {Object} req - Express supertest object
    * @param {Object} res - Express response object
    * @description Loads a form for signing in
    * @returns undefined
@@ -70,7 +70,7 @@ export default (opts) => {
    * @function
    *
    * @author Byron Mejia
-   * @param {Object} req - Express request object
+   * @param {Object} req - Express supertest object
    * @param {Object} res - Express response object
    * @description Challenges passport with local username and password
    * @returns undefined
@@ -100,7 +100,7 @@ export default (opts) => {
    * @function
    *
    * @author Byron Mejia
-   * @param {Object} req - Express request object
+   * @param {Object} req - Express supertest object
    * @param {Object} res - Express response object
    * @description Challenges passport with Facebook login
    * @returns undefined
@@ -113,7 +113,7 @@ export default (opts) => {
    * @function
    *
    * @author Byron Mejia
-   * @param {Object} req - Express request object
+   * @param {Object} req - Express supertest object
    * @param {Object} res - Express response object
    * @description Upon successful challenge, will set
    * the session's JWT token, else, will redirect to either
@@ -140,7 +140,7 @@ export default (opts) => {
    * @function
    *
    * @author Byron Mejia
-   * @param {Object} req - Express request object
+   * @param {Object} req - Express supertest object
    * @param {Object} res - Express response object
    * @description Prepares the Facebook strategy for
    * saving to the current logged in user.
@@ -154,7 +154,7 @@ export default (opts) => {
    * @function
    *
    * @author Byron Mejia
-   * @param {Object} req - Express request object
+   * @param {Object} req - Express supertest object
    * @param {Object} res - Express response object
    * @description Adds a new Facebook strategy to
    * the currently logged in user, if successful.
@@ -185,7 +185,7 @@ export default (opts) => {
    * @function
    *
    * @author Byron Mejia
-   * @param {Object} req - Express request object
+   * @param {Object} req - Express supertest object
    * @param {Object} res - Express response object
    * @description Challenges passport with GitHub login
    * @returns undefined
@@ -198,7 +198,7 @@ export default (opts) => {
    * @function
    *
    * @author Byron Mejia
-   * @param {Object} req - Express request object
+   * @param {Object} req - Express supertest object
    * @param {Object} res - Express response object
    * @description Adds a new GitHub strategy to
    * the currently logged in user, if successful.
@@ -222,7 +222,7 @@ export default (opts) => {
    * @function
    *
    * @author Byron Mejia
-   * @param {Object} req - Express request object
+   * @param {Object} req - Express supertest object
    * @param {Object} res - Express response object
    * @description Prepares the GitHub strategy for
    * saving to the current logged in user.
@@ -236,7 +236,7 @@ export default (opts) => {
    * @function
    *
    * @author Byron Mejia
-   * @param {Object} req - Express request object
+   * @param {Object} req - Express supertest object
    * @param {Object} res - Express response object
    * @description Adds a new GitHub strategy to
    * the currently logged in user, if successful.
@@ -267,7 +267,7 @@ export default (opts) => {
    * @function
    *
    * @author Byron Mejia
-   * @param {Object} req - Express request object
+   * @param {Object} req - Express supertest object
    * @param {Object} res - Express response object
    * @description Challenges passport with Google login
    * @returns undefined
@@ -283,7 +283,7 @@ export default (opts) => {
    * @function
    *
    * @author Byron Mejia
-   * @param {Object} req - Express request object
+   * @param {Object} req - Express supertest object
    * @param {Object} res - Express response object
    * @description Adds a new Google strategy to
    * the currently logged in user, if successful.
@@ -308,7 +308,7 @@ export default (opts) => {
    * @function
    *
    * @author Byron Mejia
-   * @param {Object} req - Express request object
+   * @param {Object} req - Express supertest object
    * @param {Object} res - Express response object
    * @description Prepares the Google strategy for
    * saving to the current logged in user.
@@ -325,7 +325,7 @@ export default (opts) => {
    * @function
    *
    * @author Byron Mejia
-   * @param {Object} req - Express request object
+   * @param {Object} req - Express supertest object
    * @param {Object} res - Express response object
    * @description Adds a new Google strategy to
    * the currently logged in user, if successful.

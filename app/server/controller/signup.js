@@ -22,7 +22,7 @@ export default () => {
    * @function
    *
    * @author Jessica Barron
-   * @param {Object} req - Express request object
+   * @param {Object} req - Express supertest object
    * @param {Object} res - Express response object
    * @description Generates a form for allowing users to sign up
    * @returns undefined
@@ -37,7 +37,7 @@ export default () => {
    * @function
    *
    * @author Jessica Barron
-   * @param {Object} req - Express request object
+   * @param {Object} req - Express supertest object
    * @param {Object} res - Express response object
    * @description Generates the models related to signing up
    * @returns undefined

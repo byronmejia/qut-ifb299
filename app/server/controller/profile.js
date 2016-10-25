@@ -19,7 +19,7 @@ export default (Models, getCurrentProfile) => {
    * @function
    *
    * @author Jessica Barron
-   * @param {Object} req - Express request object
+   * @param {Object} req - Express supertest object
    * @param {Object} res - Express response object
    * @description Show profiles of signed in user
    * @todo Ensure profile's view is up to date
@@ -72,7 +72,7 @@ export default (Models, getCurrentProfile) => {
    * @function
    *
    * @author Jessica Barron
-   * @param {Object} req - Express request object
+   * @param {Object} req - Express supertest object
    * @param {Object} res - Express response object
    * @description Returns a view of a form to edit
    * the current profile
@@ -99,7 +99,7 @@ export default (Models, getCurrentProfile) => {
    * @function
    *
    * @author Jessica Barron
-   * @param {Object} req - Express request object
+   * @param {Object} req - Express supertest object
    * @param {Object} res - Express response object
    * @description Returns a view for ONE profile
    * @returns undefined
@@ -149,7 +149,7 @@ export default (Models, getCurrentProfile) => {
    * @function
    *
    * @author Jessica Barron
-   * @param {Object} req - Express request object
+   * @param {Object} req - Express supertest object
    * @param {Object} res - Express response object
    * @description Returns a view upon successfully
    * updating the current community

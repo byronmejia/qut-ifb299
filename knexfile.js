@@ -1,11 +1,20 @@
 const path = require('path');
+
 const databaseFile = path.join(__dirname, 'dev.db');
+const testDatabaseFile = path.join(__dirname, 'test.db');
 const migrations = {
   migrations: path.join(__dirname, '/migrations'),
   seeds: path.join(__dirname, '/seeds'),
 };
 
 module.exports = {
+  test: {
+    client: 'sqlite3',
+    connection: {
+      filename: testDatabaseFile,
+    },
+  },
+
   development: {
     client: 'sqlite3',
     connection: {

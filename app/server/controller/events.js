@@ -29,7 +29,7 @@ export default () => {
    *
    * @author Byron Mejia
    * @author Jessica Barron
-   * @param {Object} req - Express request object
+   * @param {Object} req - Express supertest object
    * @param {Object} res - Express response object
    * @description Show all events available to the signed in user
    * @todo Ensure event's view is up to date
@@ -49,7 +49,7 @@ export default () => {
    * @function
    *
    * @author Byron Mejia
-   * @param {Object} req - Express request object
+   * @param {Object} req - Express supertest object
    * @param {Object} res - Express response object
    * @description Renders a form to create an event, for a community.
    * @todo Ensure event's view is up to date
@@ -69,7 +69,7 @@ export default () => {
    * @function
    *
    * @author Byron Mejia
-   * @param {Object} req - Express request object
+   * @param {Object} req - Express supertest object
    * @param {Object} res - Express response object
    * @description Generates the event upon successful fields
    * @todo Ensure event's view is up to date
@@ -103,7 +103,7 @@ export default () => {
    * @function
    *
    * @author Jessica Barron
-   * @param {Object} req - Express request object
+   * @param {Object} req - Express supertest object
    * @param {Object} res - Express response object
    * @description Returns a view for ONE event
    * @returns undefined
@@ -150,7 +150,7 @@ export default () => {
    * @function
    *
    * @author Jessica Barron
-   * @param {Object} req - Express request object
+   * @param {Object} req - Express supertest object
    * @param {Object} res - Express response object
    * @description Returns a view of a form to edit
    * the current event
@@ -174,7 +174,7 @@ export default () => {
    * @function
    *
    * @author Jessica Barron
-   * @param {Object} req - Express request object
+   * @param {Object} req - Express supertest object
    * @param {Object} res - Express response object
    * @description Returns a view upon successfully
    * updating the current community

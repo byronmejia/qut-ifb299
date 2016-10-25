@@ -46,7 +46,7 @@ export default (Models, getCurrentProfile, Stripe) => {
    * @function
    *
    * @author Byron Mejia
-   * @param {Object} req - Express request object
+   * @param {Object} req - Express supertest object
    * @param {Object} res - Express response object
    * @description Returns a view of all communities
    * on the platform
@@ -64,7 +64,7 @@ export default (Models, getCurrentProfile, Stripe) => {
    * @function
    *
    * @author Jessica Barron
-   * @param {Object} req - Express request object
+   * @param {Object} req - Express supertest object
    * @param {Object} res - Express response object
    * @description Returns a view of a form for
    * creating a community
@@ -80,7 +80,7 @@ export default (Models, getCurrentProfile, Stripe) => {
    * @function
    *
    * @author Jessica Barron
-   * @param {Object} req - Express request object
+   * @param {Object} req - Express supertest object
    * @param {Object} res - Express response object
    * @description Generates a community with
    * the given attributes from the form.
@@ -111,7 +111,7 @@ export default (Models, getCurrentProfile, Stripe) => {
    * @function
    *
    * @author Jessica Barron
-   * @param {Object} req - Express request object
+   * @param {Object} req - Express supertest object
    * @param {Object} res - Express response object
    * @description Returns a view for ONE community
    * @returns undefined
@@ -141,7 +141,7 @@ export default (Models, getCurrentProfile, Stripe) => {
    * @function
    *
    * @author Jessica Barron
-   * @param {Object} req - Express request object
+   * @param {Object} req - Express supertest object
    * @param {Object} res - Express response object
    * @description Returns a view upon successfully joining
    * a community
@@ -164,7 +164,7 @@ export default (Models, getCurrentProfile, Stripe) => {
    * @function
    *
    * @author Jessica Barron
-   * @param {Object} req - Express request object
+   * @param {Object} req - Express supertest object
    * @param {Object} res - Express response object
    * @description Returns a view of a form to edit
    * the current community, if joined
@@ -189,7 +189,7 @@ export default (Models, getCurrentProfile, Stripe) => {
    * @function
    *
    * @author Jessica Barron
-   * @param {Object} req - Express request object
+   * @param {Object} req - Express supertest object
    * @param {Object} res - Express response object
    * @description Returns a view upon successfully
    * updating the current community
@@ -217,7 +217,7 @@ export default (Models, getCurrentProfile, Stripe) => {
    * @function
    *
    * @author Byron Mejia
-   * @param {Object} req - Express request object
+   * @param {Object} req - Express supertest object
    * @param {Object} res - Express response object
    * @description Returns a view with a form to allow
    * the logged in user to donate to the current community
@@ -238,7 +238,7 @@ export default (Models, getCurrentProfile, Stripe) => {
    * @function
    *
    * @author Byron Mejia
-   * @param {Object} req - Express request object
+   * @param {Object} req - Express supertest object
    * @param {Object} res - Express response object
    * @description Returns a view upon successfully donating
    * to a community.
