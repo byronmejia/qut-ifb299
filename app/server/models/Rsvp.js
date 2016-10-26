@@ -4,4 +4,4 @@ const Rsvp = bookshelf.Model.extend({
   tableName: 'rsvp',
 });
 
-module.exports = Rsvp;
+module.exports = bookshelf.model('Rsvp', Rsvp);

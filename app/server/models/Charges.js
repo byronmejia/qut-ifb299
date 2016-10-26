@@ -4,4 +4,4 @@ const Charges = bookshelf.Model.extend({
   tableName: 'charges',
 });
 
-module.exports = Charges;
+module.exports = bookshelf.model('Charges', Charges);
