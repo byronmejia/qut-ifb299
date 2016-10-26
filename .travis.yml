@@ -1,8 +1,7 @@
 language: node_js
 sudo: false
 env:
-  - CXX=g++-4.8
-  - SECRET_KEY=AnExampleKeyHere_PlsEnsureDifferentInProduction
+  - CXX=g++-4.8 SECRET_KEY=AnExampleKeyHere_PlsEnsureDifferentInProduction
 before_script:
   - npm run bootstrap
 addons:
