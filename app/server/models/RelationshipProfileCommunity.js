@@ -4,4 +4,4 @@ const RelationshipProfileCommunity = bookshelf.Model.extend({
   tableName: 'profile_community_relationship',
 });
 
-module.exports = RelationshipProfileCommunity;
+module.exports = bookshelf.model('RelationshipProfileCommunity', RelationshipProfileCommunity);
