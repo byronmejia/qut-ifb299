@@ -136,6 +136,31 @@ export default (Models, getCurrentProfile, Stripe) => {
   });
 
   /**
+   * GET One Community Members
+   *
+   * @function
+   *
+   * @author Jessica Barron
+   * @author Byron Mejia
+   * @param {Object} res - Express response object
+   * @description Returns a view for all members for ONE community
+   * @returns undefined
+   */
+  router.get('/:id/members', (req, res) => {
+    Models.Community.where({
+      id: req.params.id,
+    }).fetch({
+      require: true,
+      withRelated: ['profiles'],
+    }).then((community) => {
+      res.render('app/communities/members', {
+        community: community.attributes,
+        profiles: community.relations.profiles.models,
+      });
+    });
+  });
+
+  /**
    * GET One Community and Join
    *
    * @function
