@@ -10,15 +10,7 @@
  */
 import { Router } from 'express';
 
-const Profiles = require('../models/Profile');
-const Communities = require('../models/Community');
-const Relationships = require('../models/RelationshipProfileCommunity');
-const RSVPs = require('../models/RelationshipRsvpEventProfile');
-const Events = require('../models/Event');
-const getCurrentProfile = require('../helper/getCurrentProfile');
-
-
-export default (opts) => {
+export default (Models, getCurrentProfile) => {
   const router = new Router();
 
   /**
@@ -27,20 +19,20 @@ export default (opts) => {
    * @function
    *
    * @author Jessica Barron
-   * @param {Object} req - Express request object
+   * @param {Object} req - Express supertest object
    * @param {Object} res - Express response object
    * @description Show profiles of signed in user
    * @todo Ensure profile's view is up to date
    * @returns undefined
    */
-  router.get('/', opts.jwtAuth, (req, res) => {
+  router.get('/', (req, res) => {
     getCurrentProfile(req).then((profileId) => {
-      Profiles.where({
+      Models.Profile.where({
         id: profileId,
       }).fetch({
         require: true,
       }).then((profile) => {
-        Relationships.where({
+        Models.RelationshipProfileCommunity.where({
           profile_id: profileId,
         }).fetchAll({
           require: true,
@@ -49,16 +41,16 @@ export default (opts) => {
           for (let i = 0, len = relations.length; i < len; i += 1) {
             comArr[i] = relations.models[i].attributes.community_id;
           }
-          Communities.where('id', 'in', comArr)
+          Models.Community.where('id', 'in', comArr)
           .fetchAll().then((communities) => {
-            RSVPs.where({
+            Models.Rsvp.where({
               profile_id: profileId,
             }).fetchAll().then((rsvp) => {
               const evArr = [];
               for (let i = 0, len = rsvp.length; i < len; i += 1) {
                 evArr[i] = rsvp.models[i].attributes.event_id;
               }
-              Events.where('id', 'in', evArr)
+              Models.Event.where('id', 'in', evArr)
               .fetchAll().then((events) => {
                 res.render('app/profile/index', {
                   profile: profile.attributes,
@@ -80,15 +72,15 @@ export default (opts) => {
    * @function
    *
    * @author Jessica Barron
-   * @param {Object} req - Express request object
+   * @param {Object} req - Express supertest object
    * @param {Object} res - Express response object
    * @description Returns a view of a form to edit
    * the current profile
    * @returns undefined
    */
-  router.get('/edit', opts.jwtAuth, (req, res) => {
+  router.get('/edit', (req, res) => {
     getCurrentProfile(req).then((profileId) => {
-      Profiles.where({
+      Models.Profile.where({
         id: profileId,
       }).fetch({
         require: true,
@@ -107,18 +99,18 @@ export default (opts) => {
    * @function
    *
    * @author Jessica Barron
-   * @param {Object} req - Express request object
+   * @param {Object} req - Express supertest object
    * @param {Object} res - Express response object
    * @description Returns a view for ONE profile
    * @returns undefined
    */
-  router.get('/:id', opts.jwtAuth, (req, res) => {
-    Profiles.where({
+  router.get('/:id', (req, res) => {
+    Models.Profile.where({
       id: req.params.id,
     }).fetch({
       require: true,
     }).then((profile) => {
-      Relationships.where({
+      Models.RelationshipProfileCommunity.where({
         profile_id: req.params.id,
       }).fetchAll({
         require: true,
@@ -127,16 +119,16 @@ export default (opts) => {
         for (let i = 0, len = relations.length; i < len; i += 1) {
           comArr[i] = relations.models[i].attributes.community_id;
         }
-        Communities.where('id', 'in', comArr)
+        Models.Community.where('id', 'in', comArr)
         .fetchAll().then((communities) => {
-          RSVPs.where({
+          Models.Rsvp.where({
             profile_id: req.params.id,
           }).fetchAll().then((rsvp) => {
             const evArr = [];
             for (let i = 0, len = rsvp.length; i < len; i += 1) {
               evArr[i] = rsvp.models[i].attributes.event_id;
             }
-            Events.where('id', 'in', evArr)
+            Models.Event.where('id', 'in', evArr)
             .fetchAll().then((events) => {
               res.render('app/profile/index', {
                 profile: profile.attributes,
@@ -157,16 +149,16 @@ export default (opts) => {
    * @function
    *
    * @author Jessica Barron
-   * @param {Object} req - Express request object
+   * @param {Object} req - Express supertest object
    * @param {Object} res - Express response object
    * @description Returns a view upon successfully
    * updating the current community
    * @todo Ensure only certain users may edit the community
    * @returns undefined
    */
-  router.post('/edit', opts.jwtAuth, (req, res) => {
+  router.post('/edit', (req, res) => {
     getCurrentProfile(req).then((profileId) => {
-      Profiles.where({
+      Models.Profile.where({
         id: profileId,
       }).save({
         firstName: req.body.first_name,

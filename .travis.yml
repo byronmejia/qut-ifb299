@@ -1,8 +1,9 @@
 language: node_js
 sudo: false
 env:
-  - CXX=g++-4.8
-before_install:
+- CXX=g++-4.8 SECRET_KEY=AnExampleKeyHere_PlsEnsureDifferentInProduction
+before_script:
+- npm run bootstrap
 addons:
   apt:
     sources:
@@ -12,3 +13,6 @@ addons:
 notifications:
   slack:
     secure: h0amr1ycNg89KBLjaL1B17utJIq9Erzo1kmq6qqz78natXZ1vi3EM8Qevz2r+466umZ9bwnb3iuFGBFYwcU3pkOuDOi7vkR5NFzo389PBc4PSlku0qrgChJeZfgzD3ZcXDqO3DFRlsHewLMIZ6LvO53OheFmFIjvWWQ8DfaYVAGSFHabA8Oj3aGwkSX1IoiqF/KlImjOT5X+skEzUSFx/l2BOPa2O4wXL3fgj0uFnUuEz2uM0DaZ66uEq/EOw3dK3VCj1RdmHoOIsNGdvWXAxAKBUVWWq3/ppy+13Tt/Ai6c3rD3lCZS2yQoRBl5Ss+zZWgbsXultSEIHLbxaA3t9USCp2eIVVQlOc/SOi46HMWCkRRWv1wAyftWT7f4FSTnZ3NkyW5MOOW19ATFsy+E7+wevEA7Hn3eku+ObbZsWnYQtfw6fHz+MwSZjboUhWfrIzNyRRIL10xMyfbjqMORCf4FShwC7f3fA0o8dctIt+2tuLaQ/0WQryU1bFcqL+ZtJ2O1kjVtSvvXVsfC3mgY7ywx48blxh1SKTOzlwtAdisxIhHYg65eZsnS0Qyy8b7LfUXE6mQtvtbA0SYlYeAi2RLRBRQqAve+N3/z/4vIoMK23xhozuxTRbbxeGqJ1p0esTse863+WeF+3x1cnhn/hPKKMV4aMYNrvLLEGdD649k=
+before_install:
+- openssl aes-256-cbc -K $encrypted_9df397c2a944_key -iv $encrypted_9df397c2a944_iv
+  -in keys.json.enc -out app/server/config/keys.json -d

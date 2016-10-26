@@ -18,7 +18,7 @@ export default (opts) => {
    *
    * @function
    *
-   * @param {Object} req - Express request object
+   * @param {Object} req - Express supertest object
    * @param {Object} res - Express response object
    * @description Render's the highest level homepage, that the public can see
    * @returns undefined
@@ -33,7 +33,7 @@ export default (opts) => {
    * @function
    *
    * @author Byron Mejia
-   * @param {Object} req - Express request object
+   * @param {Object} req - Express supertest object
    * @param {Object} res - Express response object
    * @description Generates an overview/dashboard of what to do
    * @todo Figure if it is necessary with the home page?

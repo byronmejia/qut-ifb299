@@ -13,6 +13,10 @@ import communities from './communities';
 import events from './events';
 import signup from './signup';
 import profile from './profile';
+import Models from '../models';
+
+const getCurrentProfile = require('../helper/getCurrentProfile');
+const Stripe = require('../config/stripe').stripe;
 
 /**
  * Combines all controllers together
@@ -25,10 +29,10 @@ export default function allControllers(opts) {
 
   router.use(misc(opts));
   router.use('/auth', auth(opts));
-  router.use('/communities', communities(opts));
-  router.use('/events', events(opts));
+  router.use('/communities', opts.jwtAuth, communities(Models, Stripe, getCurrentProfile));
+  router.use('/events', opts.jwtAuth, events());
   router.use('/signup', signup());
-  router.use('/profile', profile(opts));
+  router.use('/profile', opts.jwtAuth, profile(Models, getCurrentProfile));
 
   return router;
 }

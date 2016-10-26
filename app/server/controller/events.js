@@ -19,7 +19,7 @@ const RSVP = require('../models/RelationshipRsvpEventProfile');
 const getCurrentProfile = require('../helper/getCurrentProfile');
 const Location = require('../models/Location');
 
-export default (opts) => {
+export default () => {
   const router = new Router();
 
   /**
@@ -29,13 +29,13 @@ export default (opts) => {
    *
    * @author Byron Mejia
    * @author Jessica Barron
-   * @param {Object} req - Express request object
+   * @param {Object} req - Express supertest object
    * @param {Object} res - Express response object
    * @description Show all events available to the signed in user
    * @todo Ensure event's view is up to date
    * @returns undefined
    */
-  router.get('/', opts.jwtAuth, (req, res) => {
+  router.get('/', (req, res) => {
     Events.fetchAll().then((events) => {
       res.render('app/events/all', {
         events: events.models,
@@ -49,13 +49,13 @@ export default (opts) => {
    * @function
    *
    * @author Byron Mejia
-   * @param {Object} req - Express request object
+   * @param {Object} req - Express supertest object
    * @param {Object} res - Express response object
    * @description Renders a form to create an event, for a community.
    * @todo Ensure event's view is up to date
    * @returns undefined
    */
-  router.get('/create', opts.jwtAuth, (req, res) => {
+  router.get('/create', (req, res) => {
     Communities.fetchAll().then((communities) => {
       res.render('app/events/new', {
         communities: communities.models,
@@ -69,14 +69,14 @@ export default (opts) => {
    * @function
    *
    * @author Byron Mejia
-   * @param {Object} req - Express request object
+   * @param {Object} req - Express supertest object
    * @param {Object} res - Express response object
    * @description Generates the event upon successful fields
    * @todo Ensure event's view is up to date
    * @todo Ensure event saves to appropiate location
    * @returns undefined
    */
-  router.post('/create', opts.jwtAuth, (req, res) => {
+  router.post('/create', (req, res) => {
     const start = `${req.body.event_startdate} ${req.body.event_starttime}`;
     const finish = `${req.body.event_enddate} ${req.body.event_endtime}`;
     new Location({
@@ -103,12 +103,12 @@ export default (opts) => {
    * @function
    *
    * @author Jessica Barron
-   * @param {Object} req - Express request object
+   * @param {Object} req - Express supertest object
    * @param {Object} res - Express response object
    * @description Returns a view for ONE event
    * @returns undefined
    */
-  router.get('/:id', opts.jwtAuth, (req, res) => {
+  router.get('/:id', (req, res) => {
     let going;
     getCurrentProfile(req).then((pid) => {
       RSVP.where({
@@ -150,13 +150,13 @@ export default (opts) => {
    * @function
    *
    * @author Jessica Barron
-   * @param {Object} req - Express request object
+   * @param {Object} req - Express supertest object
    * @param {Object} res - Express response object
    * @description Returns a view of a form to edit
    * the current event
    * @returns undefined
    */
-  router.get('/:id/edit', opts.jwtAuth, (req, res) => {
+  router.get('/:id/edit', (req, res) => {
     Events.where({
       id: req.params.id,
     }).fetch({
@@ -174,14 +174,14 @@ export default (opts) => {
    * @function
    *
    * @author Jessica Barron
-   * @param {Object} req - Express request object
+   * @param {Object} req - Express supertest object
    * @param {Object} res - Express response object
    * @description Returns a view upon successfully
    * updating the current community
    * @todo Ensure only certain users may edit the community
    * @returns undefined
    */
-  router.post('/:id/edit', opts.jwtAuth, (req, res) => {
+  router.post('/:id/edit', (req, res) => {
     const start = `${req.body.event_startdate} ${req.body.event_starttime}`;
     const finish = `${req.body.event_enddate} ${req.body.event_endtime}`;
     Events.where({
