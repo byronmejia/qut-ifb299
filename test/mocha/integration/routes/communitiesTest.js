@@ -1,7 +1,7 @@
 const describe = require('mocha').describe;
 const it = require('mocha').it;
 const before = require('mocha').before;
-const app = require('../../../app/server/index').getApp;
+const app = require('../../../../app/server/index').getApp;
 const supertest = require('supertest');
 
 const agent = supertest.agent(app);

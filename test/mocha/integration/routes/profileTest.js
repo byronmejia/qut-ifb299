@@ -1,7 +1,7 @@
 const describe = require('mocha').describe;
 const it = require('mocha').it;
 const before = require('mocha').before;
-const app = require('../../../app/server/index').getApp;
+const app = require('../../../../app/server/index').getApp;
 const supertest = require('supertest');
 
 const agent = supertest.agent(app);
@@ -12,7 +12,7 @@ const account = {
 };
 
 
-describe('Integration: Events Router', () => {
+describe('Integration: Profile Router', () => {
   before((done) => {
     agent
       .post('/auth/local')
@@ -28,25 +28,19 @@ describe('Integration: Events Router', () => {
   describe('GET', () => {
     it('Will return 200/OK at /', (done) => {
       agent
-        .get('/events')
+        .get('/profile')
+        .expect(200, done);
+    });
+
+    it('Will return 200/OK at /edit', (done) => {
+      agent
+        .get('/profile/edit')
         .expect(200, done);
     });
 
     it('Will return 200/OK at /:id (1)', (done) => {
       agent
-        .get('/events/1')
-        .expect(200, done);
-    });
-
-    it('Will return 200/OK at /create', (done) => {
-      agent
-        .get('/events/create')
-        .expect(200, done);
-    });
-
-    it('Will return 200/OK at /:id/edit', (done) => {
-      agent
-        .get('/events/1/edit')
+        .get('/profile/1')
         .expect(200, done);
     });
   });
