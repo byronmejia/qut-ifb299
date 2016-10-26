@@ -48,7 +48,8 @@ block content
                 div.bar
                     div.progress
             article.card
-                h3 Members
+                a(href="/communities/"+community.id+"/members")
+                    h3 Members
                 each profile in profiles
                     a(href='/profile/' + profile.attributes.id)
                         p= profile.attributes.firstName + ' ' 

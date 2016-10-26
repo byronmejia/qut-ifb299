@@ -44,6 +44,12 @@ describe('Integration: Communities Router', () => {
         .expect(200, done);
     });
 
+    it('Will return 200/OK at /:id/members', (done) => {
+      agent
+        .get('/communities/1/members')
+        .expect(200, done);
+    });
+
     it('Will return 200/OK at /:id/edit', (done) => {
       agent
         .get('/communities/1/edit')

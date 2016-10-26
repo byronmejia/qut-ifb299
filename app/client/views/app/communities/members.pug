@@ -1,0 +1,18 @@
+extends ../../_app_layout
+
+block content
+    div.jumbo
+        div.head
+            div.left
+                h1 #{community.name}
+            div.right
+                a(href="/communities/"+community.id+"/edit" class="button") Edit Community
+        h4 !{community.description}
+    div.page
+        div.card_container.content
+            article.card
+                h3 Members
+                each profile in profiles
+                    a(href='/profile/' + profile.attributes.id)
+                        p= profile.attributes.firstName + ' '
+                            = profile.attributes.lastName
