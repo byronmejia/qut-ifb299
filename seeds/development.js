@@ -9,7 +9,7 @@ const RelationshipProfileCommunity = require('../app/server/models/RelationshipP
 // TODO: const Rsvp = require('../app/server/models/Rsvp');
 
 function seedLocations(knex, Promise) {
-  return knex('locations').truncate().then(() => Promise.all([
+  return knex('locations').then(() => Promise.all([
     new Location({
       lat: -38.694892,
       lon: 143.32371,
@@ -39,7 +39,7 @@ function seedLocations(knex, Promise) {
 }
 
 function seedLogins(knex, Promise) {
-  return knex('logins').truncate().then(() => Promise.all([
+  return knex('logins').then(() => Promise.all([
     new Login({
       username: 'admin',
       password: 'password',
@@ -64,7 +64,7 @@ function seedLogins(knex, Promise) {
 }
 
 function seedProfiles(knex, Promise) {
-  return knex('profiles').truncate().then(() => (Promise.all([
+  return knex('profiles').then(() => (Promise.all([
     Login.where({ username: 'admin' }).fetch()
       .then(
         login =>
@@ -138,7 +138,7 @@ function seedProfiles(knex, Promise) {
 }
 
 function seedCommunities(knex, Promise) {
-  return knex('communities').truncate().then(() => Promise.all([
+  return knex('communities').then(() => Promise.all([
     Location.where({ locationName: 'Google Chrome' }).fetch()
       .then(
         location =>
@@ -194,7 +194,7 @@ function seedCommunities(knex, Promise) {
 
 function seedEvents(knex, Promise) {
   return knex('events')
-  .truncate().then(
+  .then(
     () => Promise.all([
       new Event({
         name: 'UX Meetup',
@@ -261,7 +261,7 @@ function seedProfileCommunityRelationship(knex, Promise) {
     communities.forEach(community =>
       promises.push(seedOneProfileCommunityRelationship(user, community))));
 
-  return knex('profile_community_relationship').truncate()
+  return knex('profile_community_relationship')
     .then(() => Promise.all(promises));
 }
 
