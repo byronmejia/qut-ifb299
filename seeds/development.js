@@ -200,7 +200,7 @@ function seedEvents(knex, Promise) {
         name: 'UX Meetup',
         description: 'My favourite colour is black',
         startTime: Date.now(),
-        endTime: (Date.now() + (2 * 60 * 60 * 1000)),
+        endTime: Date.now(),
         location_id: 1,
         community_id: 1,
       }).save(),
@@ -208,7 +208,7 @@ function seedEvents(knex, Promise) {
         name: 'UQCS Meetup',
         description: 'My favourite colour is purple',
         startTime: Date.now(),
-        endTime: (Date.now() + (2 * 60 * 60 * 1000)),
+        endTime: Date.now(),
         location_id: 2,
         community_id: 2,
       }).save(),
@@ -216,7 +216,7 @@ function seedEvents(knex, Promise) {
         name: 'JDP Meetup',
         description: 'My favourite colour is lambda',
         startTime: Date.now(),
-        endTime: (Date.now() + (2 * 60 * 60 * 1000)),
+        endTime: Date.now(),
         location_id: 3,
         community_id: 3,
       }).save(),
@@ -267,9 +267,10 @@ function seedProfileCommunityRelationship(knex, Promise) {
 
 exports.seed = function generateSeeds(knex, Promise) {
   return Promise.all([
-    seedLogins(knex, Promise),
-    seedLocations(knex, Promise),
-  ]).then(
+      seedLogins(knex, Promise),
+      seedLocations(knex, Promise),
+    ])
+    .then(
     () => Promise.all([
       seedProfiles(knex, Promise),
       seedCommunities(knex, Promise),
