@@ -1,1 +1,1 @@
-web: babel-node --presets es2015 app/misc.js
+web: npm start
