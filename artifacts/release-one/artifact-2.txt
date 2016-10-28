@@ -1,0 +1,16 @@
+Hi {{name}},
+
+Thanks for registering for {{eventTitle}}.
+
+Event Details
+Location: {{eventLocation}}
+Date: {{eventDate}}
+Time: {{eventStart}} to {{eventFinish}}
+
+Thanks,
+{{companyName}} Team
+
+© 2016 {{companyName}}. All rights reserved.
+
+{{companyName}}
+{{companyAddress}}

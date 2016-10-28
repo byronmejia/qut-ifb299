@@ -1,0 +1,11 @@
+Hi {{name}},
+
+We are contacting you to inform you that {{eventTitle}} has been cancelled.
+
+Thanks,
+{{companyName}} Team
+
+© 2016 {{companyName}}. All rights reserved.
+
+{{companyName}}
+{{companyAddress}}
