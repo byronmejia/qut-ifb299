@@ -1,0 +1,14 @@
+   eventUpdated: (user) => {
+    getUserProfile(user).then((profile) => {
+      if (profile.notifications === 'email') {
+        email.send(profile.email, 942443, {
+          eventName: 'eventName',
+          companyName: emailConfig.company.name,
+          name: profile.firstName,
+          eventLocation: 'eventLocation',
+          eventDate: 'eventDate',
+          eventStart: 'eventStart',
+          eventFinish: 'eventFinish',
+          companyAddress: emailConfig.company.address,
+        });
+      }

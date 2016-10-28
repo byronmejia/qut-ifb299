@@ -1,0 +1,10 @@
+  welcome: (user) => {
+    getUserProfile(user).then((profile) => {
+      if (profile.notifications === 'email') {
+        email.send(profile.email, 942341, {
+          companyName: emailConfig.company.name,
+          name: profile.firstName,
+          username: 'username',
+          companyAddress: emailConfig.company.address,
+        });
+      }

@@ -1,0 +1,13 @@
+Hi {{name}},
+
+Thanks for signing up to {{companyName}}. We're very excited to have you on board.
+
+For reference, your username to login is {{username}}.
+
+Thanks,
+{{companyName}} Team
+
+© 2016 {{companyName}}. All rights reserved.
+
+{{companyName}}
+{{companyAddress}}
